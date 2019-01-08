@@ -1,2 +1,2 @@
-# ltjs-compiler
+# ljts-compiler
 Lucas, Théo, Jules &amp; Sullivan font de la compil'
