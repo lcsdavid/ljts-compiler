@@ -1,7 +1,7 @@
 #ifndef LTJS_COMPILER_HPP
 #define LTJS_COMPILER_HPP
 
-enum token : int {
+enum class token : int {
 	END_OF_FILE,
 	ASSIGNMENT, CLASS, DEF, ELSE, EXTENDS,
 	IDENTIFIER, IF, INTEGER, IS, MINUS,
@@ -30,6 +30,7 @@ enum relational {
 //#include "utils/abstract_syntax_tree.hpp"
 
 /* YYSTYPE defintion */
+#include <string>
 #include <variant>
 
 typedef std::variant<int, std::string> YYSTYPE;

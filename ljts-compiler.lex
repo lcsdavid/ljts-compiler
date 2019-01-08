@@ -29,20 +29,20 @@ extern "C" {
 %%
 {commentary}
 {newline}     yylineno++;
-class         return CLASS;
-def           return DEF;
-else          return ELSE;
-extends       return EXTENDS;
-is            return IS;
-if            return IF;
-object        return OBJECT;
-override      return OVERRIDE;
-var           return VAR;
-return        return RETURN;
-then          return THEN;
-:=            return ASSIGNMENT;
-{integer}     { yylval = std::atoi(yytext); return INTEGER; }
-{identifier}  { yylval = std::string(yytext); return IDENTIFIER; }
+class         return (int)token::CLASS;
+def           return (int)token::DEF;
+else          return (int)token::ELSE;
+extends       return (int)token::EXTENDS;
+is            return (int)token::IS;
+if            return (int)token::IF;
+object        return (int)token::OBJECT;
+override      return (int)token::OVERRIDE;
+var           return (int)token::VAR;
+return        return (int)token::RETURN;
+then          return (int)token::THEN;
+:=            return (int)token::ASSIGNMENT;
+{integer}     { yylval = std::atoi(yytext); return (int)token::INTEGER; }
+{identifier}  { yylval = std::string(yytext); return (int)token::IDENTIFIER; }
 .
 %%
 
@@ -53,49 +53,49 @@ then          return THEN;
 
 std::ostream& operator<<(std::ostream& os, token const& t) {
 	switch (t) {
-		case ASSIGNMENT:
+		case token::ASSIGNMENT:
 			os << "ASSIGNMENT";
 			break;
-		case CLASS:
+		case token::CLASS:
 			os << "CLASS";
 			break;
-		case DEF:
+		case token::DEF:
 			os << "DEF";
 			break;
-		case ELSE:
+		case token::ELSE:
 		    os << "ELSE";
 			break;
-		case EXTENDS:
+		case token::EXTENDS:
 			os << "EXTENDS";
 			break;
-		case IDENTIFIER:
+		case token::IDENTIFIER:
 		    os << "IDENTIFIER: " << std::get<std::string>(yylval);
 			break;
-		case IF:
+		case token::IF:
 			os << "IF";
 			break;
-		case INTEGER:
+		case token::INTEGER:
 		    os << "INTEGER: " << std::get<int>(yylval);
 			break;
-		case IS:
+		case token::IS:
 		    os << "IS";
 			break;
-	    case OBJECT:
+	    case token::OBJECT:
 		    os << "OBJECT";
 			break;
-		case OVERRIDE:
+		case token::OVERRIDE:
             os << "OVERRIDE";
 			break;
-		case RELATIONAL_OPERATOR:
+		case token::RELATIONAL_OPERATOR:
 			os << "RELATIONAL_OPERATOR: " << yytext;
 			break;
-		case RETURN:
+		case token::RETURN:
 			os << "RETURN";
 			break;
-		case THEN:
+		case token::THEN:
 			os << "THEN";
 			break;
-		case VAR:
+		case token::VAR:
 			os << "VAR";
 			break;
 		default:
@@ -110,10 +110,10 @@ int main(int argc, char **argv) {
 		std::cerr << "Erreur: fichier inaccessible " << argv[1] << std::endl;
 		exit(1);
 	}
-	std::cout << "Fichier " << argv[1] << "chargé:" << std::endl;
+	std::cout << "Fichier " << argv[1] << " chargé: " << std::endl;
 	close(0); dup(fi); close(fi);
 	token t;
-	while ((t = (token)yylex()) != 0)
+	while ((t = (token)yylex()) != token::END_OF_FILE)
 		std::cout << t << std::endl;
 	return 0;
 }

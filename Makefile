@@ -1,6 +1,6 @@
 CC=g++
 CXXFLAGS=-Wall -g -std=c++17
-LDFLAGS=-lfl -ll
+LDFLAGS=-lfl
 EXEC=ljts-compiler
 
 $(EXEC): ljts-compiler.tab.o ljts-compiler.yy.o
