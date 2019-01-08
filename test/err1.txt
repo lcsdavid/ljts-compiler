@@ -1,0 +1,4 @@
+x := 0;
+y := z+5;
+begin 0 end
+/*Error: Undeclared variable: z */

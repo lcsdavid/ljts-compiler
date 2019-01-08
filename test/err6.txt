@@ -1,0 +1,4 @@
+x := 0;
+y := 0+5;
+begin if x == y then 0 else 1 end
+/* erreur de syntaxe a cause du == */

@@ -1,0 +1,5 @@
+y :=  if 1 < 0 then x else 1;
+/* erreur contextuelle: variable x non declaree meme si on n'a pas besoin de
+ * connaitre sa valeur d'evaluation.
+ */
+begin y end

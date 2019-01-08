@@ -1,0 +1,15 @@
+/* ATTENTION: cet exemple suppose que vous avez introduit les + et -
+ * UNAIRES, en plus de leurs homologues binaires
+ */
+
+x := 0;
+/* ceci est un commentaire */
+y := 1;
+/* ceci est un commentaire avec une "chaine" dedans et des * en plus */
+z := -5--5-+x;
+z2 :=(+5+-5)*-y;
+/**/
+/****/
+/***/
+begin 3 end
+

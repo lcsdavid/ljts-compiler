@@ -1,0 +1,7 @@
+x := 3;
+y := 12 + x;
+z := x + 2 * y; 
+t := if z < y then 1 else y + 3;
+begin 
+  1 * if t < z then x * y + z * t else 1
+end

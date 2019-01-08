@@ -1,0 +1,5 @@
+x := 0;
+y := 0+5;
+z := x = y; /* = seulement correct dans le contexte d'un IF */
+begin z end
+/* erreur de syntaxe */

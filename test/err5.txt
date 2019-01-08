@@ -1,0 +1,3 @@
+x := 0;
+begin 1 / x end
+/* Erreur: Division par zero */

@@ -1,0 +1,56 @@
+%token CLASS DEF ELSE EXTENDS IS IF OBJECT OVERRIDE VAR RETURN THEN
+%token PLUS MINUS MULTIPLY DIVIDE 
+%token ASSIGNEMENT MEMBER_ACCESS
+%token <relational_operation> RELATIONAL_OPERATOR
+
+%token <std::string> IDENTIFIER
+%token <std::variant<int, double>> INTEGER
+
+%type <abstract_syntax_tree> declLOpt decl expr relop_expr
+
+/* ------ Donnez ici si besoin les indications de precedence et d'associativite */
+%right AFFECT
+%right Else
+%left RELOP
+%left ADD SUB
+%left MUL DIV
+%nonassoc unary
+
+/* ------------- C Part */
+
+%{
+#include "ljts-compiler.hpp"
+
+extern int yylex();	/* fournie par Flex */
+extern void yyerror();  /* definie dans tp.c */
+%}
+
+/* ------------- Grammar rules part */
+
+%%
+programme : declLOpt Begin expr End { printAST($1, $3); evalMain($3, evalDecls($1)); }
+;
+
+declLOpt : decl declLOpt		{ $$ = ($2 == NULL ? makeTree(EDECL, 1, $1) : makeTree(EDECL, 2, $1, $2)); }
+         |						{ $$ = NULL; }
+;
+
+decl : ID AFFECT expr ';' 				{ $$ = makeTree(EAFFECT, 2, makeLeafStr(EID, $1), $3); }
+;
+
+relop_expr : expr RELOP expr			{ $$ = makeTree($2, 2, $1, $3); }
+
+expr : ADD expr %prec unary				{ $$ = makeTree(EADD_UNARY, 1, $2); }
+ | SUB expr %prec unary					{ $$ = makeTree(ESUB_UNARY, 1, $2); }
+ | expr AFFECT expr						{ $$ = makeTree(EAFFECT, 2, $1, $3); }
+ | expr ADD expr 						{ $$ = makeTree(EADD, 2, $1, $3); }
+ | expr SUB expr						{ $$ = makeTree(ESUB, 2, $1, $3); }
+ | expr MUL expr 						{ $$ = makeTree(EMUL, 2, $1, $3); }
+ | expr DIV expr						{ $$ = makeTree(EDIV, 2, $1, $3); }
+ | If relop_expr Then expr Else expr 	{ $$ = makeTree(ETERN, 3, $2, $4, $6); }
+ | ID 									{ $$ = makeLeafStr(EID, $1); }
+ | CST									{ $$ = makeLeafInt(ECST, $1); }
+ | '(' expr ')'							{ $$ = $2; }
+;
+
+/* ------------- Function definitons part */

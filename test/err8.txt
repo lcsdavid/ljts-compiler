@@ -1,0 +1,8 @@
+/* commentaire non ferme 1  end => erreur lexicale a priori. Mais comme
+on ne reconnait pas un commentaire, l'analyseur va renvoyer la derniere
+unite reconnue, ici l'operateur '/', suivi ulterieurement de l'operateur
+'*' d'ou l'erreur syntaxique detectee
+*/
+
+begin /* commentaire non ferme 1 end 
+

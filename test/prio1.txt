@@ -1,0 +1,8 @@
+/* ATTENTION : utilise les operateurs unaires */
+
+x := -3;
+y := + 3;
+z := -x+-3;
+t := -x--3;
+u := -t*-1;
+begin +z+x-+-4 end

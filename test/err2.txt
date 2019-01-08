@@ -1,0 +1,5 @@
+x := 0;
+y := x+5;
+x := 4;
+begin 0 end
+/* Double declaration de: x */

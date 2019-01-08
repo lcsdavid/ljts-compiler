@@ -1,0 +1,5 @@
+x := 0;
+y := 12;
+z := 5;
+t := if (z > y ) then x + 3 else y + 2;
+begin if t = 2*z+4 then x * y + z * t else 1 / x end
