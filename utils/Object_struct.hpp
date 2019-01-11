@@ -15,7 +15,7 @@ typedef struct Methode_struct{
 	
 	std::string m_nom;
 	std::vector<Param_srtuct *> m_listParam;
-	std::
+	abstract_syntax_tree m_bloc_instruction;
 	
 	
 }Methode_struct;
