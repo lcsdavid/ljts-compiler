@@ -37,26 +37,4 @@ typedef std::variant<int, std::string> YYSTYPE;
 
 #define YYSTYPE YYSTYPE
 
-/* la structure d'un arbre (noeud ou feuille) */
-  typedef struct _Tree {
-  short op;         /* etiquette de l'operateur courant */
-  short nbChildren; /* nombre de sous-arbres */
-  union {
-    char *str;      /* valeur de la feuille si op = ID */
-    int val;        /* valeur de la feuille si op = CST */
-    struct _Tree **children; /* tableau des sous-arbres d'un noeud interne */
-  } u;
-} Tree, *TreeP;
-
-/* la structure ci-dessous permet de cosntruire des listes de paires
- * (variable, valeur entiere).
- * On va construire des listes de la forme { (x 5), (y, 27) } au fur
- * et a mesure qu'on interprete les declarations dans un programme source.
- */
-typedef struct _Decl
-{ char *name;
-  int val;
-  struct _Decl *next;
-} VarDecl, *VarDeclP;
-
 #endif
