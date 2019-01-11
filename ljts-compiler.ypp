@@ -1,4 +1,4 @@
-%token ASSIGNEMENT CLASS DEF ELSE EXTENDS IS IF OBJECT OVERRIDE VAR RETURN THEN
+%token ASSIGNEMENT CLASS DEF ELSE EXTENDS IS IF NEW OBJECT OVERRIDE VAR RETURN THEN
 
 %token <int> RELATIONAL_OPERATOR
 
@@ -24,7 +24,8 @@ void yyerror (char const *s) {
 %left RELATIONAL_OPERATOR
 %left '+' '-'
 %left '*' '/'
-%nonassoc unary
+%nonassoc unary NEW
+%left '.'
 
 %%
 ProgrammeComplet : Programme '$'
@@ -37,32 +38,23 @@ LOptDecls : LDecls
 |
 ;
 
-LDecls : Class ';' LDecls
-| Object ';' LDecls
+LDecls : Decls ';' LDecls
 | Decls
 ;
 
-Decls : Class
-| Object
+Decls : ClassDecl
+| ObjectDecl
 ;
 
-//LClass : Class ';' LClass
-//;
-
-//LObject : Object ';' LObject
-//; 
-//Déclaration
-
-LOptParam : LParam
-|
+/*
+LClassDecl : ClassDecl ';' LClassDecl
 ;
 
-LParam : Param',' LParam
-| Param
+LObjectDecl : ObjectDecl ';' LObjectDecl
 ;
+*/ 
 
-Param : id
-;
+/* Parameter declaration*/
 
 LOptParamDecl : LParamDecl
 |
@@ -72,43 +64,44 @@ LParamDecl : ParamDecl',' LParamDecl
 | ParamDecl
 ;
 
-ParamDecl : OptVar id ':' id
+ParamDecl : OptVar Identifier ':' Identifier
 ;
 
 OptVar : VAR
 |
 ;
 
-id : IDENTIFIER;
-//Classe
+/* ===== Class ===== */
 
-Class : CLASS id '('LOptParamDecl')' OptExtends IS '{'ClassDef'}'
+ClassDecl : CLASS Identifier '(' LOptParamDecl ')' OptExtends IS '{' ClassDef '}'
 ;
 
-OptExtends : EXTENDS id
+OptExtends : EXTENDS Identifier
 |
 ;
 
 ClassDef : LOptField ClassConstructor LOptMethod
 ;
 
-ClassConstructor : DEF id '('LOptParamDecl')' OptSuper IS '{'Bloc'}'
+ClassConstructor : DEF Identifier '(' LOptParamDecl ')' OptSuper IS '{'Bloc'}'
 ;
 
-OptSuper : id'('LOptParam')'
+OptSuper : Identifier '(' LOptParam ')'
 |
 ;
-//Objet
 
-Object : CLASS id IS '{'ObjectDef'}'
+/* ===== Object ===== */
+
+ObjectDecl : CLASS Identifier IS '{' ObjectDef '}'
 ;
 
 ObjectDef : LOptField ObjectConstructor LOptMethod
 ;
 
-ObjectConstructor : DEF id IS '{'Bloc'}'
+ObjectConstructor : DEF Identifier IS '{' Bloc '}'
 ;
-//Champ
+
+/* ===== Champ ===== */
 
 LOptField : LField
 |
@@ -118,79 +111,113 @@ LField : Field LField
 | Field
 ;
 
-Field : VAR id ':' id
+Field : VAR Identifier ':' Identifier ';'
 ;
-//Méthodes
+
+/* ===== Method ===== */
 
 LOptMethod : LMethod
-|
+ |
 ;
 
 LMethod : Method LMethod
-|Method
+ | Method
 ;
 
-Method : OptOverride id '('LOptParamDecl')' MethodEnd
+Method : OptOverride Identifier '(' LOptParamDecl ')' Identifier ASSIGNMENT Expr
+ | OptOverride Identifier '(' LOptParamDecl ')' OptReturn IS Bloc
 ;
 
 OptOverride : OVERRIDE
-|
+ |
 ;
 
-MethodEnd : id ASSIGNMENT Expr
-| OptReturn IS Bloc
+OptReturn : Identifier
+ |
 ;
 
-OptReturn : id
-|
-;
-//Instruction
-
-Bloc : '{'LOptInst'}'
-| '{'LOptVarDecl IS LInst'}'
-;
+/* ===== Instruction ===== */
 
 LOptInst : LInst
-|
+ |
 ;
 
 LInst : Inst ';' LInst
-| Inst ';'
+ | Inst ';'
 ;
 
-Inst : Expr ';'
-|Bloc
-|RETURN ';'
-|Expr ASSIGNMENT Expr ';'
-|IF Expr THEN Inst ELSE Inst
+Inst : Expr
+ | Bloc
+ | RETURN
+ | Expr ASSIGNMENT Expr
+ | IF Expr THEN Inst ELSE Inst
 ;
+
+Bloc : '{' LOptInst '}'
+ | '{' LOptVarDecl IS LInst '}'
+;
+
+/* Declaration variable */
 
 LOptVarDecl : LVarDecl
-|
+ |
 ;
 
 LVarDecl : VarDecl LVarDecl
-| VarDecl
+ | VarDecl
 ;
 
-VarDecl : id '=' Expr
+VarDecl : Identifier ':' Identifier ASSIGNMENT Expr
+ | Identifier ':' Identifier
 ;
-//Expression
 
-Expr : Constante
-| Expr RELATIONAL_OPERATOR Expr
-| Expr '+' Expr 
-| Expr '-' Expr 
-| Expr '*' Expr 
-| Expr '/' Expr 
-| id 
-| '(' Expr ')'
+/* ===== Expression ===== */
+
+Expr : Expr RELATIONAL_OPERATOR Expr
+ | Expr '+' Expr 
+ | Expr '-' Expr 
+ | Expr '*' Expr 
+ | Expr '/' Expr 
+ | NEW Identifier '(' LOptParam ')'
+ | '+' Expr %prec unary
+ | '-' Expr %prec unary
+ | '(' Identifier Expr ')'
+ | Identifier '.' Identifier
+ | Identifier '.' Identifier '(' LOptParam ')'
+ | '(' Expr ')'
+ | Identifier
+ | Constante
+;
+
+LOptParam : LParam
+|
+;
+
+LParam : Param ',' LParam
+| Param
+;
+
+Param : Identifier
+;
+
+/* ===== Identifier & Constante ===== */
+
+Identifier : IDENTIFIER
 ;
 
 Constante : INTEGER
 ;
 
 %%
+
+#ifdef BISON_ONLY
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+#include <iostream>
 
 int main(int argc, char **argv) {
 	int fi;
@@ -202,3 +229,5 @@ int main(int argc, char **argv) {
 	close(0); dup(fi); close(fi);
 	return yyparse();
 }
+
+#endif

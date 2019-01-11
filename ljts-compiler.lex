@@ -35,6 +35,7 @@ else          return (int)token::ELSE;
 extends       return (int)token::EXTENDS;
 is            return (int)token::IS;
 if            return (int)token::IF;
+new           return (int)token::NEW;
 object        return (int)token::OBJECT;
 override      return (int)token::OVERRIDE;
 var           return (int)token::VAR;
@@ -104,6 +105,8 @@ std::ostream& operator<<(std::ostream& os, token const& t) {
 	return os << ", lineno " << yylineno;
 }
 
+#ifdef LEX_MAIN
+
 int main(int argc, char **argv) {
 	int fi;
 	if ((fi = open(argv[1], O_RDONLY)) == -1) {
@@ -117,3 +120,5 @@ int main(int argc, char **argv) {
 		std::cout << t << std::endl;
 	return 0;
 }
+
+#endif

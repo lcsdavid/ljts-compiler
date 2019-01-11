@@ -2,24 +2,21 @@
 #define LTJS_COMPILER_HPP
 
 enum class token : int {
-	END_OF_FILE,
-	ASSIGNMENT, CLASS, DEF, ELSE, EXTENDS,
-	IDENTIFIER, IF, INTEGER, IS, MINUS,
-	OBJECT, OVERRIDE, PLUS, POINT, RELATIONAL_OPERATOR,
-	RETURN, SLASH, STAR, THEN, VAR
+	END_OF_FILE, ASSIGNMENT, CLASS, DEF,
+	ELSE, EXTENDS, IDENTIFIER, IF, INTEGER,
+	IS, MINUS, NEW, OBJECT, OVERRIDE, PLUS,
+	POINT, RELATIONAL_OPERATOR, RETURN,
+	SLASH, STAR, THEN, VAR
 };
 
-enum keywords {
-	TERNARY_CONDITIONAL
-};
-
-enum arithmetic {
+enum class operation : int {
+	/* MISCELLANEOUS */
+	TERNARY_CONDITIONAL,
+	/* ARITHMETIC */
 	UNARY_PLUS, UNARY_SUBSTRACT,
 	MULTIPLICATION, DIVISION,
-	ADDITION, SUBSTRACTION
-};
-
-enum relational {
+	ADDITION, SUBSTRACTION,
+	/* RELATIONAL_OPERATOR */
 	LESS_STRICT, LESS_EQUAL, GREATER_STRICT, GREATER_EQUAL,
 	EQUAL, NOT_EQUAL
 };
@@ -27,7 +24,7 @@ enum relational {
 
 
 /* AST definition */
-//#include "utils/abstract_syntax_tree.hpp"
+#include "utils/tree.hpp"
 
 /* YYSTYPE defintion */
 #include <string>

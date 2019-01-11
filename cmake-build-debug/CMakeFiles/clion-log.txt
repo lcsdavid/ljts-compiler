@@ -1,4 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" E:\Travail\ET4\Compilation\projet\ljts-compiler
--- Configuring done
--- Generating done
--- Build files have been written to: E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug
