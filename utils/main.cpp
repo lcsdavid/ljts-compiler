@@ -1,6 +1,8 @@
 #include <iostream>
 
 #include "tree.hpp"
+#include "class_struct.h"
+
 
 int main() {
 	std::tree<int> t = std::make_tuple(1);

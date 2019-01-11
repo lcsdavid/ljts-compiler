@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+E:/Travail/ET4/Compilation/projet/ljts-compiler/ljts-compiler.cpp
+
+E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/abstract_syntax_tree.hpp
+tree.hpp
+E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/tree.hpp
+abstract_syntax_tree.tcc
+E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/abstract_syntax_tree.tcc
+
+E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/abstract_syntax_tree.tcc
+
+E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/class_struct.cpp
+class_struct.h
+E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/class_struct.h
+
+E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/class_struct.h
+string
+-
+vector
+-
+abstract_syntax_tree.hpp
+E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/abstract_syntax_tree.hpp
+
+E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/tree.hpp
+tuple
+-
+tree.tcc
+E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/tree.tcc
+
+E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/tree.tcc
+
