@@ -3,7 +3,7 @@ CXXFLAGS=-Wall -g -std=c++17
 LIB=libljts
 
 $(EXEC): tree.o
-	ar rvs libljts.a $^
+	g++ -o main $(CXXFLAGS)
 	
 %.o: %.cpp
 	$(CC) -c $< $(CXXFLAGS)
