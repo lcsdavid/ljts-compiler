@@ -12,7 +12,7 @@ double       {integer}\.{digit}*
 string       "[^"]*"
 
 %{
-	
+
 #include <cstdlib>
 #include <iostream>
 #include <string>

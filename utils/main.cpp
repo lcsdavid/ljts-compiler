@@ -3,7 +3,8 @@
 #include "tree.hpp"
 
 int main() {
-	auto t = make_tree(1, 1., 1.f, "a");
-	std::cout << std::get<0>(t) << "  " << get<1>(t) << "  " << get<2>(t) << "  " << get<3>(t) << std::endl;
+	std::tree<int> t = std::make_tuple(1);
+	auto tr = std::make_tuple(1, 1., 1.f, "a");
+	std::cout << std::get<0>(tr); // << "  " << std::get<1>(t) << "  " << std::get<2>(t) << "  " << std::get<3>(t) << std::endl;
 	return 0;
 }

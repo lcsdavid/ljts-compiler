@@ -27,8 +27,6 @@ void yyerror (char const *s) {
 %nonassoc unary
 
 %%
-//Programme
-
 ProgrammeComplet : Programme '$'
 ;
 
@@ -41,11 +39,11 @@ LOptDecls : LDecls
 
 LDecls : Class ';' LDecls
 | Object ';' LDecls
-|Decls
+| Decls
 ;
 
 Decls : Class
-|Object
+| Object
 ;
 
 //LClass : Class ';' LClass
@@ -179,7 +177,7 @@ VarDecl : id '=' Expr
 ;
 //Expression
 
-Expr : cst
+Expr : Constante
 | Expr RELATIONAL_OPERATOR Expr
 | Expr '+' Expr 
 | Expr '-' Expr 
@@ -189,5 +187,18 @@ Expr : cst
 | '(' Expr ')'
 ;
 
-cst : INTEGER
+Constante : INTEGER
 ;
+
+%%
+
+int main(int argc, char **argv) {
+	int fi;
+	if ((fi = open(argv[1], O_RDONLY)) == -1) {
+		std::cerr << "Erreur: fichier inaccessible " << argv[1] << std::endl;
+		exit(1);
+	}
+	std::cout << "Fichier " << argv[1] << " chargé: " << std::endl;
+	close(0); dup(fi); close(fi);
+	return yyparse();
+}
