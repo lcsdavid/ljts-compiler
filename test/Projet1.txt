@@ -8,9 +8,9 @@
  */
 object CptPoint is           /* objet compteur d'instances de Point */
 { var next : Integer;        /* index de la prochaine instance de Point */
-  def CptPoint is { next := -1; }
-  def incr() : Integer is { result := next; next := next + 1;}
-  def howMany() : Integer := next - 1
+  def CptPoint is { this.next := -1; }
+  def incr() : Integer is { result := this.next; this.next := this.next + 1;}
+  def howMany() : Integer := this.next - 1
 }
 
 class Point(var x: Integer, var y: Integer, var name: String) is
@@ -23,29 +23,27 @@ class Point(var x: Integer, var y: Integer, var name: String) is
   var clone : Point;
 
   def Point(var x: Integer, var y: Integer, var name: String) is
-     { this.x := x; this.y := y; this.name := name; this.hasClone := 0;
-       CptPoint.incr();
-     }
+     { CptPoint.incr(); }
 
-  def setName(s: String) is { name := s; }
+  def setName(s: String) is { this.name := s; }
 
   def getx() : Integer := this.x      /* pas de this implicite */
 
   def gety() : Integer := this.y
 
-  def cloned() : Integer := hasClone <> 0
+  def cloned() : Integer := this.hasClone <> 0
 
   def move(dx: Integer, dy: Integer, verbose: Integer) : Point is {
-      x := x + dx; y := y + dy;
-      if verbose then { this.print(); } else {}
+      this.x := this.x + dx; this.y := this.y + dy;
+      if verbose then { this.print(verbose); } else {}
       result := this;
   }
 
-  def print(verbose : Integer ) is {
+  def print(verbose : Integer) is {
       if verbose then "Inside Point::print".println(); else { }
       /* Exemples avec l'operateur & de concatenation de chaines */
-      name.print();
-      ( "= (" & x.toString() & ", " & y.toString() & ")" ).println();
+      this.name.print();
+      ( "= (" & this.x.toString() & ", " & this.y.toString() & ")" ).println();
   }
 
   /* par defaut, on ajoute un ' au nom de l'objet. On pourra le changer
@@ -54,7 +52,7 @@ class Point(var x: Integer, var y: Integer, var name: String) is
   def clone() : Point is
   { this.hasClone = 1;
     /* On memorise le dernier clone construit à partir de cet objet */
-    this.clone := new Point(x, y, this.name & "'");
+    this.clone := new Point(this.x, this.y, this.name & "'");
     result := this.clone;
   }
 
@@ -62,25 +60,25 @@ class Point(var x: Integer, var y: Integer, var name: String) is
    * les clones de ce dernier
    */
   def allClones () is {
-    if hasClone <> 0 then { this.print(); this.clone.allClones(); }
+    if this.hasClone <> 0 then { this.print(1); this.clone.allClones(); }
     else { }
   }
 
   def egal(p: Point) : Integer is {
    /* ils sont egaux s'ils ont memes coordonnees */
-       b1 : Integer := p.x - x;
-       b2 : Integer := p.y - y;
+       b1 : Integer := p.x - this.x;
+       b2 : Integer := p.y - this.y;
        is
        if b1 then result := 0; else result := b2 = 0;
   }
 
   def egal2(p: Point) : Integer is {  /* autre version */
-    b1 : Integer := p.x - x;
+    b1 : Integer := p.x - this.x;
     b2: Integer;
     is
     result := 0;
     if b1 then { return; } else { }
-       b2 := p.y - y;
+       b2 := p.y - this.y;
        result := b2 = 0;
   }
 }
@@ -93,22 +91,22 @@ class Couleur(var coul: Integer) is {
     else if coul > 2 then coul := 0; else {}
     this.coul := coul;
   }
-  
+
   def name(verbose: Integer) : String is {
   aux : String;
   is
   if verbose then "Inside Couleur::couleur".println(); else {}
-  if coul = 0 then result:= "Blanc"; /* pseudo variable result */
+  if this.coul = 0 then result:= "Blanc"; /* pseudo variable result */
   else { dummy : String;
          is
-         if coul = 1 then aux := "Noir"; else aux := "Gris";
+         if this.coul = 1 then aux := "Noir"; else aux := "Gris";
          result := aux;
        }
   }
 
   def estGris() : Integer is {
      "Inside Couleur::estGris".println();
-     result := coul = 2;
+     result := this.coul = 2;
   }
 
 }
@@ -119,13 +117,13 @@ object CouleurFactory is
    var theGris : Couleur;
 
   def CouleurFactory is {
-      theBlanc := new Couleur();
-      theNoir := new Couleur(1);
-      theGris := new Couleur(2);
+      this.theBlanc := new Couleur(0);
+      this.theNoir := new Couleur(1);
+      this.theGris := new Couleur(2);
   }
-  def blanc() : Couleur := theBlanc
-  def noir() : Couleur := theNoir
-  def gris() : Couleur := theGris
+  def blanc() : Couleur := this.theBlanc
+  def noir() : Couleur :=  this.theNoir
+  def gris() : Couleur :=  this.theGris
 }
 
 /* ci-dessous on ne met pas var devant x et y sinon ca definirait deux
@@ -134,26 +132,24 @@ object CouleurFactory is
 class PointColore(x: Integer, y:Integer, var coul: Couleur)
       extends Point is {
 
-  def PointColore (x: Integer, y:Integer, var coul: Couleur) : Point(x, y) is
-  { this.x := x;
-    this.y := y;
-    this.coul := coul;
-  } 
+  def PointColore (x: Integer, y:Integer, var coul: Couleur)
+     : Point(x, y, "") is
+  { }
 
-  def couleur() : Couleur := coul
+  def couleur() : Couleur := this.coul
 
-  def colore() : Integer := coul.estGris() <> 0
+  def colore() : Integer := this.coul.estGris() <> 0
 
   override def clone() : Point /* pas PointColore. Pas de covariance ! */
   /* ci-dessous x et y sont les champs herites de Point */
-       := new PointColore(x, y, coul)
+       := new PointColore(this.x, this.y, this.coul)
 
-  def estGris() : Integer := coul.estGris()
+  def estGris() : Integer := this.coul.estGris()
 
   override def print(verbose : Integer) is {
       if verbose then "Inside PointColore::print".println(); else { }
-      super.print();  /* usage classique de super */
-      this.couleur().name().println();
+      super.print(verbose);  /* usage classique de super */
+      this.couleur().name(verbose).println();
   }
 }
 
@@ -178,7 +174,7 @@ object Test is {
   def Test is {}
   def test(p: Point, p2: PointColore, p3: PointNoir) is {
       c: String; c2: String; c3: String;
-      true: Integer := 1;
+      true: Integer := 1; false: Integer := 0;
       is
       p.print(true);
       p2.print(true);
@@ -196,7 +192,7 @@ object Test is {
   }
 
   def test2(p: PointColore) is {
-      p.couleur().name().print();
+      p.couleur().name(0).print();
   }
 }
 
@@ -204,20 +200,20 @@ object Test is {
 class A() is {
   var v : Integer;
 
-  def A() is { v := 1 ;}
-  def f() is { "A::f()\"n".print(); }
+  def A() is { this.v := 1 ;}
+  def f() is { "A::f()\n".print(); }
   def h(x: Integer, y : Integer) : Integer := x + y
 }
 
 class A2() extends A is {
   var v : String; /* masque le champ v de la classe A */
 
-  def A2() : A() is { v := "hello"; }
+  def A2() : A() is { this.v := "hello"; }
 
-  override def f() is { "A2::f()\"n".print(); }
+  override def f() is { "A2::f()\n".print(); }
 
   def g() is {
-      v := "world"; /* par defaut, il s'agit du champ de A2 */
+      this.v := "world"; /* par defaut, il s'agit du champ de A2 */
       /* this etant caste en A, le champ v en question est celui de A */
       (A this).v := 1;
       /* les deux appels doivent fournir la meme chose */
@@ -235,14 +231,14 @@ class A2() extends A is {
   true: Integer := 1;
   p1: Point := new Point(1, 5, "p1");
   p2: Point := new Point(2, 3, "p2");
-  p3 : Point := new Point(); /* utilise toutes les valeurs par defaut */
+  p3 : Point := new Point(0, 0, "p3");
   /* Incorrect: les types ne sont pas consideres quand on decide s'il faut
    * utiliser les valeurs par defaut. Si on donne un argument, ca doit
    * forcement correspondre au premier parametre, etc. Ci-dessous, on ne
    * peut pas omettre les coordonnees et ne passer que la couleur !
    * var err : PointColore := new PointColore(new Couleur(25));
    */
-  o : PointColore := new PointColore(0, 0, (new Couleur(0)).blanc());
+  o : PointColore := new PointColore(0, 0, CouleurFactory.blanc());
   pn : PointNoir := new PointNoir(+1, -1);
   /* Incorrect: le constructeur de PointNoir n'est pas une redefinition
    * du constructeur de PointColore ou de Point. Il ne beneficie donc
@@ -252,21 +248,21 @@ class A2() extends A is {
    */
   dp : DefaultPoint := new DefaultPoint();
 is
-  p2.move(p1.getx(), p1.gety());
+  p2.move(p1.getx(), p1.gety(), true);
   o.setName("origine");
-  p2.move(p1.getx()-2*5-3, p1.gety());
-  o.print();
-  p2.print();
-  o.clone().print();
-  o.clone().move(54, 36).print(true);
+  p2.move(p1.getx()-2*5-3, p1.gety(), true);
+  o.print(true);
+  p2.print(true);
+  o.clone().print(true);
+  o.clone().move(54, 36, true).print(true);
   o.allClones();
   /* Ne doit pas compiler car clone() renvoie statiquement un Point alors
    * que o est declare comme PointColore
    * o := o.clone();
    */
-  p1 := p1.clone().move(+2, -3);
-  p1.print();
-  o.clone().print();
+  p1 := p1.clone().move(+2, -3, true);
+  p1.print(true);
+  o.clone().print(true);
   "test(Point, PointColore, PointNoir)".println();
   Test.test(p1, o, pn);
   "test(PointNoir, PointNoir, PointNoir)".println();

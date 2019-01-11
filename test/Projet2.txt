@@ -11,7 +11,7 @@ class TriNombre() is {
    def TriNombre () is {
    trinome := 0; last := 1;
    }
-   
+
    def reset() is {
        if last = 0 then suivant.reset(); else {}
        last := 1; trinome := 0;
@@ -24,9 +24,9 @@ class TriNombre() is {
    }
 
     def assurerCapacite(capa:Integer) : TriNombre  is {
-	if capa <= 1 then { 
-	} else {
-	  if last = 1 then {
+        if capa <= 1 then {
+        } else {
+        if last = 1 then {
 	     suivant := new TriNombre(); this.lier(suivant);
 	  } else { }
 	  suivant.assurerCapacite(capa - 1);
@@ -42,13 +42,13 @@ class TriNombre() is {
     }
 
     def affecter(nombre:Integer) : Integer is {
-	reste:Integer := nombre / 1000;
-	is
-	trinome := nombre - (reste * 1000);
-	if reste > 0 then {
-	   this.assurerCapacite(2);
-	   result := suivant.affecter(reste) + 1;
-	} else { last = 1; result := 1; }
+      reste:Integer := nombre / 1000;
+    is
+      trinome := nombre - (reste * 1000);
+      if reste > 0 then {
+         this.assurerCapacite(2);
+          result := suivant.affecter(reste) + 1;
+      } else { last = 1; result := 1; }
     }
 
     def additionner(nombre:Integer) : Integer is {
@@ -77,11 +77,11 @@ class TriNombre() is {
 	} else { trinome := somme; nb1 := 1; }
 	if tri.last = 1 then { result := nb1; }
 	else {
-	   this.assurerCapacite(2); 
+	   this.assurerCapacite(2);
            result := suivant.additionnerTri(tri.suivant);
 	}
     }
-	
+
    def multiplier(nb: Integer) : Integer is {
 	if nb = 0 then { this.affecter(0); result := 1;
 	} else {
@@ -178,7 +178,6 @@ class GrandNombre() is {
 
 object Test is {
    def Test is {}
-   
    def test1(num: Integer, cible: Integer, gn: GrandNombre) is {
         if num <= cible then {
 	   /* additionner renvoie un Integer (qu'on ignore) et modifie gn */
