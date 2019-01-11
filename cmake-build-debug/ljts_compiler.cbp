@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="ljts_compiler"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ljts_compiler">
+				<Option output="E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/ljts_compiler.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="E:/Travail/ET4/Compilation/projet/ljts-compiler/."/>
+					<Add directory="E:/Travail/ET4/Compilation/projet/ljts-compiler/utils"/>
+					<Add directory="E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/libljts"/>
+					<Add directory="C:/Program Files/mingw64/x86_64-7.2.0-release-posix-seh-rt_v5-rev0/bin/../lib/gcc/x86_64-w64-mingw32/7.2.0/include/c++"/>
+					<Add directory="C:/Program Files/mingw64/x86_64-7.2.0-release-posix-seh-rt_v5-rev0/bin/../lib/gcc/x86_64-w64-mingw32/7.2.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/Program Files/mingw64/x86_64-7.2.0-release-posix-seh-rt_v5-rev0/bin/../lib/gcc/x86_64-w64-mingw32/7.2.0/include/c++/backward"/>
+					<Add directory="C:/Program Files/mingw64/x86_64-7.2.0-release-posix-seh-rt_v5-rev0/bin/../lib/gcc/x86_64-w64-mingw32/7.2.0/include"/>
+					<Add directory="C:/Program Files/mingw64/x86_64-7.2.0-release-posix-seh-rt_v5-rev0/bin/../lib/gcc/x86_64-w64-mingw32/7.2.0/include-fixed"/>
+					<Add directory="C:/Program Files/mingw64/x86_64-7.2.0-release-posix-seh-rt_v5-rev0/bin/../lib/gcc/x86_64-w64-mingw32/7.2.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 ljts_compiler"/>
+					<CompileFile command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ljts_compiler/fast">
+				<Option output="E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/ljts_compiler.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="E:/Travail/ET4/Compilation/projet/ljts-compiler/."/>
+					<Add directory="E:/Travail/ET4/Compilation/projet/ljts-compiler/utils"/>
+					<Add directory="E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/libljts"/>
+					<Add directory="C:/Program Files/mingw64/x86_64-7.2.0-release-posix-seh-rt_v5-rev0/bin/../lib/gcc/x86_64-w64-mingw32/7.2.0/include/c++"/>
+					<Add directory="C:/Program Files/mingw64/x86_64-7.2.0-release-posix-seh-rt_v5-rev0/bin/../lib/gcc/x86_64-w64-mingw32/7.2.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/Program Files/mingw64/x86_64-7.2.0-release-posix-seh-rt_v5-rev0/bin/../lib/gcc/x86_64-w64-mingw32/7.2.0/include/c++/backward"/>
+					<Add directory="C:/Program Files/mingw64/x86_64-7.2.0-release-posix-seh-rt_v5-rev0/bin/../lib/gcc/x86_64-w64-mingw32/7.2.0/include"/>
+					<Add directory="C:/Program Files/mingw64/x86_64-7.2.0-release-posix-seh-rt_v5-rev0/bin/../lib/gcc/x86_64-w64-mingw32/7.2.0/include-fixed"/>
+					<Add directory="C:/Program Files/mingw64/x86_64-7.2.0-release-posix-seh-rt_v5-rev0/bin/../lib/gcc/x86_64-w64-mingw32/7.2.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 ljts_compiler/fast"/>
+					<CompileFile command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~1/mingw64/X86_64~1.0-R/bin/mingw32-make.exe -f &quot;E:/Travail/ET4/Compilation/projet/ljts-compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="E:/Travail/ET4/Compilation/projet/ljts-compiler/ljts-compiler.cpp">
+			<Option target="ljts_compiler"/>
+		</Unit>
+		<Unit filename="E:/Travail/ET4/Compilation/projet/ljts-compiler/ljts-compiler.hpp">
+			<Option target="ljts_compiler"/>
+		</Unit>
+		<Unit filename="E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/abstract_syntax_tree.hpp">
+			<Option target="ljts_compiler"/>
+		</Unit>
+		<Unit filename="E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/abstract_syntax_tree.tcc">
+			<Option target="ljts_compiler"/>
+		</Unit>
+		<Unit filename="E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/class_struct.cpp">
+			<Option target="ljts_compiler"/>
+		</Unit>
+		<Unit filename="E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/class_struct.h">
+			<Option target="ljts_compiler"/>
+		</Unit>
+		<Unit filename="E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/libljts/tree.cpp">
+			<Option target="ljts_compiler"/>
+		</Unit>
+		<Unit filename="E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/libljts/tree.hpp">
+			<Option target="ljts_compiler"/>
+		</Unit>
+		<Unit filename="E:/Travail/ET4/Compilation/projet/ljts-compiler/utils/libljts/tree.tcc">
+			<Option target="ljts_compiler"/>
+		</Unit>
+		<Unit filename="E:/Travail/ET4/Compilation/projet/ljts-compiler/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
