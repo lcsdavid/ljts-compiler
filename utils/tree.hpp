@@ -4,7 +4,7 @@
 #include <tuple>
 
 template<class... Types>
-class tree : private std::tuple<Types...> {
+class tree : public std::tuple<Types...> {
 public:
     explicit tree(const Types &...args);
     tree(const tree &other) = default;

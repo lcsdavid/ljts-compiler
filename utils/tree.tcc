@@ -55,6 +55,6 @@ constexpr const T &get(const tree<Types...> &t) noexcept {
 }
 
 template<class T, class... Types>
-constexpr const T &&get(const tuple<Types...> &&t) noexcept {
+constexpr const T &&get(const tree<Types...> &&t) noexcept {
 	return std::get<T>(dynamic_cast<const std::tuple<Types...> &&>(t));
 }
