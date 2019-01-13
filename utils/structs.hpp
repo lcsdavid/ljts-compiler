@@ -2,7 +2,17 @@
 #define LJTS_COMPILER_CLASS_STRUCT_HPP
 
 #include <string>
+#include <type_traits>
+#include <variant>
 #include <vector>
+
+/*
+struct Bloc {
+	std::vector<Variable*> variables;
+	std::vector<Instruction*> instructions;
+	
+	Bloc(
+};*/
 
 struct Parameter {
     std::string identifier;     /* Identifiant du paramètre. */
@@ -31,7 +41,7 @@ struct Constructor {
     std::string identifier;             /* Identifiant. */
     std::vector<Parameter*> parameters; /* Liste de paramètre. */
     Constructor *superConstructor;      /* Super constructeur [optionnel]. */
-    //tree *m_bloc_instruction;
+    //tree *m_bloc_instruction; Pas mieux de faire une struct Bloc ?
 	
 	Constructor(const std::string &identifier, const std::vector<Parameter*> &parameters, Constructor *superConstructor);
 };
@@ -61,6 +71,26 @@ struct Object /* : Type */ {
 	
 	Object(const std::string &identifier, const std::vector<Field*> &fields, const std::vector<Method*> &methods);
 };
+
+struct Tree;
+
+struct Tree {
+	int operation;
+	std::vector<std::variant<Parameter, Class, Object, Tree>> children;
+	
+	//template <typename ...Args>
+	//Tree(int operation, Args&... args); 
+};
+
+/*
+
+template <typename ...Args>
+Tree::Tree(int operation, Args&... args) : operation(operation), children(args...) {
+	static_assert(std::disjunction<std::is_same<Parameter, Args>..., std::is_same<Class, Args>..., std::is_same<Object, Args>..., std::is_same<Tree, Args>...>::value);
+}
+
+*/
+
 
 void regressionTesting();
 

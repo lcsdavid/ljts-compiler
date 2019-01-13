@@ -1,8 +1,9 @@
 #include <iostream>
 
-#include "class_struct.hpp"
+#include "structs.hpp"
 
 int main() {
+	Tree t = { 1 };
 	regressionTesting();
 	/*
 	std::tree<int> t = std::make_tuple(1);

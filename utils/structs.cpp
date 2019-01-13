@@ -1,4 +1,4 @@
-#include "class_struct.hpp"
+#include "structs.hpp"
 
 Parameter::Parameter(const std::string &identifier, const std::string &typeIdentifier, bool var) : identifier(identifier), typeIdentifier(typeIdentifier), var(var) {}
 
