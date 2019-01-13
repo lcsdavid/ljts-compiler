@@ -1,6 +1,23 @@
 #ifndef TREE_HPP
 #define TREE_HPP
 
+class Tree {
+	
+	
+};
+
+
+
+
+
+
+
+
+
+
+
+#ifdef TEMPLATE_TREE
+
 #include <tuple>
 
 namespace std {
@@ -10,5 +27,7 @@ namespace std {
 	template<class... Types>
 	constexpr tree<typename std::decay<Types>::type...> (*make_tree)(Types &&...args) = &std::make_tuple;
 }
+
+#endif
 
 #endif
