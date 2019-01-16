@@ -22,6 +22,11 @@ struct Parameter {
 	Parameter(const std::string &identifier, const std::string &type, bool var);
 };
 
+//surchage d'opérateurs pour les paramètres
+bool operator ==(Parameter p1, Parameter p2);
+
+
+
 struct Field {
 	std::string identifier;     /* Identifiant. */
     std::string typeIdentifier; /* Identifiant du type du champ. */
@@ -36,6 +41,12 @@ struct Method {
 	
 	Method(const std::string &identifier, const std::vector<Parameter*> parameters);
 };
+
+//surcharge d'opérateurs pour les méthodes
+bool operator ==(Method m1, Method m2);
+
+//ajout d'un paramètre sur un methode
+Method operator+(Method m, Parameter p);
 
 struct Constructor {
     std::string identifier;             /* Identifiant. */
