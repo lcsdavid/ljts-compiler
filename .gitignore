@@ -1,3 +1,7 @@
+# Compiler generated source files
+*.yy.cpp
+*.tab.cpp
+
 # Prerequisites
 *.d
 

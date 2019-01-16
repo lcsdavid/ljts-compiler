@@ -75,7 +75,7 @@ LParamDecl : ParamDecl ',' LParamDecl
  | ParamDecl
 ;
 
-ParamDecl : OptVar Identifier ':' TYPENAME
+ParamDecl : OptVar IDENTIFIER ':' TYPENAME
 ;
 
 OptVar : VAR
@@ -122,7 +122,7 @@ LField : Field LField
 | Field
 ;
 
-Field : VAR Identifier ':' TYPENAME ';'
+Field : VAR IDENTIFIER ':' TYPENAME ';'
 ;
 
 /* ===== Method ===== */
@@ -135,8 +135,8 @@ LMethod : Method LMethod
  | Method
 ;
 
-Method : OptOverride DEF Identifier '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr
- | OptOverride DEF Identifier '(' LOptParamDecl ')' OptReturn IS Bloc
+Method : OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr
+ | OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' OptReturn IS Bloc
 ;
 
 OptOverride : OVERRIDE
@@ -178,8 +178,8 @@ LVarDecl : VarDecl LVarDecl
  | VarDecl
 ;
 
-VarDecl : Identifier ':' TYPENAME ASSIGNMENT Expr ';'
- | Identifier ':' TYPENAME ';'
+VarDecl : IDENTIFIER ':' TYPENAME ASSIGNMENT Expr ';'
+ | IDENTIFIER ':' TYPENAME ';'
 ;
 
 /* ===== Expression ===== */
@@ -215,14 +215,6 @@ LParam : Param ',' LParam   // { $$ = (Tree) {lineo, 2, $1, $3};}
 Param : Expr
 ;
 
-/* ===== Identifier & Constante ===== */
-
-Identifier : IDENTIFIER
-;
-
-Constante : INTEGER
-;
-
 %%
 
 #ifdef BISON_MAIN
@@ -240,9 +232,13 @@ int main(int argc, char **argv) {
 		std::cerr << "Erreur: fichier inaccessible " << argv[1] << std::endl;
 		exit(1);
 	}
-	std::cout << "Fichier " << argv[1] << " chargé: " << std::endl;
+	std::cout << "Fichier " << argv[1] << " chargé correctement." << std::endl;
 	close(0); dup(fi); close(fi);
-	return yyparse();
+	if (yyparse() == 0) {
+		std::cout << "Compilation succeed!" << std::endl;
+		return 0;
+	}
+	return -1;
 }
 
 #endif
