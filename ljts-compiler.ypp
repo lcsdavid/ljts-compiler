@@ -173,39 +173,39 @@ VarDecl : Identifier ':' Identifier ASSIGNMENT Expr
 
 /* ===== Expression ===== */
 
-Expr : Expr RELATIONAL_OPERATOR Expr
- | Expr '+' Expr 
- | Expr '-' Expr 
- | Expr '*' Expr 
- | Expr '/' Expr 
- | NEW Identifier '(' LOptParam ')'
- | '+' Expr %prec unary
- | '-' Expr %prec unary
- | '(' Identifier Expr ')'
- | Identifier '.' Identifier
+Expr : Expr RELATIONAL_OPERATOR Expr {(Tree) {3, $1,$2, $3};}
+ | Expr '+' Expr {(Tree) {3, $1,$2, $3};}
+ | Expr '-' Expr {(Tree) {3, $1,$2, $3};}
+ | Expr '*' Expr {(Tree) {3, $1,$2, $3};}
+ | Expr '/' Expr {(Tree) {3, $1,$2, $3};}
+ | NEW Identifier '(' LOptParam ')' {(Tree) {3, $1, $2, $4};}
+ | '+' Expr %prec unary {(Tree) {2, $1, $2};}
+ | '-' Expr %prec unary {(Tree) {2, $1, $2};}
+ | '(' Identifier Expr ')' {(Tree) {2, $2, $3};}
+ | Identifier '.' Identifier {(Tree) {3, $1,$2, $3};}
  | Identifier '.' Identifier '(' LOptParam ')'
- | '(' Expr ')'
- | Identifier
- | Constante
+ | '(' Expr ')' {(Tree) {1, $2};}
+ | Identifier {(Tree) {1, $1};}
+ | Constante {(Tree) {1, $1};}
 ;
 
 LOptParam : LParam
 |
 ;
 
-LParam : Param ',' LParam
+LParam : Param ',' LParam 
 | Param
 ;
 
-Param : Identifier
+Param : Identifier 
 ;
 
 /* ===== Identifier & Constante ===== */
 
-Identifier : IDENTIFIER
+Identifier : IDENTIFIER {$1;}
 ;
 
-Constante : INTEGER
+Constante : INTEGER {$1;}
 ;
 
 %%
