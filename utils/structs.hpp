@@ -82,6 +82,7 @@ struct Object  : Type  {
 struct Tree;
 
 struct Tree {
+	int ligne;
 	int operation;
 	std::vector<std::variant<Parameter, Class, Object, Tree>> children;
 	
