@@ -2,19 +2,43 @@
 
 Parameter::Parameter(const std::string &identifier, const std::string &typeIdentifier, bool var) : identifier(identifier), typeIdentifier(typeIdentifier), var(var) {}
 
+bool operator ==(Parameter p1, Parameter p2){
+	return (p1.identifier == p2.identifier && p1.typeIdentifier==p2.typeIdentifier && p1.var==p2.var);
+}
+
+
 Field::Field(const std::string &identifier, const std::string &typeIdentifier) : identifier(identifier), typeIdentifier(typeIdentifier) {}
 
 Method::Method(const std::string &identifier, const std::vector<Parameter*> parameters) : identifier(identifier), parameters(parameters) {}
 
+bool operator ==(Method m1, Method m2){
+	if(m1.parameters.size() != m2.parameters.size() )
+		return false;
+	bool res = m1.identifier == m2.identifier ;
+	for(size_t i = 0; i < m2.parameters.size(); i++ ){
+		res = res && (m1.parameters.at(i) == m2.parameters.at(i));
+	}
+	return res;
+
+}
+
+Method operator+(Method &m, Parameter* p){
+	if( p != nullptr)
+		m.parameters.push_back(p);
+	return m;
+}
+
 Constructor::Constructor(const std::string &identifier, const std::vector<Parameter*> &parameters, Constructor *superConstructor) : identifier(identifier),
     parameters(parameters), superConstructor(superConstructor) {}
 
+Type::Type(const std::string &identifier, const std::vector<Field*> &fields, const std::vector<Method*> &methods, Constructor &constructor) :identifier(identifier),
+    fields(fields), methods(methods), constructor(constructor) {}
+
+
 Class::Class(const std::string &identifier, const std::vector<Parameter*> &parameters, Class *superClass, const std::vector<Field*> &fields,
-    const std::vector<Method*> &methods, Constructor &constructor) : identifier(identifier), parameters(parameters), superClass(superClass), fields(fields), 
-	methods(methods), constructor(constructor) {}
+    const std::vector<Method*> &methods, Constructor &constructor) :  parameters(parameters), superClass(superClass), Type(identifier,fields,methods,constructor) {}
 	
-Object::Object(const std::string &identifier, const std::vector<Field*> &fields, const std::vector<Method*> &methods) : identifier(identifier), fields(fields),
-    methods(methods) {}
+Object::Object(const std::string &identifier, const std::vector<Field*> &fields, const std::vector<Method*> &methods) : Type(identifier,fields,methods,constructor) {}
 	
 void regressionTesting() {
 	Parameter p("nom", "String", false);
