@@ -174,10 +174,10 @@ VarDecl : Identifier ':' Identifier ASSIGNMENT Expr
 /* ===== Expression ===== */
 
 Expr : Expr RELATIONAL_OPERATOR Expr {(Tree) {3, $1,$2, $3};}
- | Expr '+' Expr {(Tree) {3, $1,$2, $3};}
- | Expr '-' Expr {(Tree) {3, $1,$2, $3};}
- | Expr '*' Expr {(Tree) {3, $1,$2, $3};}
- | Expr '/' Expr {(Tree) {3, $1,$2, $3};}
+ | Expr '+' Expr {(Tree) {3, $1, $2, $3};}
+ | Expr '-' Expr {(Tree) {3, $1, $2, $3};}
+ | Expr '*' Expr {(Tree) {3, $1, $2, $3};}
+ | Expr '/' Expr {(Tree) {3, $1, $2, $3};}
  | NEW Identifier '(' LOptParam ')' {(Tree) {3, $1, $2, $4};}
  | '+' Expr %prec unary {(Tree) {2, $1, $2};}
  | '-' Expr %prec unary {(Tree) {2, $1, $2};}
