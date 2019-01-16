@@ -3,6 +3,24 @@
 
 #include <iostream>
 
+/* YYSTYPE defintion */
+#include <string>
+#include <variant>
+
+typedef std::variant<int, std::string> YYSTYPE;
+
+#define YYSTYPE YYSTYPE
+
+/* Extern declarations. */
+extern "C" int yylex();
+extern "C" YYSTYPE yylval;
+
+extern int yylineno;
+extern char* yytext;
+
+void yyerror (char const *s);
+
+
 /* Token type. */
 #ifndef YYTOKENTYPE
 #define YYTOKENTYPE
@@ -30,10 +48,11 @@ enum yytokentype {
 #endif
 
 
+
 /**
  * Enumération des différentes opérations.
  */
-enum class Operation : int {
+enum Operation : int {
 	/* MISCELLANEOUS */
 	ternary_conditional,
 	/* ARITHMETIC */
@@ -44,13 +63,5 @@ enum class Operation : int {
 	less_strict, less_equal, greater_strict, greater_equal,
 	equal, not_equal
 };
-
-/* YYSTYPE defintion */
-#include <string>
-#include <variant>
-
-typedef std::variant<int, Operation, std::string> YYSTYPE;
-
-#define YYSTYPE YYSTYPE
 
 #endif

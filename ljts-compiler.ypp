@@ -18,17 +18,6 @@
 
 #include "ljts-compiler.hpp"
 
-extern "C" int yylex();
-
-extern "C" int yylineno;
-extern "C" char* yytext;
-
-
-void yyerror (char const *s) {
-	fprintf (stderr, "Error: %s '$undefined = %s' at line %d\n", s, yytext, yylineno);
-	exit(1);
-}
-
 %}
 %debug
 %error-verbose

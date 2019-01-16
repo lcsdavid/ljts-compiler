@@ -7,3 +7,6 @@ test:  main.o structs.o
 
 %.o: %.cpp
 	$(CC) -c $< $(CXXFLAGS)
+	
+clean:
+	rm -rf $(EXEC) *.o

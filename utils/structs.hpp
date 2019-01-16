@@ -22,10 +22,10 @@ struct Parameter {
 	Parameter(const std::string &identifier, const std::string &type, bool var);
 };
 
-//surchage d'opérateurs pour les paramètres
-bool operator ==(Parameter p1, Parameter p2);
-
-
+/** 
+ * Surcharge de '==' pour les Parameter.
+ */
+bool operator==(const Parameter &lhs, const Parameter &rhs);
 
 struct Field {
 	std::string identifier;     /* Identifiant. */
@@ -42,11 +42,16 @@ struct Method {
 	Method(const std::string &identifier, const std::vector<Parameter*> parameters);
 };
 
-//surcharge d'opérateurs pour les méthodes
-bool operator ==(Method m1, Method m2);
+/** 
+ * Surcharge de '==' pour les Method.
+ */
+bool operator ==(const Method &lhs, const Method &rhs);
 
-//ajout d'un paramètre sur un methode
-Method operator+(Method m, Parameter p);
+/**
+ * Surcharge de '+' entre Method et Parameter.
+ * Ajout d'un Parameter sur une Method.
+ */
+Method operator+(const Method &lhs, const Parameter &rhs);
 
 struct Constructor {
     std::string identifier;             /* Identifiant. */
@@ -61,10 +66,12 @@ struct Type {
 	std::string identifier;       /* Identifiant de la classe. */
 	std::vector<Field*> fields;   /* Liste de champs de la classe. */
 	std::vector<Method*> methods; /* Liste de méthodes de la classe. */
-    Constructor &constructor;       /* Constructeur de la classe. */
+    Constructor &constructor;     /* Constructeur de la classe. */
 
     Type(const std::string &identifier, const std::vector<Field*> &fields, const std::vector<Method*> &methods, Constructor &constructor);
 };
+
+struct Class;
 
 struct Class : Type  {
 	std::vector<Parameter*> parameters; /* Liste de paramètres de la classe. */
@@ -74,8 +81,7 @@ struct Class : Type  {
 	    const std::vector<Method*> &methods, Constructor &constructor);
 };
 
-struct Object  : Type  {
-	
+struct Object : Type  {
 	Object(const std::string &identifier, const std::vector<Field*> &fields, const std::vector<Method*> &methods);
 };
 
@@ -99,7 +105,7 @@ Tree::Tree(int operation, Args&... args) : operation(operation), children(args..
 
 */
 
-struct Programme{
+struct Programme {
     std::vector<Type *> decls;//la liste optionnelle de declarations
     Tree tree;//le bloc d'opéraction
 };

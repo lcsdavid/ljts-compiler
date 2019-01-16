@@ -23,11 +23,6 @@ string       \"[^\"]*\"
 
 #include "ljts-compiler.hpp"
 
-extern "C" {
-	int yylex(void);
-	YYSTYPE yylval;
-};
-
 %}
 
 %%
