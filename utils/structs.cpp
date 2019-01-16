@@ -31,7 +31,7 @@ Method operator+(Method &m, Parameter* p){
 Constructor::Constructor(const std::string &identifier, const std::vector<Parameter*> &parameters, Constructor *superConstructor) : identifier(identifier),
     parameters(parameters), superConstructor(superConstructor) {}
 
-    
+
 
 
 Class::Class(const std::string &identifier, const std::vector<Parameter*> &parameters, Class *superClass, const std::vector<Field*> &fields,

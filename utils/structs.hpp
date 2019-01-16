@@ -57,28 +57,29 @@ struct Constructor {
 	Constructor(const std::string &identifier, const std::vector<Parameter*> &parameters, Constructor *superConstructor);
 };
 
-//struct Type {
-//	std::string identifier;       /* Identifiant de la classe. */
-//	std::vector<Field*> fields;   /* Liste de champs de la classe. */
-//	std::vector<Method*> methods; /* Liste de méthodes de la classe. */
-//};
+struct Type {
+	std::string identifier;       /* Identifiant de la classe. */
+	std::vector<Field*> fields;   /* Liste de champs de la classe. */
+	std::vector<Method*> methods; /* Liste de méthodes de la classe. */
+    Constructor &constructor;       /* Constructeur de la classe. */
+};
 
-struct Class /* : Type */ {
-    std::string identifier;             /* Identifiant de la classe. */
+struct Class : Type  {
+    //std::string identifier;             /* Identifiant de la classe. */
 	std::vector<Parameter*> parameters; /* Liste de paramètres de la classe. */
 	Class *superClass;                  /* Super-classe de la classe [optionnel]. */
-	std::vector<Field*> fields;         /* Liste de champs de la classe. */
-	std::vector<Method*> methods;       /* Liste de méthodes de la classe. */
-	Constructor &constructor;           /* Constructeur de la classe. */
-  
+	//std::vector<Field*> fields;         /* Liste de champs de la classe. */
+	//std::vector<Method*> methods;       /* Liste de méthodes de la classe. */
+	//Constructor &constructor;           /* Constructeur de la classe. */
+
 	Class(const std::string &identifier, const std::vector<Parameter*> &parameters, Class *superClass, const std::vector<Field*> &fields,
 	    const std::vector<Method*> &methods, Constructor &constructor);
 };
 
-struct Object /* : Type */ {
-    std::string identifier;       /* Identifiant de l'objet. */
-    std::vector<Field*> fields;   /* Liste de champs de l'objet. */
-    std::vector<Method*> methods; /* Liste de méthodes de l'objet. */
+struct Object  : Type  {
+    //std::string identifier;       /* Identifiant de l'objet. */
+    //std::vector<Field*> fields;   /* Liste de champs de l'objet. */
+    //std::vector<Method*> methods; /* Liste de méthodes de l'objet. */
 	
 	Object(const std::string &identifier, const std::vector<Field*> &fields, const std::vector<Method*> &methods);
 };

@@ -31,20 +31,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="structs.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="structs.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/structs.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+            <state relative-caret-position="561">
+              <caret line="33" selection-start-line="33" selection-end-line="33" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="structs.hpp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="structs.hpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/utils/structs.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="26" selection-start-line="26" selection-end-line="26" />
+            <state relative-caret-position="629">
+              <caret line="72" column="6" selection-start-line="72" selection-start-column="6" selection-end-line="72" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -60,8 +60,8 @@
         <option value="$PROJECT_DIR$/utils/main.cpp" />
         <option value="$PROJECT_DIR$/utils/class_struct.cpp" />
         <option value="$PROJECT_DIR$/utils/class_struct.h" />
-        <option value="$PROJECT_DIR$/utils/structs.hpp" />
         <option value="$PROJECT_DIR$/utils/structs.cpp" />
+        <option value="$PROJECT_DIR$/utils/structs.hpp" />
       </list>
     </option>
   </component>
@@ -141,12 +141,12 @@
       <updated>1547197072581</updated>
       <workItem from="1547197074197" duration="1756000" />
       <workItem from="1547199140913" duration="219000" />
-      <workItem from="1547626617574" duration="3541000" />
+      <workItem from="1547626617574" duration="3730000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7117000" />
+    <option name="totallyTimeSpent" value="7306000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -338,17 +338,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/structs.hpp">
+    <entry file="file://$PROJECT_DIR$/utils/structs.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        <state relative-caret-position="561">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/structs.cpp">
+    <entry file="file://$PROJECT_DIR$/utils/structs.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+        <state relative-caret-position="629">
+          <caret line="72" column="6" selection-start-line="72" selection-start-column="6" selection-end-line="72" selection-end-column="6" />
         </state>
       </provider>
     </entry>
