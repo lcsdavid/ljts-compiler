@@ -183,7 +183,7 @@ Expr : Expr RELATIONAL_OPERATOR Expr {(Tree) {3, $1,$2, $3};}
  | '-' Expr %prec unary {(Tree) {2, $1, $2};}
  | '(' Identifier Expr ')' {(Tree) {2, $2, $3};}
  | Identifier '.' Identifier {(Tree) {3, $1,$2, $3};}
- | Identifier '.' Identifier '(' LOptParam ')'
+ | Identifier '.' Identifier '(' LOptParam ')' {(Tree) {4, $1,$2, $3, $5};}
  | '(' Expr ')' {(Tree) {1, $2};}
  | Identifier {(Tree) {1, $1};}
  | Constante {(Tree) {1, $1};}
