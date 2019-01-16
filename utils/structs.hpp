@@ -98,6 +98,10 @@ Tree::Tree(int operation, Args&... args) : operation(operation), children(args..
 
 */
 
+struct Programme{
+    std::vector<Type *> decls;//la liste optionnelle de declarations
+    Tree tree;//le bloc d'opéraction
+};
 
 void regressionTesting();
 
