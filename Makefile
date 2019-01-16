@@ -3,7 +3,7 @@ CXXFLAGS=-Wall -g -std=c++17
 LDFLAGS=-lfl
 EXEC=ljts-compiler
 
-$(EXEC): ljts-compiler.tab.o ljts-compiler.yy.o
+$(EXEC): $(EXEC).tab.o $(EXEC).yy.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 lex_only: $(EXEC).yy.cpp
@@ -26,4 +26,4 @@ bison_only: $(EXEC).yy.o $(EXEC).tab.cpp
 .Phony: clean
 
 clean:
-	rm -f *.o *.yy.c *.tab.h *.tab.c
+	rm -rf $(EXEC) *.o *.yy.cpp *.tab.h *.tab.cpp

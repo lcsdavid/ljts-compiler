@@ -1,36 +1,55 @@
 #ifndef LTJS_COMPILER_HPP
 #define LTJS_COMPILER_HPP
 
-enum class token : int {
-	END_OF_FILE, ASSIGNMENT, CLASS, DEF,
-	ELSE, EXTENDS, IDENTIFIER, IF, INTEGER,
-	IS, MINUS, NEW, OBJECT, OVERRIDE, PLUS,
-	POINT, RELATIONAL_OPERATOR, RETURN,
-	SLASH, STAR, THEN, VAR
-};
+#include <iostream>
 
-enum class operation : int {
+/* Token type. */
+#ifndef YYTOKENTYPE
+#define YYTOKENTYPE
+enum yytokentype {
+    ASSIGNMENT = 258,
+    CLASS = 259,
+    DEF = 260,
+    ELSE = 261,
+    EXTENDS = 262,
+    IDENTIFIER = 263,
+    IF = 264,
+    INTEGER = 265,
+    IS = 266,
+    NEW = 267,
+    OBJECT = 268,
+    OVERRIDE = 269,
+    RELATIONAL_OPERATOR = 270,
+    RETURN = 271,
+    STRING = 272,
+    THEN = 273,
+    TYPENAME = 274,
+    VAR = 275,
+    unary = 276
+};
+#endif
+
+
+/**
+ * Enumération des différentes opérations.
+ */
+enum class Operation : int {
 	/* MISCELLANEOUS */
-	TERNARY_CONDITIONAL,
+	ternary_conditional,
 	/* ARITHMETIC */
-	UNARY_PLUS, UNARY_SUBSTRACT,
-	MULTIPLICATION, DIVISION,
-	ADDITION, SUBSTRACTION,
+	unary_plus, unary_substract,
+	multiplication, division,
+	addition, substraction,
 	/* RELATIONAL_OPERATOR */
-	LESS_STRICT, LESS_EQUAL, GREATER_STRICT, GREATER_EQUAL,
-	EQUAL, NOT_EQUAL
+	less_strict, less_equal, greater_strict, greater_equal,
+	equal, not_equal
 };
-
-
-
-/* AST definition */
-#include "utils/tree.hpp"
 
 /* YYSTYPE defintion */
 #include <string>
 #include <variant>
 
-typedef std::variant<int, std::string> YYSTYPE;
+typedef std::variant<int, Operation, std::string> YYSTYPE;
 
 #define YYSTYPE YYSTYPE
 

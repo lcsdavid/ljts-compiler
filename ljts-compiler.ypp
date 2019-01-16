@@ -1,23 +1,37 @@
-%token ASSIGNEMENT CLASS DEF ELSE EXTENDS IS IF NEW OBJECT OVERRIDE VAR RETURN THEN
-
+/* Tokens placés en ordre alphabétique pour mieux si retrouver. */
+%token ASSIGNMENT CLASS
+%token DEF ELSE EXTENDS
+%token <std::string> IDENTIFIER 
+%token IF
+%token <int> INTEGER
+%token IS NEW OBJECT OVERRIDE
 %token <int> RELATIONAL_OPERATOR
-
-%token <std::string> IDENTIFIER
-%token <std::variant<int, double>> INTEGER
+%token RETURN
+%token <std::string> STRING
+%token THEN 
+%token <std::string> TYPENAME
+%token VAR
 
 %{
 
+#define YYDEBUG 1
+
 #include "ljts-compiler.hpp"
 
-extern "C" {
-	int yylex();
-}
+extern "C" int yylex();
+
+extern "C" int yylineno;
+extern "C" char* yytext;
+
 
 void yyerror (char const *s) {
-	fprintf (stderr, "%s\n", s);
+	fprintf (stderr, "Error: %s '$undefined = %s' at line %d\n", s, yytext, yylineno);
+	exit(1);
 }
 
 %}
+%debug
+%error-verbose
 
 %right ASSIGNMENT
 %right ELSE
@@ -28,22 +42,19 @@ void yyerror (char const *s) {
 %left '.'
 
 %%
-ProgrammeComplet : Programme '$'
-;
-
 Programme : LOptDecls Bloc
 ;
 
 LOptDecls : LDecls
-|
+ |
 ;
 
-LDecls : Decls ';' LDecls
-| Decls
+LDecls : Decls LDecls
+ | Decls
 ;
 
 Decls : ClassDecl
-| ObjectDecl
+ | ObjectDecl
 ;
 
 /*
@@ -57,48 +68,48 @@ LObjectDecl : ObjectDecl ';' LObjectDecl
 /* Parameter declaration*/
 
 LOptParamDecl : LParamDecl
-|
+ |
 ;
 
-LParamDecl : ParamDecl',' LParamDecl
-| ParamDecl
+LParamDecl : ParamDecl ',' LParamDecl
+ | ParamDecl
 ;
 
-ParamDecl : OptVar Identifier ':' Identifier
+ParamDecl : OptVar Identifier ':' TYPENAME
 ;
 
 OptVar : VAR
-|
+ |
 ;
 
 /* ===== Class ===== */
 
-ClassDecl : CLASS Identifier '(' LOptParamDecl ')' OptExtends IS '{' ClassDef '}'
+ClassDecl : CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' ClassDef '}'
 ;
 
-OptExtends : EXTENDS Identifier
-|
+OptExtends : EXTENDS TYPENAME
+ |
 ;
 
 ClassDef : LOptField ClassConstructor LOptMethod
 ;
 
-ClassConstructor : DEF Identifier '(' LOptParamDecl ')' OptSuper IS '{'Bloc'}'
+ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' OptSuper IS Bloc
 ;
 
-OptSuper : Identifier '(' LOptParam ')'
-|
+OptSuper : ':' TYPENAME '(' LOptParam ')'
+ |
 ;
 
 /* ===== Object ===== */
 
-ObjectDecl : CLASS Identifier IS '{' ObjectDef '}'
+ObjectDecl : OBJECT TYPENAME IS '{' ObjectDef '}'
 ;
 
 ObjectDef : LOptField ObjectConstructor LOptMethod
 ;
 
-ObjectConstructor : DEF Identifier IS '{' Bloc '}'
+ObjectConstructor : DEF TYPENAME IS Bloc
 ;
 
 /* ===== Champ ===== */
@@ -111,7 +122,7 @@ LField : Field LField
 | Field
 ;
 
-Field : VAR Identifier ':' Identifier ';'
+Field : VAR Identifier ':' TYPENAME ';'
 ;
 
 /* ===== Method ===== */
@@ -124,15 +135,15 @@ LMethod : Method LMethod
  | Method
 ;
 
-Method : OptOverride Identifier '(' LOptParamDecl ')' Identifier ASSIGNMENT Expr
- | OptOverride Identifier '(' LOptParamDecl ')' OptReturn IS Bloc
+Method : OptOverride DEF Identifier '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr
+ | OptOverride DEF Identifier '(' LOptParamDecl ')' OptReturn IS Bloc
 ;
 
 OptOverride : OVERRIDE
  |
 ;
 
-OptReturn : Identifier
+OptReturn : ':' TYPENAME
  |
 ;
 
@@ -142,14 +153,14 @@ LOptInst : LInst
  |
 ;
 
-LInst : Inst ';' LInst
- | Inst ';'
+LInst : Inst LInst
+ | Inst
 ;
 
-Inst : Expr
+Inst : Expr ';'
  | Bloc
- | RETURN
- | Expr ASSIGNMENT Expr
+ | RETURN ';'
+ | Expr ASSIGNMENT Expr ';'
  | IF Expr THEN Inst ELSE Inst
 ;
 
@@ -167,8 +178,8 @@ LVarDecl : VarDecl LVarDecl
  | VarDecl
 ;
 
-VarDecl : Identifier ':' Identifier ASSIGNMENT Expr
- | Identifier ':' Identifier
+VarDecl : Identifier ':' TYPENAME ASSIGNMENT Expr ';'
+ | Identifier ':' TYPENAME ';'
 ;
 
 /* ===== Expression ===== */
@@ -178,15 +189,18 @@ Expr : Expr RELATIONAL_OPERATOR Expr
  | Expr '-' Expr 
  | Expr '*' Expr 
  | Expr '/' Expr 
- | NEW Identifier '(' LOptParam ')'
+ | NEW TYPENAME '(' LOptParam ')'
  | '+' Expr %prec unary
  | '-' Expr %prec unary
- | '(' Identifier Expr ')'
- | Identifier '.' Identifier
- | Identifier '.' Identifier '(' LOptParam ')'
+ | '(' TYPENAME Expr ')'
+ | Expr '.' IDENTIFIER
+ | TYPENAME '.' IDENTIFIER
+ | Expr '.' IDENTIFIER '(' LOptParam ')'
+ | TYPENAME '.' IDENTIFIER '(' LOptParam ')'
  | '(' Expr ')'
- | Identifier
- | Constante
+ | INTEGER
+ | STRING
+ | IDENTIFIER
 ;
 
 LOptParam : LParam
@@ -197,7 +211,7 @@ LParam : Param ',' LParam
 | Param
 ;
 
-Param : Identifier
+Param : Expr
 ;
 
 /* ===== Identifier & Constante ===== */
@@ -205,12 +219,9 @@ Param : Identifier
 Identifier : IDENTIFIER
 ;
 
-Constante : INTEGER
-;
-
 %%
 
-#ifdef BISON_ONLY
+#ifdef BISON_MAIN
 
 #include <sys/types.h>
 #include <sys/stat.h>
