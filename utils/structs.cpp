@@ -31,15 +31,14 @@ Method operator+(Method &m, Parameter* p){
 Constructor::Constructor(const std::string &identifier, const std::vector<Parameter*> &parameters, Constructor *superConstructor) : identifier(identifier),
     parameters(parameters), superConstructor(superConstructor) {}
 
-
+Type::Type(const std::string &identifier, const std::vector<Field*> &fields, const std::vector<Method*> &methods, Constructor &constructor) :identifier(identifier),
+    fields(fields), methods(methods), constructor(constructor) {}
 
 
 Class::Class(const std::string &identifier, const std::vector<Parameter*> &parameters, Class *superClass, const std::vector<Field*> &fields,
-    const std::vector<Method*> &methods, Constructor &constructor) : identifier(identifier), parameters(parameters), superClass(superClass), fields(fields), 
-	methods(methods), constructor(constructor) {}
+    const std::vector<Method*> &methods, Constructor &constructor) :  parameters(parameters), superClass(superClass), Type(identifier,fields,methods,constructor) {}
 	
-Object::Object(const std::string &identifier, const std::vector<Field*> &fields, const std::vector<Method*> &methods) : identifier(identifier), fields(fields),
-    methods(methods) {}
+Object::Object(const std::string &identifier, const std::vector<Field*> &fields, const std::vector<Method*> &methods) : Type(identifier,fields,methods,constructor) {}
 	
 void regressionTesting() {
 	Parameter p("nom", "String", false);
