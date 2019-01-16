@@ -1,0 +1,7 @@
+- une variable utilisée doit avoir été initialisée dans la même portée
+- les paramètres d'une classe et de son constructeur sont les mêmes
+- toutes les variables mebres doivent être initialisées
+- lors de la création d'un objet vérification que son type existe/est connu
+- lors de l'héritage vérifier que la super classe existe
+- lors de l'appel d'une méthode vérifier que la classe ou super classe de l'objet peut effectivement appeler cette méthode
+- PUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUTE

@@ -2,7 +2,7 @@
 // Created by user on 16/01/2019.
 //
 
-#include "structs.hpp"
+#include "verifications.h"
 
 /**
  * @return true si le programme est bon, false sinon
