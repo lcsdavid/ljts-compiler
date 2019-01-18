@@ -6,7 +6,11 @@
 #define LJTS_COMPILER_VERIFICATIONS_H
 
 #include "structs.hpp"
+#include <map>
+#include <string>
 
+//fonction de vérification globale
+bool verifications(Programme programme);
 
 
 

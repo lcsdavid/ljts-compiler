@@ -5,6 +5,7 @@
 #include <type_traits>
 #include <variant>
 #include <vector>
+#include <map>
 
 /*
 struct Bloc {
@@ -51,7 +52,7 @@ bool operator ==(const Method &lhs, const Method &rhs);
  * Surcharge de '+' entre Method et Parameter.
  * Ajout d'un Parameter sur une Method.
  */
-Method operator+(const Method &lhs, const Parameter &rhs);
+Method operator+(Method &lhs, Parameter *rhs);
 
 struct Constructor {
     std::string identifier;             /* Identifiant. */
@@ -69,7 +70,10 @@ struct Type {
     Constructor &constructor;     /* Constructeur de la classe. */
 
     Type(const std::string &identifier, const std::vector<Field*> &fields, const std::vector<Method*> &methods, Constructor &constructor);
+    bool typeCorrect(std::map<std::string, Type>* environnement);//vérifie que le Type créer est correct par rapport à l'environnement existant
 };
+
+
 
 struct Class;
 

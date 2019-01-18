@@ -24,7 +24,7 @@ bool operator==(const Method &lhs, const Method &rhs) {
     return true;
 }
 
-Method operator+(const Method &lhs, const Parameter &rhs) {
+Method operator+(Method &lhs, Parameter *rhs) {
     lhs.parameters.push_back(rhs);
     return lhs;
 }
@@ -36,6 +36,13 @@ Constructor::Constructor(const std::string &identifier, const std::vector<Parame
 Type::Type(const std::string &identifier, const std::vector<Field *> &fields, const std::vector<Method *> &methods,
            Constructor &constructor) : identifier(identifier),
                                        fields(fields), methods(methods), constructor(constructor) {}
+
+bool Type::typeCorrect(std::map<std::string, Type>* environnement){
+    //TODO
+
+    return true;
+}
+
 
 Class::Class(const std::string &identifier, const std::vector<Parameter *> &parameters, Class *superClass,
              const std::vector<Field *> &fields,
