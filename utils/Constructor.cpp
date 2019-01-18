@@ -1,7 +1,7 @@
 //
 // Created by user on 18/01/2019.
 //
-#include "Constructeur.hpp"
+#include "Constructor.hpp"
 
 Constructor::Constructor(const std::string &identifier, const std::vector<Parameter *> &parameters,
                          Constructor *superConstructor) : identifier(identifier), parameters(parameters),
