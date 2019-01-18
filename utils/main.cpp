@@ -4,7 +4,7 @@
 
 int main() {
 	Tree t = { 1 };
-	regressionTesting();
+	//regressionTesting();
 	/*
 	std::tree<int> t = std::make_tuple(1);
 	auto tr = std::make_tuple(1, 1., 1.f, "a");

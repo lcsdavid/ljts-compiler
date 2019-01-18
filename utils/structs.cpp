@@ -1,12 +1,12 @@
 #include "structs.hpp"
 
-void regressionTesting() {
+/*void regressionTesting() {
     Parameter p("nom", "String", false);
     Method m("toString", std::vector<Parameter *>());
     Constructor("Compiler", std::vector<Parameter *>(), nullptr);
 
 
-};
+};*/
 
 /*	
 Param* makeParam(bool var, std::string nom, std::string type){
