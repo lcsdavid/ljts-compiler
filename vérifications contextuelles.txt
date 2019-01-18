@@ -4,7 +4,6 @@
 - Toutes les variables membres doivent etre initialisees
 - Lors de la creation d'un objet verification que son type existe/est connu
 - Lors de l'heritage verifier que la super classe existe
-
 - Lors de l'appel d'une methode ve rifier que la classe ou  super classe  de l'objet peut effectivement appeler cette methode
 - Si on essaye de cast, il faut que le type existe/soit connu et que la partie castee soit compatible
 - Verifier l'unicite des Objet
