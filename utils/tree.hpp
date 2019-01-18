@@ -1,20 +1,19 @@
 #ifndef TREE_HPP
 #define TREE_HPP
 
-class Tree {
+struct Parameter;
+struct Class;
+struct Object;
+struct Tree;
+
+struct Tree {
+	int ligne;
+	int operation;
+	std::vector<std::variant<Parameter*, Class*, Object*, Tree*>> children;
 	
-	
+	//template <typename ...Args>
+	//Tree(int operation, Args&... args); 
 };
-
-
-
-
-
-
-
-
-
-
 
 #ifdef TEMPLATE_TREE
 
