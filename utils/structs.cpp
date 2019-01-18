@@ -33,9 +33,19 @@ Constructor::Constructor(const std::string &identifier, const std::vector<Parame
                          Constructor *superConstructor) : identifier(identifier), parameters(parameters),
 						 superConstructor(superConstructor) {}
 
-Type::Type(std::string const &identifier, std::vector<Parameter*> const &parameters, std::string const &superClass, std::vector<Field*> const &fields,
-	       Constructor &constructor, const std::vector<Method*> &methods) : identifier(identifier), fields(fields),
-		   constructor(constructor), methods(methods),  {}
+bool Constructeur::isCorrect() {
+    if (superConstructor != nullptr) {
+        for (auto param :superConstructor->parameters)
+            if (std::find(parameters.begin(), parameters.end(), param) != parameters.end())
+                return false;
+        return paramaters == superConstructor->parameters;
+    }
+
+}
+
+Type::Type(std::string const &identifier, std::vector<Parameter*> const &parameters, std::string const &superClass, 
+           std::vector<Field*> const &fields, Constructor &constructor, std::vector<Method*> const &methods) 
+		   : identifier(identifier), fields(fields), constructor(constructor), methods(methods) {}
 
 bool Type::typeCorrect(std::map<std::string, Type>* environnement){
     //cas ou le nom de la classe est déjà pris

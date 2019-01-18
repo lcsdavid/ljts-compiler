@@ -61,6 +61,7 @@ struct Constructor {
     //tree *m_bloc_instruction; Pas mieux de faire une struct Bloc ?
 	
 	Constructor(const std::string &identifier, const std::vector<Parameter*> &parameters, Constructor *superConstructor);
+    bool isCorrect(const std::vector<Parameter *> &parameters);
 };
 
 struct Type {
