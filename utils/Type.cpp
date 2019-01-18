@@ -1,8 +1,8 @@
 #include "Type.hpp"
 
 Type::Type(std::string const &identifier, std::vector<Parameter*> const &parameters, std::string const &superClass, 
-           std::vector<Field*> const &fields, Constructor &constructor, std::vector<Method*> const &methods) 
-		   : identifier(identifier), fields(fields), constructor(constructor), methods(methods) {}
+    std::vector<Field*> const &fields, Constructor &constructor, std::vector<Method*> const &methods) 
+	: identifier(identifier), fields(fields), constructor(constructor), methods(methods) {}
 		   
 bool Type::typeCorrect(std::map<std::string, Type>* environnement){
     //cas ou le nom de la classe est déjà pris
@@ -30,19 +30,19 @@ bool Type::typeCorrect(std::map<std::string, Type>* environnement){
 }
 
 Class::Class(std::string const &identifier, std::vector<Parameter*> const &parameters, 
-             std::string const &superClassIdentifier, std::vector<Field*> const &fields, Constructor &constructor,
-			 const std::vector<Method*> &methods) : Type(identifier, fields, constructor, methods),
-	         parameters(parameters), superClass(superClass) {}
+    std::string const &superClassIdentifier, std::vector<Field*> const &fields, Constructor &constructor,
+	const std::vector<Method*> &methods) : Type(identifier, fields, constructor, methods), parameters(parameters),
+	superClass(superClass) {}
 			 
 Object::Object(std::string const &identifier, std::vector<Field*> const &fields, Constructor const &constructor,
-               std::vector<Method*> const &methods) : Type(identifier, fields, constructor, methods) {}
+    std::vector<Method*> const &methods) : Type(identifier, fields, constructor, methods) {}
 			   
 Field::Field(std::string const &identifier, const std::string &typeIdentifier) : identifier(identifier),
-                                                                                 typeIdentifier(typeIdentifier) {}
+    typeIdentifier(typeIdentifier) {}
 																				 
 
-Method::Method(std::string const &identifier, const std::vector<Parameter *> parameters) : identifier(identifier),
-                                                                                           parameters(parameters) {}
+Method::Method(std::string const &identifier, std::vector<Parameter *> const parameters) : identifier(identifier),
+    parameters(parameters) {}
 			   
 Method operator+(Method &lhs, Parameter *rhs) {
     lhs.parameters.push_back(rhs);

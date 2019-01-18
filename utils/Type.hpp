@@ -1,8 +1,10 @@
 #ifndef COMPILER_TYPE_HPP
+#define COMPILER_TYPE_HPP
 
 #include <vector>
 
 #include "Constructor.hpp"
+#inclide "Parameter.hpp"
 
 struct Field;
 struct Method;
@@ -13,7 +15,8 @@ struct Type {
 	Constructor constructor;      /* Constructeur de la classe. */
 	std::vector<Method*> methods; /* Liste de méthodes de la classe. */
     
-    Type(std::string const &identifier, std::vector<Field*> const &fields, Constructor const &constructor, std::vector<Method*> const &methods);
+    Type(std::string const &identifier, std::vector<Field*> const &fields, Constructor const &constructor,
+        std::vector<Method*> const &methods);
 };
 
 struct Class : Type  {
@@ -21,12 +24,12 @@ struct Class : Type  {
 	std::string *superClass;            /* Identifiant de la super-classe de la classe [optionnel]. */
 
 	Class(std::string const &identifier, std::vector<Parameter*> const &parameters, std::string const &superClass,
-          std::vector<Field*> const &fields, Constructor &constructor, std::vector<Method*> const &methods);
+        std::vector<Field*> const &fields, Constructor &constructor, std::vector<Method*> const &methods);
 };
 
 struct Object : Type  {
 	Object(std::string const &identifier, std::vector<Field*> const &fields, Constructor const &constructor, 
-	       std::vector<Method*> const &methods);
+	    std::vector<Method*> const &methods);
 };
 
 struct Field {
@@ -54,3 +57,5 @@ Method operator+(const Method &lhs, const Parameter &rhs);
  * Surcharge de '==' pour les Method.
  */
 bool operator ==(const Method &lhs, const Method &rhs);
+
+#endif
