@@ -71,6 +71,7 @@ struct Type {
 
     Type(const std::string &identifier, const std::vector<Field*> &fields, const std::vector<Method*> &methods, Constructor &constructor);
     bool typeCorrect(std::map<std::string, Type>* environnement);//vérifie que le Type créer est correct par rapport à l'environnement existant
+    std::string getSuperClass()=0;
 };
 
 
@@ -83,10 +84,18 @@ struct Class : Type  {
 
 	Class(const std::string &identifier, const std::vector<Parameter*> &parameters, Class *superClass, const std::vector<Field*> &fields,
 	    const std::vector<Method*> &methods, Constructor &constructor);
+	std::string getSuperClass(){
+	    if(this->superClass == nullptr)
+	        return "";
+	    return this->superClass->identifier;
+	}
 };
 
 struct Object : Type  {
 	Object(const std::string &identifier, const std::vector<Field*> &fields, const std::vector<Method*> &methods);
+	std::string getSuperClass(){
+	    return "";
+	}
 };
 
 struct Tree;

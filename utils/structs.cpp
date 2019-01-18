@@ -38,7 +38,26 @@ Type::Type(const std::string &identifier, const std::vector<Field *> &fields, co
                                        fields(fields), methods(methods), constructor(constructor) {}
 
 bool Type::typeCorrect(std::map<std::string, Type>* environnement){
-    //TODO
+    //cas ou le nom de la classe est déjà pris
+    bool correct = false;
+    try{
+        environnement->at(this->identifier);
+    }catch(std::out_of_range){
+        correct = true;//on a le droit de définir cette variable vu qu'elle n'existe pas déjà
+
+    }
+    if(!correct)
+        return false;
+
+    std::string res = this->getSuperClass();
+    if(res != ""){//si le type déclare avoir une super classe
+        try{
+            environnement->at(res);
+        }catch(std::out_of_range){
+            return false;//la super classe n'est pas connue
+        }
+    }
+
 
     return true;
 }
