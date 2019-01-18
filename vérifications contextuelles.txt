@@ -3,11 +3,13 @@
 - Le nom du constructeur est le meme que le nom de sa classe
 - Toutes les variables membres doivent etre initialisees
 - Lors de la creation d'un objet verification que son type existe/est connu
--       L   o   r   s       d   e       l   '   h   e   r   i   t   a   g   e       v   e   r   i   f   i   e   r       q   u   e       l   a       s   u   p   e   r       c   l   a   s   s   e       e   x   i   s   t   e   
-   -       L   o   r   s       d   e       l   '   a   p   p   e   l       d   '   u   n   e       m   e   t   h   o   d   e       v   e   r   i   f   i   e   r       q   u   e       l   a       c   l   a   s   s   e       o   u       s   u   p   e   r       c   l   a   s   s   e       d   e       l   '   o   b   j   e   t       p   e   u   t       e   f   f   e   c   t   i   v   e   m   e   n   t       a   p   p   e   l   e   r       c   e   t   t   e       m   e   t   h   o   d   e   
-   -       S   i       o   n       e   s   s   a   y   e       d   e       c   a   s   t   ,       i   l       f   a   u   t       q   u   e       l   e       t   y   p   e       e   x   i   s   t   e   /   s   o   i   t       c   o   n   n   u       e   t       q   u   e       l   a       p   a   r   t   i   e       c   a   s   t   �   e       s   o   i   t       c   o   m   p   a   t   i   b   l   e   
-   -       V   e   r   i   f   i   e   r       l   '   u   n   i   c   i   te       d   e   s       O   b   j   e   t   
-   -       L   a       s   u   r   c   h   a   r   g   e       d   '   u   n   e       m   e   t   h   o   d   e       e   s   t       a   u   t   o   r   i   s   e   e       e   n   t   r   e       c   l   a   s   s   e   s       n   o   n       l   i   e   e   s       p   a   r       h   e   r   i   t   a   g   e  
+- Lors de l'heritage verifier que la super classe existe
+
+- Lors de l'appel d'une methode ve rifier que la classe ou  super classe  de l'objet peut effectivement appeler cette methode 
+- Si on essaye de cast, il faut que le type existe/soit connu et que la partie castee soit compatible 
+- Verifier l'unicite des Objet 
+
+- La surcharge d'une methode est autorisee entre classes non liees par heritage
 - Les methodes peuvent s'appeler elles-memes
 - La surcharge de methode  n'est pas autorisee dans une classe ou entre classe et  super-classe
 - La re definition doit etre precede de @Override
