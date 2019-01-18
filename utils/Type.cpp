@@ -30,7 +30,7 @@ bool Type::typeCorrect(std::map<std::string, Type>* environnement){
 }
 
 Class::Class(std::string const &identifier, std::vector<Parameter*> const &parameters, 
-    std::string const &superClassIdentifier, std::vector<Field*> const &fields, Constructor &constructor,
+    std::string const *superClassIdentifier, std::vector<Field*> const &fields, Constructor &constructor,
 	const std::vector<Method*> &methods) : Type(identifier, fields, constructor, methods), parameters(parameters),
 	superClass(superClass) {}
 			 

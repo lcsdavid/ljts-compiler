@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "Constructor.hpp"
-#inclide "Parameter.hpp"
+#include "Parameter.hpp"
 
 struct Field;
 struct Method;
@@ -21,9 +21,9 @@ struct Type {
 
 struct Class : Type  {
 	std::vector<Parameter*> parameters; /* Liste de paramètres de la classe. */
-	std::string *superClass;            /* Identifiant de la super-classe de la classe [optionnel]. */
+	std::string *superClassIdentifier;  /* Identifiant de la super-classe de la classe [optionnel]. */
 
-	Class(std::string const &identifier, std::vector<Parameter*> const &parameters, std::string const &superClass,
+	Class(std::string const &identifier, std::vector<Parameter*> const &parameters, std::string const *superClassIdentifier,
         std::vector<Field*> const &fields, Constructor &constructor, std::vector<Method*> const &methods);
 };
 
