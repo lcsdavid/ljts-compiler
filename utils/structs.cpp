@@ -19,7 +19,7 @@ bool operator==(const Method &lhs, const Method &rhs) {
     if (lhs.identifier != rhs.identifier)
         return false;
     for (std::size_t i = 0; i < rhs.parameters.size(); i++)
-        if (lhs.parameters[i] == rhs.parameters[i])
+        if (lhs.parameters[i] != rhs.parameters[i])
             return false;
     return true;
 }
