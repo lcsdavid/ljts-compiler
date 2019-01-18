@@ -18,9 +18,9 @@
 %type <std::vector<Type*>> LDecls
 %type <Type*> Decl
 
-%type <std::vector<Parameter*>*> LOptParamDecl
-%type <std::vector<Parameter*>> LParamDecl
-%type <Parameter*> ParamDecl
+%type <std::vector<Parameter>*> LOptParamDecl
+%type <std::vector<Parameter>> LParamDecl
+%type <Parameter> ParamDecl
 %type <bool> OptVar
 
 %type <Class*> ClassDecl
@@ -74,7 +74,7 @@ LParamDecl : ParamDecl ',' LParamDecl                                           
  | ParamDecl                                                                           { $$.push_back($1); }	
 ;
 
-ParamDecl : OptVar IDENTIFIER ':' TYPENAME                                             { $$ = new Parameter($1, $2, $3); }
+ParamDecl : OptVar IDENTIFIER ':' TYPENAME                                             { $$ = Parameter($1, $2, $3); }
 ;
 
 OptVar : VAR                                                                           { $$ = true; }
@@ -113,37 +113,37 @@ ObjectConstructor : DEF TYPENAME IS Bloc                                        
 
 /* ===== Champ ===== */
 
-LOptField : LField                                                                     {
-|
+LOptField : LField                                                                     { $$ = new std::vector<Field*>(); $$->insert(std::end(*$$), std::begin($1), std::end($1)); }
+|                                                                                      { $$ = nullptr; }
 ;
 
-LField : Field LField
-| Field
+LField : Field LField                                                                  { $$.push_back($1); $$.insert(std::end(*$$), std::begin($1), std::end($1)); }
+| Field                                                                                { $$.push_back($1); }  
 ;
 
-Field : VAR IDENTIFIER ':' TYPENAME ';'
+Field : VAR IDENTIFIER ':' TYPENAME ';'                                                { $$ = Field($2, $4); }
 ;
 
 /* ===== Method ===== */
 
-LOptMethod : LMethod
- |
+LOptMethod : LMethod                                                                   { $$ = new std::vector<Method>(); $$->insert(std::end(*$$), std::begin($1), std::end($1)); }
+ |                                                                                     { $$ = nullptr; }
 ;
 
-LMethod : Method LMethod
- | Method
+LMethod : Method LMethod                                                               { $$.push_back($1); $$.insert(std::end(*$$), std::begin($1), std::end($1)); }
+ | Method                                                                              { $$.push_back($1); }
 ;
 
-Method : OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr {
- | OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' OptReturn IS Bloc
+Method : OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr { $$ = Method($1, $3, $5, $8, $10); } // TODO faire mieux eXPR
+ | OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' OptReturn IS Bloc                  { $$ = Method($1, $3, $5, $8, $10); }
 ;
 
-OptOverride : OVERRIDE
- |
+OptOverride : OVERRIDE                                                                 { $$ = true; }
+ |                                                                                     { $$ = false; }
 ;
 
-OptReturn : ':' TYPENAME
- |
+OptReturn : ':' TYPENAME                                                               { $$ = $2; }
+ |                                                                                     { $$ = ""; }
 ;
 
 /* ===== Instruction ===== */
