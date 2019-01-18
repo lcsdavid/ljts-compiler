@@ -1,11 +1,6 @@
 #include "structs.hpp"
 
-Parameter::Parameter(const std::string &identifier, const std::string &typeIdentifier, bool var) : identifier(
-        identifier), typeIdentifier(typeIdentifier), var(var) {}
 
-bool operator==(const Parameter &lhs, const Parameter &rhs) {
-    return lhs.identifier == rhs.identifier && lhs.typeIdentifier == rhs.typeIdentifier && lhs.var == rhs.var;
-}
 
 Field::Field(const std::string &identifier, const std::string &typeIdentifier) : identifier(identifier),
                                                                                  typeIdentifier(typeIdentifier) {}
@@ -29,19 +24,6 @@ Method operator+(Method &lhs, Parameter *rhs) {
     return lhs;
 }
 
-Constructor::Constructor(const std::string &identifier, const std::vector<Parameter *> &parameters,
-                         Constructor *superConstructor) : identifier(identifier), parameters(parameters),
-						 superConstructor(superConstructor) {}
-
-bool Constructeur::isCorrect() {
-    if (superConstructor != nullptr) {
-        for (auto param :superConstructor->parameters)
-            if (std::find(parameters.begin(), parameters.end(), param) != parameters.end())
-                return false;
-        return paramaters == superConstructor->parameters;
-    }
-
-}
 
 Type::Type(std::string const &identifier, std::vector<Parameter*> const &parameters, std::string const &superClass, 
            std::vector<Field*> const &fields, Constructor &constructor, std::vector<Method*> const &methods) 
