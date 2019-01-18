@@ -5,10 +5,9 @@
 - Lors de la creation d'un objet verification que son type existe/est connu
 - Lors de l'heritage verifier que la super classe existe
 
-- Lors de l'appel d'une methode ve rifier que la classe ou  super classe  de l'objet peut effectivement appeler cette methode 
-- Si on essaye de cast, il faut que le type existe/soit connu et que la partie castee soit compatible 
-- Verifier l'unicite des Objet 
-
+- Lors de l'appel d'une methode ve rifier que la classe ou  super classe  de l'objet peut effectivement appeler cette methode
+- Si on essaye de cast, il faut que le type existe/soit connu et que la partie castee soit compatible
+- Verifier l'unicite des Objet
 - La surcharge d'une methode est autorisee entre classes non liees par heritage
 - Les methodes peuvent s'appeler elles-memes
 - La surcharge de methode  n'est pas autorisee dans une classe ou entre classe et  super-classe
