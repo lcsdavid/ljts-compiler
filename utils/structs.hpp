@@ -66,11 +66,13 @@ struct Constructor {
 struct Type {
 	std::string identifier;       /* Identifiant de la classe. */
 	std::vector<Field*> fields;   /* Liste de champs de la classe. */
+	Constructor &constructor;     /* Constructeur de la classe. */
 	std::vector<Method*> methods; /* Liste de méthodes de la classe. */
-    Constructor &constructor;     /* Constructeur de la classe. */
 
-    Type(const std::string &identifier, const std::vector<Field*> &fields, const std::vector<Method*> &methods, Constructor &constructor);
+    Type(std::string const &identifier, std::vector<Field*> const &fields, Constructor const &constructor, std::vector<Method*> const &methods);
+	
     bool typeCorrect(std::map<std::string, Type>* environnement);//vérifie que le Type créer est correct par rapport à l'environnement existant
+	
     std::string getSuperClass()=0;
 };
 
@@ -80,11 +82,11 @@ struct Class;
 
 struct Class : Type  {
 	std::vector<Parameter*> parameters; /* Liste de paramètres de la classe. */
-	Class *superClass;                  /* Super-classe de la classe [optionnel]. */
+	std::string *superClassIdentifier;  /* Identifiant de la super-classe de la classe [optionnel]. */
 
-	Class(const std::string &identifier, const std::vector<Parameter*> &parameters, Class *superClass, const std::vector<Field*> &fields,
-	    const std::vector<Method*> &methods, Constructor &constructor);
-	std::string getSuperClass(){
+	Class(std::string const &identifier, std::vector<Parameter*> const &parameters, std::string const &superClassIdentifier, std::vector<Field*> const &fields,
+	    Constructor &constructor, const std::vector<Method*> &methods);
+	std::string getSuperClass() {
 	    if(this->superClass == nullptr)
 	        return "";
 	    return this->superClass->identifier;
@@ -92,7 +94,8 @@ struct Class : Type  {
 };
 
 struct Object : Type  {
-	Object(const std::string &identifier, const std::vector<Field*> &fields, const std::vector<Method*> &methods);
+	Object(std::string const &identifier, std::vector<Field*> const &fields, Constructor const &constructor, std::vector<Method*> const &methods);
+	
 	std::string getSuperClass(){
 	    return "";
 	}

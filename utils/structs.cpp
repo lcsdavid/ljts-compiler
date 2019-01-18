@@ -30,12 +30,12 @@ Method operator+(Method &lhs, Parameter *rhs) {
 }
 
 Constructor::Constructor(const std::string &identifier, const std::vector<Parameter *> &parameters,
-                         Constructor *superConstructor) : identifier(identifier),
-                                                          parameters(parameters), superConstructor(superConstructor) {}
+                         Constructor *superConstructor) : identifier(identifier), parameters(parameters),
+						 superConstructor(superConstructor) {}
 
-Type::Type(const std::string &identifier, const std::vector<Field *> &fields, const std::vector<Method *> &methods,
-           Constructor &constructor) : identifier(identifier),
-                                       fields(fields), methods(methods), constructor(constructor) {}
+Type::Type(std::string const &identifier, std::vector<Parameter*> const &parameters, std::string const &superClass, std::vector<Field*> const &fields,
+	       Constructor &constructor, const std::vector<Method*> &methods) : identifier(identifier), fields(fields),
+		   constructor(constructor), methods(methods),  {}
 
 bool Type::typeCorrect(std::map<std::string, Type>* environnement){
     //cas ou le nom de la classe est déjà pris
@@ -62,16 +62,13 @@ bool Type::typeCorrect(std::map<std::string, Type>* environnement){
     return true;
 }
 
+Class::Class(std::string const &identifier, std::vector<Parameter*> const &parameters, 
+             std::string const &superClassIdentifier, std::vector<Field*> const &fields, Constructor &constructor,
+			 const std::vector<Method*> &methods) : Type(identifier, fields, constructor, methods),
+	 parameters(parameters), superClass(superClass) {}
 
-Class::Class(const std::string &identifier, const std::vector<Parameter *> &parameters, Class *superClass,
-             const std::vector<Field *> &fields,
-             const std::vector<Method *> &methods, Constructor &constructor) : Type(identifier, fields, methods,
-                                                                                    constructor),
-                                                                               parameters(parameters),
-                                                                               superClass(superClass) {}
-
-Object::Object(const std::string &identifier, const std::vector<Field *> &fields, const std::vector<Method *> &methods)
-        : Type(identifier, fields, methods, constructor) {}
+Object::Object(std::string const &identifier, std::vector<Field*> const &fields, Constructor const &constructor,
+               std::vector<Method*> const &methods) : Type(identifier, fields, constructor, methods) {}
 
 void regressionTesting() {
     Parameter p("nom", "String", false);

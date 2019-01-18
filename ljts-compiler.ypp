@@ -12,11 +12,29 @@
 %token <std::string> TYPENAME
 %token VAR
 
+%type <Program*> Programme
+
+%type <std::vector<Type*>*> LOptDecls
+%type <std::vector<Type*>> LDecls
+%type <Type*> Decl
+
+%type <std::vector<Parameter*>*> LOptParamDecl
+%type <std::vector<Parameter*>> LParamDecl
+%type <Parameter*> ParamDecl
+%type <bool> OptVar
+
+%type <Class*> ClassDecl
+%type <std::string*> OptExtends
+
+%type <std::tuple<std::vector<Field*>*, Constructor, std::vector<Method*>*> ClassDef ObjectDef
+
 %{
 
 #define YYDEBUG 1
 
 #include "ljts-compiler.hpp"
+
+Program* program = nullptr;
 
 %}
 %debug
@@ -31,79 +49,71 @@
 %left '.'
 
 %%
-Programme : LOptDecls Bloc
+Programme : LOptDecls Bloc                                                             { program = new Program($1, $2); }
 ;
 
-LOptDecls : LDecls
- |
+LOptDecls : LDecls                                                                     { $$ = new std::vector<Type*>(); $$->insert(std::end(*$$), std::begin($1), std::end($1); }
+ |                                                                                     { $$ = nullptr; }
 ;
 
-LDecls : Decls LDecls
- | Decls
+LDecls : Decl LDecls                                                                   { $$.push_back($1); $$.insert(std::end($$), std::begin($2), std::end($2); }
+ | Decl                                                                                { $$.push_back($1); }
 ;
 
-Decls : ClassDecl
- | ObjectDecl
+Decl : ClassDecl                                                                       { $$ = $1; }
+ | ObjectDecl                                                                          { $$ = $1; }
 ;
-
-/*
-LClassDecl : ClassDecl ';' LClassDecl
-;
-
-LObjectDecl : ObjectDecl ';' LObjectDecl
-;
-*/ 
 
 /* Parameter declaration*/
 
-LOptParamDecl : LParamDecl
- |
+LOptParamDecl : LParamDecl                                                             { $$ = new std::vector<Parameter*>(); $$->insert(std::end(*$$), std::begin($1), std::end($1); }
+ |                                                                                     { $$ = nullptr; }
 ;
 
-LParamDecl : ParamDecl ',' LParamDecl
- | ParamDecl
+LParamDecl : ParamDecl ',' LParamDecl                                                  { $$.push_back($1); $$.insert(std::end($$), std::begin($2), std::end($2); }
+ | ParamDecl                                                                           { $$.push_back($1); }	
 ;
 
-ParamDecl : OptVar IDENTIFIER ':' TYPENAME
+ParamDecl : OptVar IDENTIFIER ':' TYPENAME                                             { $$ = new Parameter($1, $2, $3); }
 ;
 
-OptVar : VAR
- |
+OptVar : VAR                                                                           { $$ = true; }
+ |                                                                                     { $$ = false; }
 ;
 
 /* ===== Class ===== */
 
-ClassDecl : CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' ClassDef '}'
+ClassDecl : CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' ClassDef '}'        { $$ = new Class($2, $4, $6, std::get<0>($9), std::get<1>($9), std::get<2>($9)); }
 ;
 
-OptExtends : EXTENDS TYPENAME
- |
+OptExtends : EXTENDS TYPENAME                                                          { $$ = new std::string($2); }
+ |                                                                                     { $$ = nullptr; }
 ;
 
-ClassDef : LOptField ClassConstructor LOptMethod
+ClassDef : LOptField ClassConstructor LOptMethod                                       { $$ = std::make_tuple($1, $2, $3); }
 ;
 
-ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' OptSuper IS Bloc
+ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' OptSuper IS Bloc                 { $$ = Constructor($2, $4, $6, $8); }
 ;
 
-OptSuper : ':' TYPENAME '(' LOptParam ')'
+OptSuper : ':' TYPENAME '(' LOptParam ')'                                              { $$ = new Constructor($2, $4, nullptr); }
  |
 ;
 
 /* ===== Object ===== */
 
-ObjectDecl : OBJECT TYPENAME IS '{' ObjectDef '}'
+ObjectDecl : OBJECT TYPENAME IS '{' ObjectDef '}'                                      { $$ = new Object($2, std::get<0>($5), std::get<1>($5), std::get<2>($5)); }
 ;
 
-ObjectDef : LOptField ObjectConstructor LOptMethod
+ObjectDef : LOptField ObjectConstructor LOptMethod                                     { $$ = std::make_tuple($1, $2, $3); }
 ;
 
-ObjectConstructor : DEF TYPENAME IS Bloc
+ObjectConstructor : DEF TYPENAME IS Bloc                                               { $$ = Constructor($2, std::vector<Parameter*>(), nullptr, $4); }
 ;
 
 /* ===== Champ ===== */
 
-LOptField : LField
+LOptField : LField                                                                     {
 |
 ;
 
@@ -124,7 +134,7 @@ LMethod : Method LMethod
  | Method
 ;
 
-Method : OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr
+Method : OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr {
  | OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' OptReturn IS Bloc
 ;
 
