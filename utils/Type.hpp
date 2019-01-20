@@ -5,6 +5,7 @@
 
 #include "Constructor.hpp"
 #include "Variable.hpp"
+#include "Method.hpp"
 
 struct Type {
 	std::string identifier;       /* Identifiant de la classe. */
@@ -14,6 +15,8 @@ struct Type {
     
     Type(std::string const &identifier, std::vector<Variable> const &fields, Constructor const &constructor,
         std::vector<Method> const &methods);
+		
+	virtual bool correctDecl() const;
 };
 
 struct Class : Type  {
@@ -21,38 +24,17 @@ struct Class : Type  {
 	std::string *superClassIdentifier;  /* Identifiant de la super-classe de la classe [optionnel]. */
 
 	Class(std::string const &identifier, std::vector<Parameter> const &parameters, std::string const *superClassIdentifier,
-        std::vector<Variable> const &fields, Constructor const &constructor, std::vector<Method> const &methods);
+        std::vector<Variable> const &fields, ClassConstructor const &constructor, std::vector<Method> const &methods);
+		
+	bool correctDecl() const override;
 };
 
 struct Object : Type  {
+	
 	Object(std::string const &identifier, std::vector<Variable> const &fields, Constructor const &constructor, 
 	    std::vector<Method> const &methods);
+		
+	bool correctDecl() const override;
 };
-
-struct Field {
-	std::string identifier;     /* Identifiant. */
-    std::string typeIdentifier; /* Identifiant du type du champ. */
-	
-	Field(std::string const &identifier, std::string const &typeIdentifier);
-};
-
-struct Method {
-    std::string identifier;             /* Identifiant de la méthode. */
-    std::vector<Parameter*> parameters; /* Liste de paramètre. */
-    //std::tree* m_bloc_instruction;    /* Arbre d'instructions. */
-	
-	Method(std::string const &identifier, std::vector<Parameter*> const parameters);
-};
-
-/**
- * Surcharge de '+' entre Method et Parameter.
- * Ajout d'un Parameter sur une Method.
- */
-Method operator+(const Method &lhs, const Parameter &rhs);
-
-/** 
- * Surcharge de '==' pour les Method.
- */
-bool operator ==(const Method &lhs, const Method &rhs);
 
 #endif

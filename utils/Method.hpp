@@ -11,3 +11,17 @@ struct Method {
 		std::vector<Parameter> const &parameters);
 };
 
+Method operator+=(Method &lhs, Parameter const &rhs);
+
+/**
+ * Surcharge de '+' entre Method et Parameter.
+ * Ajout d'un Parameter sur une Method.
+ */
+Method operator+(Method const &lhs, Parameter const &rhs);
+
+/** 
+ * Surcharge de '==' pour les Method.
+ */
+bool operator ==(Method const &lhs, Method const &rhs);
+
+#endif

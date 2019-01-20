@@ -1,61 +1,45 @@
 #include "Type.hpp"
 
-Type::Type(std::string const &identifier, std::vector<Parameter> const &parameters, std::string const &superClass, 
-    std::vector<Variable> const &fields, Constructor const &constructor, std::vector<Method> const &methods) 
-	: identifier(identifier), fields(fields), constructor(constructor), methods(methods) {}
+Type::Type(std::string const &identifier, std::vector<Variable> const &fields, Constructor const &constructor,
+	std::vector<Method> const &methods) : identifier(identifier), fields(fields), constructor(constructor),
+	methods(methods) {}
 		   
-bool Type::typeCorrect(std::map<std::string, Type>* environnement){
-    //cas ou le nom de la classe est déjà pris
-    bool correct = false;
-    try{
-        environnement->at(this->identifier);
-    }catch(std::out_of_range){
-        correct = true;//on a le droit de définir cette variable vu qu'elle n'existe pas déjà
-
-    }
-    if(!correct)
-        return false;
-
-    std::string res = this->getSuperClass();
-    if(res != ""){//si le type déclare avoir une super classe
-        try{
-            environnement->at(res);
-        }catch(std::out_of_range){
-            return false;//la super classe n'est pas connue
-        }
-    }
-
+bool Type::correctDecl(/*std::map<std::string, Type>* environnement*/) {
+    /* Cas où le nom de la classe est déjà pris... */
+	/* if (environnement->find(identifier) != environnement.end())
+        return false; */
+	
+	/* Vérifie la validité du constructeur... */
+	if (!constructor.correctDecl())
+		return false;
+	
+	/* Vérifie la validité des méthodes... */
+	for (Method const &method : methods)
+		if (!method.correctDecl())
+			return false;
 
     return true;
 }
 
-Class::Class(std::string const &identifier, std::vector<Parameter> const &parameters, 
-    std::string const *superClassIdentifier, std::vector<Variable> const &fields, Constructor const &constructor,
-	const std::vector<Method> &methods) : Type(identifier, fields, constructor, methods), parameters(parameters),
-	superClassIdentifier(superClassIdentifier) {}
-			 
-Object::Object(std::string const &identifier, std::vector<Variable> const &fields, Constructor const &constructor,
-    std::vector<Method> const &methods) : Type(identifier, fields, constructor, methods) {}
-			   
-Field::Field(std::string const &identifier, const std::string &typeIdentifier) : identifier(identifier),
-    typeIdentifier(typeIdentifier) {}
-																				 
-Method::Method(std::string const &identifier, std::vector<Parameter *> const parameters) : identifier(identifier),
-    parameters(parameters) {}
-			   
-Method operator+(Method &lhs, Parameter *rhs) {
-    lhs.parameters.push_back(rhs);
-    return lhs;
-}
+Class::Class(std::string const &identifier, std::vector<Parameter> const &parameters, std::string const *superClassIdentifier, 
+	std::vector<Variable> const &fields, ClassConstructor const &constructor, std::vector<Method> const &methods) 
+	: Type(identifier, fields, constructor, methods), parameters(parameters), superClassIdentifier(superClassIdentifier) {}
 
-bool operator==(Method const &lhs, Method const &rhs) {
-    if (lhs.parameters.size() != rhs.parameters.size())
-        return false;
-    if (lhs.identifier != rhs.identifier)
-        return false;
-    for (std::size_t i = 0; i < rhs.parameters.size(); i++)
-        if (lhs.parameters[i] != rhs.parameters[i])
-            return false;
-    return true;
+bool Class::correctDecl() const override {
+	if (!Type::correctDecl())
+		return false;
+	
+	/* Vérifie si la super classe est connue... */
+	/* if (superClassIdentifier != nullptr)
+		if (environnement->find(identifier) != environnement.end())
+			return false; */
+	
+	return true;
 }
+	
+Object::Object(std::string const &identifier, std::vector<Variable> const &fields, Constructor const &constructor, 
+	std::vector<Method> const &methods) : Type(identifier, fields, constructor, methods) {}							 
 
+bool Object::correctDecl() const override {
+	return Type::correctDecl();
+}
