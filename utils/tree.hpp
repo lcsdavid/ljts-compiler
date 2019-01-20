@@ -11,10 +11,10 @@ struct Tree {
 	int operation;
 	std::vector<std::variant<Parameter*, Class*, Object*, Tree*>> children;
 	
-	//template <typename ...Args>
-	//Tree(int operation, Args&... args); 
+	Tree(int operation); 
 };
 
+/*
 #ifdef TEMPLATE_TREE
 
 #include <tuple>
@@ -28,5 +28,6 @@ namespace std {
 }
 
 #endif
+*/
 
 #endif

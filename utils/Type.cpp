@@ -1,7 +1,7 @@
 #include "Type.hpp"
 
-Type::Type(std::string const &identifier, std::vector<Parameter*> const &parameters, std::string const &superClass, 
-    std::vector<Field*> const &fields, Constructor &constructor, std::vector<Method*> const &methods) 
+Type::Type(std::string const &identifier, std::vector<Parameter> const &parameters, std::string const &superClass, 
+    std::vector<Variable> const &fields, Constructor const &constructor, std::vector<Method> const &methods) 
 	: identifier(identifier), fields(fields), constructor(constructor), methods(methods) {}
 		   
 bool Type::typeCorrect(std::map<std::string, Type>* environnement){
@@ -29,18 +29,17 @@ bool Type::typeCorrect(std::map<std::string, Type>* environnement){
     return true;
 }
 
-Class::Class(std::string const &identifier, std::vector<Parameter*> const &parameters, 
-    std::string const *superClassIdentifier, std::vector<Field*> const &fields, Constructor &constructor,
-	const std::vector<Method*> &methods) : Type(identifier, fields, constructor, methods), parameters(parameters),
-	superClass(superClass) {}
+Class::Class(std::string const &identifier, std::vector<Parameter> const &parameters, 
+    std::string const *superClassIdentifier, std::vector<Variable> const &fields, Constructor const &constructor,
+	const std::vector<Method> &methods) : Type(identifier, fields, constructor, methods), parameters(parameters),
+	superClassIdentifier(superClassIdentifier) {}
 			 
-Object::Object(std::string const &identifier, std::vector<Field*> const &fields, Constructor const &constructor,
-    std::vector<Method*> const &methods) : Type(identifier, fields, constructor, methods) {}
+Object::Object(std::string const &identifier, std::vector<Variable> const &fields, Constructor const &constructor,
+    std::vector<Method> const &methods) : Type(identifier, fields, constructor, methods) {}
 			   
 Field::Field(std::string const &identifier, const std::string &typeIdentifier) : identifier(identifier),
     typeIdentifier(typeIdentifier) {}
 																				 
-
 Method::Method(std::string const &identifier, std::vector<Parameter *> const parameters) : identifier(identifier),
     parameters(parameters) {}
 			   

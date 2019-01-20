@@ -20,7 +20,6 @@ extern char* yytext;
 
 void yyerror (char const *s);
 
-
 /* Token type. */
 #ifndef YYTOKENTYPE
 #define YYTOKENTYPE
@@ -46,8 +45,6 @@ enum yytokentype {
     unary = 276
 };
 #endif
-
-
 
 /**
  * Enumération des différentes opérations.

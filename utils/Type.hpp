@@ -4,32 +4,29 @@
 #include <vector>
 
 #include "Constructor.hpp"
-#include "Parameter.hpp"
-
-struct Field;
-struct Method;
+#include "Variable.hpp"
 
 struct Type {
 	std::string identifier;       /* Identifiant de la classe. */
-	std::vector<Field*> fields;   /* Liste de champs de la classe. */
-	Constructor constructor;      /* Constructeur de la classe. */
-	std::vector<Method*> methods; /* Liste de méthodes de la classe. */
+	std::vector<Variable> fields; /* Liste de champs de la classe. */
+	Constructor &constructor;     /* Constructeur de la classe. */
+	std::vector<Method> methods;  /* Liste de méthodes de la classe. */
     
-    Type(std::string const &identifier, std::vector<Field*> const &fields, Constructor const &constructor,
-        std::vector<Method*> const &methods);
+    Type(std::string const &identifier, std::vector<Variable> const &fields, Constructor const &constructor,
+        std::vector<Method> const &methods);
 };
 
 struct Class : Type  {
-	std::vector<Parameter*> parameters; /* Liste de paramètres de la classe. */
+	std::vector<Parameter> parameters; /* Liste de paramètres de la classe. */
 	std::string *superClassIdentifier;  /* Identifiant de la super-classe de la classe [optionnel]. */
 
-	Class(std::string const &identifier, std::vector<Parameter*> const &parameters, std::string const *superClassIdentifier,
-        std::vector<Field*> const &fields, Constructor &constructor, std::vector<Method*> const &methods);
+	Class(std::string const &identifier, std::vector<Parameter> const &parameters, std::string const *superClassIdentifier,
+        std::vector<Variable> const &fields, Constructor const &constructor, std::vector<Method> const &methods);
 };
 
 struct Object : Type  {
-	Object(std::string const &identifier, std::vector<Field*> const &fields, Constructor const &constructor, 
-	    std::vector<Method*> const &methods);
+	Object(std::string const &identifier, std::vector<Variable> const &fields, Constructor const &constructor, 
+	    std::vector<Method> const &methods);
 };
 
 struct Field {

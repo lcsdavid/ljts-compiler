@@ -1,18 +1,24 @@
-//
-// Created by user on 18/01/2019.
-//
 #include "Constructor.hpp"
 
-Constructor::Constructor(const std::string &identifier, const std::vector<Parameter *> &parameters,
-                         Constructor *superConstructor) : identifier(identifier), parameters(parameters),
-                                                          superConstructor(superConstructor) {}
+Constructor::Constructor(std::string const &identifier, std::vector<Parameter> const &parameters) 
+	: identifier(identifier), parameters(parameters) {}
 
-bool Constructeur::isCorrect() {
-    if (superConstructor != nullptr) {
-        for (auto param :superConstructor->parameters)
-            if (std::find(parameters.begin(), parameters.end(), param) != parameters.end())
-                return false;
-        return paramaters == superConstructor->parameters;
-    }
-
+Constructor::isCorrect() { /* Dans le cas d'un objet classique. */
+	return true;
+}
+	
+ClassConstructor(std::string const &identifier, std::vector<Parameter> const &parameters,
+	std::string *superIdentifier, std::vector<std::string> *superParameters) : identifier(identifier),
+	parameters(parameters), superIdentifier(superIdentifier), superParameters(superParameters) {}
+	
+bool ClassConstructor::isCorrect() { /* Dans le cas d'un constructeur de classe. */
+    if (superIdentifier == nullptr)
+		return Constructor::isCorrect();
+	/* Check si superIdentifier || superParameters ? bug track */
+	/* Check correct super constructor call ? */
+	
+	for (std::string superParam : *superParameters) /* Pas de check des types. */
+		if (std::find(parameters.begin(), parameters.end(), [=](auto param) { return superParam == param.identifier; }) != parameters.end())
+			return false;
+	return paramaters == superConstructor->parameters;
 }
