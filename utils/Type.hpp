@@ -24,7 +24,7 @@ struct Type {
 
 struct Class : Type  {
 	std::vector<Parameter> parameters; /* Liste de paramètres de la classe. */
-	std::string *superClassIdentifier;  /* Identifiant de la super-classe de la classe [optionnel]. */
+	std::string *superClassIdentifier; /* Identifiant de la super-classe de la classe [optionnel]. */
 
 	Class(std::string const &identifier, std::vector<Parameter> const &parameters, std::string const *superClassIdentifier,
         std::vector<Variable> const &fields, ClassConstructor const &constructor, std::vector<Method> const &methods);
