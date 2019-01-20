@@ -1,6 +1,8 @@
 #ifndef METHOD_HPP
 #define METHOD_HPP
 
+#include <vector>
+
 #include "Parameter.hpp"
 
 struct Method {
@@ -11,9 +13,13 @@ struct Method {
 	
 	Method(std::string const &identifier, std::string const &returnTypeIdentifier,
 		std::vector<Parameter> const &parameters);
+	
+	Method &operator=(Method const &other);
+	
+	bool correctDecl() const;
 };
 
-Method operator+=(Method &lhs, Parameter const &rhs);
+Method &operator+=(Method &lhs, Parameter const &rhs);
 
 /**
  * Surcharge de '+' entre Method et Parameter.

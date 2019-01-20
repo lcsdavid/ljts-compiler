@@ -1,15 +1,19 @@
 #ifndef TREE_HPP
 #define TREE_HPP
 
-struct Parameter;
-struct Class;
-struct Object;
+#include <variant>
+#include <vector>
+
+#include "Block.hpp"
+#include "Parameter.hpp"
+#include "Type.hpp"
+
 struct Tree;
 
 struct Tree {
 	int ligne;
 	int operation;
-	std::vector<std::variant<Parameter*, Class*, Object*, Tree*>> children;
+	std::vector<std::variant<Class, Object, Block, Tree>> children;
 	
 	Tree(int operation); 
 };

@@ -5,7 +5,7 @@
 #include "Method.hpp"
 #include "Parameter.hpp"
 #include "Type.hpp"
-#include "Variable.hpp*
+#include "Variable.hpp"
 
 #include "Tree.hpp"
 

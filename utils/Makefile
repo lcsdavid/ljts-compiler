@@ -2,7 +2,7 @@ CC = g++
 CXXFLAGS=-Wall -g -std=c++17
 EXEC=test
 
-test:  main.o structs.o
+test: $(patsubst %.cpp,%.o,$(wildcard *.cpp))
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 %.o: %.cpp

@@ -1,4 +1,4 @@
-#include "structs.hpp"
+#include "Structures.hpp"
 
 /*void regressionTesting() {
     Parameter p("nom", "String", false);

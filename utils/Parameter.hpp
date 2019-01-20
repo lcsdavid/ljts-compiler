@@ -16,4 +16,6 @@ struct Parameter {
  */
 bool operator==(Parameter const &lhs, Parameter const &rhs);
 
+bool operator!=(Parameter const &lhs, Parameter const &rhs);
+
 #endif

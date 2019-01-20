@@ -3,15 +3,27 @@
 Method::Method(std::string const &identifier, std::string const &returnTypeIdentifier, 
 	std::vector<Parameter> const &parameters) : identifier(identifier), returnTypeIdentifier(returnTypeIdentifier),
 	parameters(parameters) {}
+
+Method &Method::operator=(Method const &other) {
+	identifier = other.identifier;
+	returnTypeIdentifier = other.returnTypeIdentifier;
+	parameters = other.parameters;
+	return *this;
+}
 	
-Method operator+=(Method &lhs, Parameter const &rhs) {
+bool Method::correctDecl() const {
+	return true;
+}
+
+Method &operator+=(Method &lhs, Parameter const &rhs) {
 	lhs.parameters.push_back(rhs);
 	return lhs;
 }
 	
 Method operator+(Method const &lhs, Parameter const &rhs) {
-    lhs.parameters.push_back(rhs);
-    return lhs;
+    Method result = lhs;
+	result.parameters.push_back(rhs);
+    return result;
 }
 
 bool operator==(Method const &lhs, Method const &rhs) {

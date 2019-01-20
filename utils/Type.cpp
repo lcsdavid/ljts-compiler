@@ -1,10 +1,10 @@
 #include "Type.hpp"
 
-Type::Type(std::string const &identifier, std::vector<Variable> const &fields, Constructor const &constructor,
+Type::Type(std::string const &identifier, std::vector<Variable> const &fields, Constructor &constructor,
 	std::vector<Method> const &methods) : identifier(identifier), fields(fields), constructor(constructor),
 	methods(methods) {}
 		   
-bool Type::correctDecl(/*std::map<std::string, Type>* environnement*/) {
+bool Type::correctDecl(/*std::map<std::string, Type>* environnement*/) const {
     /* Cas où le nom de la classe est déjà pris... */
 	/* if (environnement->find(identifier) != environnement.end())
         return false; */
@@ -21,11 +21,11 @@ bool Type::correctDecl(/*std::map<std::string, Type>* environnement*/) {
     return true;
 }
 
-Class::Class(std::string const &identifier, std::vector<Parameter> const &parameters, std::string const *superClassIdentifier, 
-	std::vector<Variable> const &fields, ClassConstructor const &constructor, std::vector<Method> const &methods) 
+Class::Class(std::string const &identifier, std::vector<Parameter> const &parameters, std::string *superClassIdentifier, 
+	std::vector<Variable> const &fields, ClassConstructor &constructor, std::vector<Method> const &methods) 
 	: Type(identifier, fields, constructor, methods), parameters(parameters), superClassIdentifier(superClassIdentifier) {}
 
-bool Class::correctDecl() const override {
+bool Class::correctDecl() const {
 	if (!Type::correctDecl())
 		return false;
 	
@@ -37,9 +37,9 @@ bool Class::correctDecl() const override {
 	return true;
 }
 	
-Object::Object(std::string const &identifier, std::vector<Variable> const &fields, Constructor const &constructor, 
+Object::Object(std::string const &identifier, std::vector<Variable> const &fields, Constructor &constructor, 
 	std::vector<Method> const &methods) : Type(identifier, fields, constructor, methods) {}							 
 
-bool Object::correctDecl() const override {
+bool Object::correctDecl() const {
 	return Type::correctDecl();
 }

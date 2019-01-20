@@ -15,7 +15,7 @@ struct Type {
 	Constructor &constructor;     /* Constructeur de la classe. */
 	std::vector<Method> methods;  /* Liste de méthodes de la classe. */
     
-    Type(std::string const &identifier, std::vector<Variable> const &fields, Constructor const &constructor,
+    Type(std::string const &identifier, std::vector<Variable> const &fields, Constructor &constructor,
         std::vector<Method> const &methods);
 	virtual ~Type() = default;
 	
@@ -26,14 +26,14 @@ struct Class : Type  {
 	std::vector<Parameter> parameters; /* Liste de paramètres de la classe. */
 	std::string *superClassIdentifier; /* Identifiant de la super-classe de la classe [optionnel]. */
 
-	Class(std::string const &identifier, std::vector<Parameter> const &parameters, std::string const *superClassIdentifier,
-        std::vector<Variable> const &fields, ClassConstructor const &constructor, std::vector<Method> const &methods);
+	Class(std::string const &identifier, std::vector<Parameter> const &parameters, std::string *superClassIdentifier,
+        std::vector<Variable> const &fields, ClassConstructor &constructor, std::vector<Method> const &methods);
 		
 	bool correctDecl() const override;
 };
 
 struct Object : Type  {
-	Object(std::string const &identifier, std::vector<Variable> const &fields, Constructor const &constructor, 
+	Object(std::string const &identifier, std::vector<Variable> const &fields, Constructor &constructor, 
 	    std::vector<Method> const &methods);
 		
 	bool correctDecl() const override;

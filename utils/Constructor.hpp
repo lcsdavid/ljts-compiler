@@ -1,11 +1,10 @@
-#ifndef LJTS_COMPILER_CONSTRUCTEUR_H
-#define LJTS_COMPILER_CONSTRUCTEUR_H
+#ifndef CONSTRUCTOR_HPP
+#define CONSTRUCTOR_HPP
 
 #include <string>
-#include <type_traits>
-#include <variant>
 #include <vector>
-#include <map>
+
+#include "Parameter.hpp"
 
 struct Constructor {
 	std::string identifier;            /* Identifiant. */
@@ -13,8 +12,9 @@ struct Constructor {
     // Tree tree;
 
     Constructor(std::string const &identifier, std::vector<Parameter> const &parameters);
+	virtual ~Constructor() = default;
 	
-    virtual bool isCorrect();
+    virtual bool correctDecl() const;
 };
 
 struct ClassConstructor : Constructor {
@@ -24,7 +24,7 @@ struct ClassConstructor : Constructor {
 	ClassConstructor(std::string const &identifier, std::vector<Parameter> const &parameters,
 		std::string *superIdentifier, std::vector<std::string> *superParameters);
 		
-	bool isCorrect();
+	bool correctDecl() const override;
 };
 
 #endif
