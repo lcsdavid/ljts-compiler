@@ -1,6 +1,8 @@
 #ifndef METHOD_HPP
 #define METHOD_HPP
 
+#include "Parameter.hpp"
+
 struct Method {
 	std::string identifier;
 	std::string returnTypeIdentifier;

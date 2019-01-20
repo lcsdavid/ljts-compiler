@@ -1,11 +1,13 @@
 #ifndef COMPILER_TYPE_HPP
 #define COMPILER_TYPE_HPP
 
+#include <string>
 #include <vector>
 
 #include "Constructor.hpp"
 #include "Variable.hpp"
 #include "Method.hpp"
+#include "Parameter.hpp"
 
 struct Type {
 	std::string identifier;       /* Identifiant de la classe. */
@@ -15,7 +17,8 @@ struct Type {
     
     Type(std::string const &identifier, std::vector<Variable> const &fields, Constructor const &constructor,
         std::vector<Method> const &methods);
-		
+	virtual ~Type() = default;
+	
 	virtual bool correctDecl() const;
 };
 
@@ -30,7 +33,6 @@ struct Class : Type  {
 };
 
 struct Object : Type  {
-	
 	Object(std::string const &identifier, std::vector<Variable> const &fields, Constructor const &constructor, 
 	    std::vector<Method> const &methods);
 		

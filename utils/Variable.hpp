@@ -10,10 +10,6 @@ struct Variable {
 	Variable(std::string const &identifier, std::string const &typeIdentifier);
 };
 
-struct Parameter : Variable {
-	bool var;
-	
-	Parameter(std::string const &identifier, std::string const &typeIdentifier, bool var = false);
-};
+bool operator==(Variable const &lhs, Variable const &rhs);
 
 #endif

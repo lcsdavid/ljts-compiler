@@ -3,5 +3,6 @@
 Variable::Variable(std::string const &identifier, std::string const &typeIdentifier) : identifier(identifier),
 	typeIdentifier(typeIdentifier);
 	
-Parameter::Parameter(std::string const &identifier, std::string const &typeIdentifier, bool var = false)
-	: Variable(identifier, typeIdentifier), var(var) {}
+bool operator==(Variable const &lhs, Variable const &rhs) {
+	return lhs.identifier == rhs.identifier && lhs.typeIdentifier == rhs.typeIdentifier;
+}
