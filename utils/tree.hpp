@@ -13,7 +13,7 @@ struct Tree;
 struct Tree {
 	int ligne;
 	int operation;
-	std::vector<std::variant<Class, Object, Block, Tree>> children;
+	std::vector<std::variant<Class, Object, Block, int, std::string, Tree>> children;
 	
 	Tree(int operation); 
 };

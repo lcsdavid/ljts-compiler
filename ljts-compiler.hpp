@@ -52,7 +52,7 @@ enum yytokentype {
 enum operation : int {
 	/* DECLS */
 	class_decl, object_decl,
-	/* CLASS & OBJECT */
+	/* CLASSES & OBJECTS */
 	instanciation, cast, member_access, method_call,
 	/* ASSIGNMENT */
 	assignment,
@@ -64,7 +64,9 @@ enum operation : int {
 	less_strict, less_equal, greater_strict, greater_equal,
 	equal, not_equal,
 	/* MISCELLANEOUS */
-	if_then_else, 
+	if_then_else,
+	/* CONSTS & IDENTIFIER */
+	integer, string, identifier
 };
 
 #endif
