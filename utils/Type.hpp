@@ -18,6 +18,7 @@ struct Type {
     Type(std::string const &identifier, std::vector<Variable> const &fields, Constructor &constructor,
         std::vector<Method> const &methods);
 	Type(Type const &other) = default;
+	Type(Type &&other) = default;
 	virtual ~Type() = default;
 	
 	virtual bool correctDecl() const;
@@ -30,6 +31,7 @@ struct Class : Type  {
 	Class(std::string const &identifier, std::vector<Parameter> const &parameters, std::string *superClassIdentifier,
         std::vector<Variable> const &fields, ClassConstructor &constructor, std::vector<Method> const &methods);
 	Class(Class const &other) = default;
+	Class(Class &&other) = default;
 	
 	bool correctDecl() const override;
 };
