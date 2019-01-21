@@ -86,7 +86,7 @@ Program : LOptDecls Block { /*program = new Program($1, $2);*/ }
 ;
 
 LOptDecls : LDecls   { $$ = $1; }
- |                   { }
+ |                   { $$(); }
 ;
 
 LDecls : Decl LDecls { $$.push_back($1); $$.insert(std::end($$), std::begin($2), std::end($2); }
@@ -94,13 +94,13 @@ LDecls : Decl LDecls { $$.push_back($1); $$.insert(std::end($$), std::begin($2),
 ;
 
 Decl : ClassDecl     { $$ = $1; }
- | ObjectDecl        { $$ = $1; }
+ | ObjectDecl        { $$(); }
 ;
 
 /* Parameter declaration */
 
 LOptParamDecl : LParamDecl                 { $$ = $1; }
- |                                         { }
+ |                                         { $$(); }
 ;
 
 LParamDecl : ParamDecl ',' LParamDecl      { $$.push_back($1); $$.insert(std::end($$), std::begin($3), std::end($3); }

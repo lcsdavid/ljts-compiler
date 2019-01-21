@@ -15,31 +15,35 @@ struct Type {
 	std::vector<Variable> fields; /* Liste de champs de la classe. */
 	Constructor &constructor;     /* Constructeur de la classe. */
 	std::vector<Method> methods;  /* Liste de méthodes de la classe. */
-    bool isHeritable;
-	
-    Type(std::string const &identifier, std::vector<Variable> const &fields, Constructor &constructor,
-        std::vector<Method> const &methods, bool heritable);
+	bool isHeritable;
+
+	Type(std::string const &identifier, std::vector<Variable> const &fields, Constructor &constructor, std::vector<Method> const &methods, bool heritable);
+	Type(Type const &other) = default;
+	Type(Type &&other) = default;
 	virtual ~Type() = default;
-	
+
 	virtual bool correctDecl(std::map<std::string, Type>* environnement) const;
 };
 
-struct Class : Type  {
+struct Class : Type {
 	std::vector<Parameter> parameters; /* Liste de paramètres de la classe. */
 	std::string *superClassIdentifier; /* Identifiant de la super-classe de la classe [optionnel]. */
 
 	Class(std::string const &identifier, std::vector<Parameter> const &parameters, std::string *superClassIdentifier,
-        std::vector<Variable> const &fields, ClassConstructor &constructor, std::vector<Method> const &methods);
-		
+		std::vector<Variable> const &fields, ClassConstructor &constructor, std::vector<Method> const &methods);
+
 	bool correctDecl(std::map<std::string, Type>* environnement) const override;
-	
+	Class(Class const &other) = default;
+	Class(Class &&other) = default;
 };
 
-struct Object : Type  {
-	Object(std::string const &identifier, std::vector<Variable> const &fields, Constructor &constructor, 
-	    std::vector<Method> const &methods);
-		
+struct Object : Type {
+	Object(std::string const &identifier, std::vector<Variable> const &fields, Constructor &constructor,
+		std::vector<Method> const &methods);
+
 	bool correctDecl(std::map<std::string, Type>* environnement) const override;
+	Object(Object const &other) = default;
+
 };
 
 
