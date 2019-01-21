@@ -13,6 +13,8 @@ struct Method {
 	
 	Method(std::string const &identifier, std::string const &returnTypeIdentifier,
 		std::vector<Parameter> const &parameters);
+	Method(Method const &other) = default;
+	~Method() = default;
 	
 	Method &operator=(Method const &other);
 	

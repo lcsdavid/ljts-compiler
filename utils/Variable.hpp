@@ -8,6 +8,8 @@ struct Variable {
 	std::string typeIdentifier;
 	
 	Variable(std::string const &identifier, std::string const &typeIdentifier);
+	Variable(Variable const &other) = default;
+	~Variable() = default;
 };
 
 bool operator==(Variable const &lhs, Variable const &rhs);

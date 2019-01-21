@@ -9,6 +9,8 @@ struct Parameter {
     bool var;                   /* Est-ce que c'est un paramètre 'var'. */
 
     Parameter(std::string const &identifier, std::string const &type, bool var);
+	Parameter(Parameter const &other) = default;
+	~Parameter() = default;
 };
 
 /**

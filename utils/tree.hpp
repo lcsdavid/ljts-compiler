@@ -15,7 +15,9 @@ struct Tree {
 	int operation;
 	std::vector<std::variant<Class, Object, Block, int, std::string, Tree>> children;
 	
-	Tree(int operation); 
+	Tree(int operation);
+	Tree(Tree const &other) = default;
+	~Tree() = default;
 };
 
 /*

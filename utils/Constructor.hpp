@@ -12,6 +12,7 @@ struct Constructor {
     // Tree tree;
 
     Constructor(std::string const &identifier, std::vector<Parameter> const &parameters);
+	Constructor(Constructor const &other) = default;
 	virtual ~Constructor() = default;
 	
     virtual bool correctDecl() const;
@@ -23,7 +24,8 @@ struct ClassConstructor : Constructor {
 	
 	ClassConstructor(std::string const &identifier, std::vector<Parameter> const &parameters,
 		std::string *superIdentifier, std::vector<std::string> *superParameters);
-		
+	ClassConstructor(ClassConstructor const &other) = default;
+	
 	bool correctDecl() const override;
 };
 
