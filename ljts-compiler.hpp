@@ -49,16 +49,22 @@ enum yytokentype {
 /**
  * Enumération des différentes opérations.
  */
-enum Operation : int {
-	/* MISCELLANEOUS */
-	ternary_conditional,
+enum operation : int {
+	/* DECLS */
+	class_decl, object_decl,
+	/* CLASS & OBJECT */
+	instanciation, cast, member_access, method_call,
+	/* ASSIGNMENT */
+	assignment,
 	/* ARITHMETIC */
 	unary_plus, unary_substract,
 	multiplication, division,
 	addition, substraction,
 	/* RELATIONAL_OPERATOR */
 	less_strict, less_equal, greater_strict, greater_equal,
-	equal, not_equal
+	equal, not_equal,
+	/* MISCELLANEOUS */
+	if_then_else, 
 };
 
 #endif
