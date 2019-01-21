@@ -69,4 +69,6 @@ enum operation : int {
 	integer, string, identifier
 };
 
+#include "utils/Structures.hpp"
+
 #endif
