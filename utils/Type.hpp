@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 #include "Constructor.hpp"
 #include "Variable.hpp"
@@ -14,12 +15,13 @@ struct Type {
 	std::vector<Variable> fields; /* Liste de champs de la classe. */
 	Constructor &constructor;     /* Constructeur de la classe. */
 	std::vector<Method> methods;  /* Liste de méthodes de la classe. */
-    
+    bool isHeritable;
+	
     Type(std::string const &identifier, std::vector<Variable> const &fields, Constructor &constructor,
-        std::vector<Method> const &methods);
+        std::vector<Method> const &methods, bool heritable);
 	virtual ~Type() = default;
 	
-	virtual bool correctDecl() const;
+	virtual bool correctDecl(std::map<std::string, Type>* environnement) const;
 };
 
 struct Class : Type  {
@@ -29,14 +31,17 @@ struct Class : Type  {
 	Class(std::string const &identifier, std::vector<Parameter> const &parameters, std::string *superClassIdentifier,
         std::vector<Variable> const &fields, ClassConstructor &constructor, std::vector<Method> const &methods);
 		
-	bool correctDecl() const override;
+	bool correctDecl(std::map<std::string, Type>* environnement) const override;
+	
 };
 
 struct Object : Type  {
 	Object(std::string const &identifier, std::vector<Variable> const &fields, Constructor &constructor, 
 	    std::vector<Method> const &methods);
 		
-	bool correctDecl() const override;
+	bool correctDecl(std::map<std::string, Type>* environnement) const override;
 };
+
+
 
 #endif
