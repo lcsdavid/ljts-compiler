@@ -3,17 +3,19 @@
 
 #include <vector>
 
-#include "Parameter.hpp"
 #include "Block.hpp"
+#include "Parameter.hpp"
 
 struct Method {
 	std::string identifier;
 	std::string returnTypeIdentifier;
 	std::vector<Parameter> parameters;
-	Block corps ;
+	std::variant<Block, Tree> corps;
 	
 	Method(std::string const &identifier, std::string const &returnTypeIdentifier,
-		std::vector<Parameter> const &parameters, Block& const corps);
+		std::vector<Parameter> const &parameters, Tree const &corps);
+	Method(std::string const &identifier, std::string const &returnTypeIdentifier,
+		std::vector<Parameter> const &parameters, Block const &corps);
 	Method(Method const &other) = default;
 	~Method() = default;
 	

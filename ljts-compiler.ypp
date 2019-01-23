@@ -67,9 +67,6 @@
 void* program = nullptr;
 
 %}
-%language "c++"
-%define api.value.type variant
-
 %debug
 %error-verbose
 

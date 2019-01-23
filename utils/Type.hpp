@@ -6,9 +6,9 @@
 #include <map>
 
 #include "Constructor.hpp"
-#include "Variable.hpp"
 #include "Method.hpp"
 #include "Parameter.hpp"
+#include "Variable.hpp"
 
 struct Type {
 	std::string identifier;       /* Identifiant de la classe. */
