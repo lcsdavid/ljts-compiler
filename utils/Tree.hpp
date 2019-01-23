@@ -8,12 +8,12 @@
 #include "Parameter.hpp"
 #include "Type.hpp"
 
-typedef struct Tree Tree;
+struct Tree;
 
 struct Tree {
 	int ligne;
 	int operation;
-	//std::vector<std::variant<Class, Object, Block, int, std::string, Tree>> children;
+	//std::vector<std::variant<int, std::string, Block, Tree*>> children;
 	
 	Tree(int operation);
 	Tree(Tree const &other) = default;

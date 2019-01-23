@@ -1,19 +1,15 @@
 #include "Block.hpp"
 
-Block::Block(const std::vector <Variable> &decls, Tree &inst): decls(decls), inst(inst) {}
+#include "Type.hpp"
 
-bool Block::correctDecl(std::map <std::string, Type> *environnement) const {/* Dans le cas d'un bloc */
+Block::Block(std::vector<Variable*> const &varDecls, std::vector<Tree*> const &insts): varDecls(varDecls), insts(insts) {}
 
-    if(decls == nullptr)
+bool Block::correctDecl(std::map <std::string, Type*> *environnement) const {/* Dans le cas d'un bloc */
+    if(varDecls.empty())
         return true;
-
-    for (Variable const &decl : decls) {
-
-        if(environnement->find(decl.identifier) == environnement->end())
+    for (Variable const *varDecl : varDecls) {
+        if(environnement->find(varDecl->identifier) == environnement->end())
             return false;
-
     }
-
-    
     return true;
 }

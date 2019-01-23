@@ -5,19 +5,18 @@
 #include <vector>
 #include <map>
 
-#include "Variable.hpp"
 #include "Tree.hpp"
-
+#include "Type.hpp"
+#include "Variable.hpp"
 
 struct Block {
-	std::vector<Variable> decls;
-	Tree inst;
+	std::vector<Variable*> varDecls;
+	std::vector<Tree*> insts;
 
-	Block(std::vector<Variable> const &decls, Tree const& insts);
-	virtual ~Block() = default;
+	Block(std::vector<Variable*> const &varDecls, std::vector<Tree*> const &insts);
+	~Block() = default;
 
-	bool correctDecl(std::map<std::string, Type>* environnement) const;
-	
+	bool correctDecl(std::map<std::string, Type*>* environnement) const;
 }; 
 
 #endif
