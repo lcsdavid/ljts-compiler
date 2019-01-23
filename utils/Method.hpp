@@ -4,15 +4,16 @@
 #include <vector>
 
 #include "Parameter.hpp"
+#include "Block.hpp"
 
 struct Method {
 	std::string identifier;
 	std::string returnTypeIdentifier;
 	std::vector<Parameter> parameters;
-	// Tree instructions;
+	Block corps ;
 	
 	Method(std::string const &identifier, std::string const &returnTypeIdentifier,
-		std::vector<Parameter> const &parameters);
+		std::vector<Parameter> const &parameters, Block& const corps);
 	Method(Method const &other) = default;
 	~Method() = default;
 	

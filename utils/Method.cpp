@@ -1,8 +1,8 @@
 #include "Method.hpp"
 
 Method::Method(std::string const &identifier, std::string const &returnTypeIdentifier, 
-	std::vector<Parameter> const &parameters) : identifier(identifier), returnTypeIdentifier(returnTypeIdentifier),
-	parameters(parameters) {}
+	std::vector<Parameter> const &parameters, Block& const corps) : identifier(identifier), returnTypeIdentifier(returnTypeIdentifier),
+	parameters(parameters), corps(corps) {}
 
 Method &Method::operator=(Method const &other) {
 	identifier = other.identifier;
