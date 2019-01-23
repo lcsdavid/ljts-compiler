@@ -11,11 +11,10 @@
 
 struct Block {
 	std::vector<Variable> decls;
+	Tree inst;
 
-	Tree inst ;
-
-	Block(std::vector<Variable>& const decls, Tree& inst);
-	virtual ~Block() = default ;
+	Block(std::vector<Variable> const &decls, Tree const& insts);
+	virtual ~Block() = default;
 
 	bool correctDecl(std::map<std::string, Type>* environnement) const;
 	

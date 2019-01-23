@@ -6,17 +6,20 @@
 #include "Block.hpp"
 #include "Parameter.hpp"
 
+typedef struct Method Method;
+
 struct Method {
 	std::string identifier;
 	std::string returnTypeIdentifier;
 	std::vector<Parameter> parameters;
 	std::variant<Block, Tree> corps;
 	
+	Method() = default;
 	Method(std::string const &identifier, std::string const &returnTypeIdentifier,
 		std::vector<Parameter> const &parameters, Tree const &corps);
 	Method(std::string const &identifier, std::string const &returnTypeIdentifier,
 		std::vector<Parameter> const &parameters, Block const &corps);
-	Method(Method const &other) = default;
+	Method(Method const &other);
 	~Method() = default;
 	
 	Method &operator=(Method const &other);

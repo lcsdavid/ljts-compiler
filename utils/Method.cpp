@@ -1,6 +1,6 @@
 #include "Method.hpp"
 
-Method(std::string const &identifier, std::string const &returnTypeIdentifier,
+Method::Method(std::string const &identifier, std::string const &returnTypeIdentifier,
 	std::vector<Parameter> const &parameters, Tree const &corps) : identifier(identifier), 
 	returnTypeIdentifier(returnTypeIdentifier), parameters(parameters), corps(corps) {}
 

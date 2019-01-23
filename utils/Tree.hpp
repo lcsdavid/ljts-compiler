@@ -8,7 +8,7 @@
 #include "Parameter.hpp"
 #include "Type.hpp"
 
-struct Tree;
+typedef struct Tree Tree;
 
 struct Tree {
 	int ligne;
