@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 #include "Variable.hpp"
 #include "Tree.hpp"
@@ -13,8 +14,10 @@ struct Block {
 
 	Tree inst ;
 
-	Block()= default ;
+	Block(std::vector<Variable>& const decls, Tree& inst);
+	virtual ~Block() = default ;
 
+	bool correctDecl(std::map<std::string, Type>* environnement) const;
 	
 }; 
 
