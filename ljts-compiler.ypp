@@ -13,12 +13,12 @@
 %token VAR
 
 /* Declarations */
-%type <std::vector<Type*>> LOptDecls LDecls
+%type <std::vector<Parameter*>> LOptDecls LDecls
 %type <Type*> Decl
 
 /* Parameters */
-%type <std::vector<Parameter>> LOptParamDecl LParamDecl
-%type <Parameter> ParamDecl
+%type <std::vector<Parameter*>> LOptParamDecl LParamDecl
+%type <Parameter*> ParamDecl
 %type <bool> OptVar
 
 /* Classes */
@@ -29,13 +29,13 @@
 %type <Object*> ObjectDecl
 
 /* Fields */
-%type <std::vector<Variable>> LOptField LField
-%type <Variable> Field
+%type <std::vector<Variable*>> LOptField LField
+%type <Variable*> Field
 
 /* Constructors */
-%type <ClassConstructor> ClassConstructor
+%type <ClassConstructor*> ClassConstructor
 %type <std::tuple<std::string, std::string*>*> OptSuper
-%type <Constructor> ObjectConstructor
+%type <Constructor*> ObjectConstructor
 
 /* Methods */
 %type <std::vector<Method>> LOptMethod LMethod
@@ -44,19 +44,19 @@
 %type <std::string*> OptReturn
 
 /* Block */
-%type <std::variant<std::vector<Tree>*, std::tuple<std::vector<Tree>*, std::vector<Tree>>>> Block
+%type <Block*> Block
 
 /* Instructions */
-%type <std::vector<Tree>> LOptInst LInst
-%type <Tree> Inst
+%type <std::vector<Tree*>> LOptInst LInst
+%type <Tree*> Inst
 
 /* Declaration variable */
-%type <std::vector<Variable>> LOptVarDecl LVarDecl
-%type <Variable> VarDecl
+%type <std::vector<Variable*>> LOptVarDecl LVarDecl
+%type <Variable*> VarDecl
 
 /* Expressions */
-%type <std::vector<Tree>> LOptExpr LExpr
-%type <Tree> Expr
+%type <std::vector<Tree*>> LOptExpr LExpr
+%type <Tree*> Expr
 
 %{
 
@@ -67,6 +67,8 @@
 void* program = nullptr;
 
 %}
+%define api.value.type union
+
 %debug
 %error-verbose
 

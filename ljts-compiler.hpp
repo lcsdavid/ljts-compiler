@@ -2,12 +2,21 @@
 #define LTJS_COMPILER_HPP
 
 #include <iostream>
-
-/* YYSTYPE defintion */
 #include <string>
 #include <variant>
 
-typedef std::variant<int, std::string> YYSTYPE;
+#include "utils/Structures.hpp"
+
+/* YYSTYPE defintion */
+typedef std::variant<bool, int, std::string,
+	std::vector<Type*>, Type*,
+	std::vector<Parameter*>, Parameter*,
+	Class*, Object*,
+	std::vector<Variable*>, Variable*,
+	Constructor*,
+	std::vector<Method*>, Method*,
+	Block*,
+	std::vector<Tree*>, Tree*> YYSTYPE;
 
 #define YYSTYPE YYSTYPE
 
@@ -68,7 +77,5 @@ enum operation : int {
 	/* CONSTS & IDENTIFIER */
 	integer, string, identifier
 };
-
-#include "utils/Structures.hpp"
 
 #endif
