@@ -1,24 +1,24 @@
 #ifndef METHOD_HPP
 #define METHOD_HPP
 
+#include <string>
 #include <variant>
 #include <vector>
-#include "Parameter.hpp"
 
 struct Block;
+struct Parameter;
 struct Tree;
 
 struct Method {
 	std::string identifier;
 	std::string returnTypeIdentifier;
-	std::vector<Parameter> parameters;
+	std::vector<Parameter*> parameters;
 	std::variant<Block*, Tree*> body;
 	
-	Method() = default;
 	Method(std::string const &identifier, std::string const &returnTypeIdentifier,
-		std::vector<Parameter> const &parameters, Tree *body);
+		std::vector<Parameter*> const &parameters, Tree *body);
 	Method(std::string const &identifier, std::string const &returnTypeIdentifier,
-		std::vector<Parameter> const &parameters, Block *body);
+		std::vector<Parameter*> const &parameters, Block *body);
 	Method(Method const &other);
 	~Method() = default;
 	

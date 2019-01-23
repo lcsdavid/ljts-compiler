@@ -1,13 +1,14 @@
 #include "Method.hpp"
 
 #include "Block.hpp"
+#include "Parameter.hpp"
 
 Method::Method(std::string const &identifier, std::string const &returnTypeIdentifier,
-	std::vector<Parameter> const &parameters, Tree *body) : identifier(identifier), 
+	std::vector<Parameter*> const &parameters, Tree *body) : identifier(identifier), 
 	returnTypeIdentifier(returnTypeIdentifier), parameters(parameters), body(body) {}
 
 Method::Method(std::string const &identifier, std::string const &returnTypeIdentifier, 
-	std::vector<Parameter> const &parameters, Block *body) : identifier(identifier),
+	std::vector<Parameter*> const &parameters, Block *body) : identifier(identifier),
 	returnTypeIdentifier(returnTypeIdentifier), parameters(parameters), body(body) {}
 
 Method &Method::operator=(Method const &other) {
@@ -22,13 +23,13 @@ bool Method::correctDecl() const {
 }
 
 Method &operator+=(Method &lhs, Parameter const &rhs) {
-	lhs.parameters.push_back(rhs);
+	lhs.parameters.push_back(new Parameter(rhs));
 	return lhs;
 }
 	
 Method operator+(Method const &lhs, Parameter const &rhs) {
     Method result = lhs;
-	result.parameters.push_back(rhs);
+	result.parameters.push_back(new Parameter(rhs));
     return result;
 }
 
