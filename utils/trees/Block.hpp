@@ -18,6 +18,7 @@ struct Block {
 	~Block() = default;
 
 	bool correctDecl(std::map<std::string, Type*> &env) const;
+
 }; 
 
 #endif

@@ -34,7 +34,7 @@
 
 /* Constructors */
 %type <ClassConstructor> ClassConstructor
-%type <Constructor> ObjectConstructor
+%type <ObjectConstructor> ObjectConstructor
 
 /* Methods */
 %type <std::vector<Method>> LOptMethod LMethod
@@ -98,7 +98,7 @@ Decl : ClassDecl     { $$ = $1; }
 /* Parameter declaration */
 
 LOptParamDecl : LParamDecl                 { $$ = $1; }
- |                                         { $$ = std::vector<Parameter*>(); }
+ |                                         { $$ = std::vector<Parameter>(); }
 ;
 
 LParamDecl : ParamDecl ',' LParamDecl      { $$.push_back($1); $$.insert(std::end($$), std::begin($3), std::end($3)); }
@@ -122,8 +122,8 @@ OptExtends : EXTENDS TYPENAME                                                   
  |                                                                                                           { $$ = ""; }
 ;
 
-ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block                 { $$ = ClassConstructor($2, $4, $6, $8); }
- | DEF TYPENAME '(' LOptParamDecl ')' IS Block                                                               { $$ = ClassConstructor($2, $4, "",$7); }
+ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block                 { $$ = ClassConstructor($2, $4, $12, $7, $9); }
+ | DEF TYPENAME '(' LOptParamDecl ')' IS Block                                                               { $$ = ClassConstructor($2, $4, $7, "", std::vector<std::string>()); }
 ;
 
 /* ===== Object ===== */
@@ -131,7 +131,7 @@ ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr 
 ObjectDecl : OBJECT TYPENAME IS '{' LOptField ObjectConstructor LOptMethod '}' { $$ = new Object($2, $5, $6, $7); }
 ;
 
-ObjectConstructor : DEF TYPENAME IS Block                                      { $$ = Constructor($2, std::vector<Parameter>(), $4); }
+ObjectConstructor : DEF TYPENAME IS Block                                      { $$ = ObjectConstructor($2, $4); }
 ;
 
 /* ===== Champ ===== */
@@ -144,29 +144,29 @@ LField : Field LField                   { $$.push_back($1); $$.insert(std::end($
 | Field                                 { $$.push_back($1); }  
 ;
 
-Field : VAR IDENTIFIER ':' TYPENAME ';' { $$ = Field($2, $4); }
+Field : VAR IDENTIFIER ':' TYPENAME ';' { $$ = Variable($2, $4); }
 ;
 
 /* ===== Method ===== */
 
-LOptMethod : LMethod                                                                   { $$ = new std::vector<Method>($1); }
- |                                                                                     { $$ = nullptr; }
+LOptMethod : LMethod                                                                   { $$ = std::vector<Method>($1); }
+ |                                                                                     { $$ = std::vector<Method>(); }
 ;
 
 LMethod : Method LMethod                                                               { $$.push_back($1); $$.insert(std::end($$), std::begin($2), std::end($2)); }
  | Method                                                                              { $$.push_back($1); }
 ;
 
-Method : OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr { $$ = Method($1, $3, $5, $8, $10); } // TODO faire mieux eXPR
- | OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' OptReturn IS Block                 { $$ = Method($1, $3, $5, $7, $9); }
+Method : OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr { $$ = Method(/*$1,*/ $3, $8, $5, $10); } // TODO faire mieux eXPR
+ | OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' OptReturn IS Block                 { $$ = Method(/*$1,*/ $3, $7, $5, $9); }
 ;
 
 OptOverride : OVERRIDE                                                                 { $$ = true; }
  |                                                                                     { $$ = false; }
 ;
 
-OptReturn : ':' TYPENAME                                                               { $$ = new std::string($2); }
- |                                                                                     { $$ = nullptr; }
+OptReturn : ':' TYPENAME                                                               { $$ = std::string($2); }
+ |                                                                                     { $$ = ""; }
 ;
 
 /* ===== Instruction ===== */
@@ -181,9 +181,9 @@ LInst : Inst LInst             { $$.push_back($1); $$.insert(std::end($$), std::
 
 Inst : Expr ';'                { $$ = $1; }
  | Block                       { /* TODO BLOC */ }
- | RETURN ';'                  { $$ = Tree(/* return op code */); }
- | Expr ASSIGNMENT Expr ';'    { $$ = Tree(assignement, $1, $3); }
- | IF Expr THEN Inst ELSE Inst { $$ = Tree(if_then_else, $2, $4, $6); }
+ | RETURN ';'                  { $$ = new Tree(/* return op code */); }
+ | Expr ASSIGNMENT Expr ';'    { $$ = new Tree(ASSIGNMENT, $1, $3); }
+ | IF Expr THEN Inst ELSE Inst { $$ = new Tree(if_then_else, $2, $4, $6); }
 ;
 
 /* Block */
@@ -202,7 +202,7 @@ LVarDecl : VarDecl LVarDecl                           { $$.push_back($1); $$.ins
  | VarDecl                                            { $$.push_back($1); }
 ;
 
-VarDecl : IDENTIFIER ':' TYPENAME ASSIGNMENT Expr ';' { $$ = Variable($1, $3, $5); } 
+VarDecl : IDENTIFIER ':' TYPENAME ASSIGNMENT Expr ';' { $$ = Variable($1, $3/*, $5*/); } 
  | IDENTIFIER ':' TYPENAME ';'                        { $$ = Variable($1, $3); }
 ;
 
@@ -213,7 +213,7 @@ LOptExpr : LExpr       { $$ = $1; }
 ;
 
 LExpr : Expr ',' LExpr { $$.push_back($1); $$.insert(std::end($$), std::begin($3), std::end($3));  }
-| Expr                 { $$ = $1; }
+| Expr                 { $$.push_back($1); }
 ;
 
 Expr : Expr RELATIONAL_OPERATOR Expr        { $$ = Tree(/*yylineno,*/ $2, $1, $3); }
