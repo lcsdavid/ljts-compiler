@@ -2,6 +2,7 @@
 #define COMPILER_CLASS_HPP
 
 #include "../Type.hpp"
+#include "ClassConstructor.hpp"
 
 struct Class : Type {
 	std::vector<Parameter> parameters;	/* Liste de paramètres de la classe. */

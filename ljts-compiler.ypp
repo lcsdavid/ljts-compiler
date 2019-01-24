@@ -17,8 +17,8 @@
 %type <Type*> Decl
 
 /* Parameters */
-%type <std::vector<Parameter*>> LOptParamDecl LParamDecl
-%type <Parameter*> ParamDecl
+%type <std::vector<Parameter>> LOptParamDecl LParamDecl
+%type <Parameter> ParamDecl
 %type <bool> OptVar
 
 /* Classes */
@@ -29,19 +29,18 @@
 %type <Object*> ObjectDecl
 
 /* Fields */
-%type <std::vector<Variable*>> LOptField LField
-%type <Variable*> Field
+%type <std::vector<Variable>> LOptField LField
+%type <Variable> Field
 
 /* Constructors */
-%type <ClassConstructor&> ClassConstructor
-%type <std::tuple<std::string, std::string*>*> OptSuper
-%type <Constructor&> ObjectConstructor
+%type <ClassConstructor> ClassConstructor
+%type <Constructor> ObjectConstructor
 
 /* Methods */
 %type <std::vector<Method>> LOptMethod LMethod
 %type <Method> Method
 %type <bool> OptOverride
-%type <std::string*> OptReturn
+%type <std::string> OptReturn
 
 /* Block */
 %type <Block*> Block
@@ -51,8 +50,8 @@
 %type <Tree*> Inst
 
 /* Declaration variable */
-%type <std::vector<Variable*>> LOptVarDecl LVarDecl
-%type <Variable*> VarDecl
+%type <std::vector<Variable>> LOptVarDecl LVarDecl
+%type <Variable> VarDecl
 
 /* Expressions */
 %type <std::vector<Tree*>> LOptExpr LExpr
@@ -123,8 +122,8 @@ OptExtends : EXTENDS TYPENAME                                                   
  |                                                                                                           { $$ = ""; }
 ;
 
-ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block                 { $$ = *new ClassConstructor($2, $4, $6, $8); }
- | DEF TYPENAME '(' LOptParamDecl ')' IS Block                                                               { $$ = Constructor($2, $4, $6, $8); }
+ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block                 { $$ = ClassConstructor($2, $4, $6, $8); }
+ | DEF TYPENAME '(' LOptParamDecl ')' IS Block                                                               { $$ = ClassConstructor($2, $4, "",$8); }
 ;
 
 /* ===== Object ===== */
@@ -132,7 +131,7 @@ ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr 
 ObjectDecl : OBJECT TYPENAME IS '{' LOptField ObjectConstructor LOptMethod '}' { $$ = new Object($2, $5, $6, $7); }
 ;
 
-ObjectConstructor : DEF TYPENAME IS Block                                      { $$ = Constructor($2, std::vector<Parameter>(), nullptr, $4); }
+ObjectConstructor : DEF TYPENAME IS Block                                      { $$ = Constructor($2, std::vector<Parameter>(), $4); }
 ;
 
 /* ===== Champ ===== */

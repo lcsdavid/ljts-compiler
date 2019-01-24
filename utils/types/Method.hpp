@@ -11,8 +11,8 @@ struct Block;
 struct Tree;
 
 struct Method {
-	std::string identifier;
-	std::string returnTypeIdentifier;
+	std::string identifier;				/* Identifiant. */
+	std::string returnTypeIdentifier;	/* Type de retour. */
 	std::vector<Parameter> parameters;
 	std::variant<Block*, Tree*> body;
 	
@@ -22,11 +22,11 @@ struct Method {
 		std::vector<Parameter> const &parameters, Block *body);
 	Method(Method const &other);
 	Method(Method &&other);
-	~Method();
+	virtual ~Method();
 	
 	Method &operator=(Method const &other);
 	
-	bool correctDecl() const;
+	virtual bool correctDecl() const;
 };
 
 Method &operator+=(Method &lhs, Parameter const &rhs);
