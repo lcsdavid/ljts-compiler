@@ -180,7 +180,7 @@ LInst : Inst LInst             { $$.push_back($1); $$.insert(std::end($$), std::
 ;
 
 Inst : Expr ';'                { $$ = $1; }
- | Block                       { /* TODO BLOC */ }
+ | Block                       { $$ = new Tree($1);}
  | RETURN ';'                  { $$ = new Tree(/* return op code */); }
  | Expr ASSIGNMENT Expr ';'    { $$ = new Tree(ASSIGNMENT, $1, $3); }
  | IF Expr THEN Inst ELSE Inst { $$ = new Tree(if_then_else, $2, $4, $6); }
@@ -188,8 +188,8 @@ Inst : Expr ';'                { $$ = $1; }
 
 /* Block */
 
-Block : '{' LOptInst '}'        { /* BLOC ? */ }
- | '{' LOptVarDecl IS LInst '}' { /* BLOC ? */ }
+Block : '{' LOptInst '}'        { $$ = new Block(vector<Variable>(),$2);}
+ | '{' LOptVarDecl IS LInst '}' { $$ = new Block($1, $2); }
 ;
 
 /* Declaration variable */
