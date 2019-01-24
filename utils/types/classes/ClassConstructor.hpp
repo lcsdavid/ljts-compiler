@@ -5,10 +5,10 @@
 
 struct ClassConstructor : Constructor {
 	std::string *superIdentifier;				/* Identifiant du super constructeur appelé [optionnel]. */
-	std::vector<std::string> *superParameters;	/* Paramètres du super constructeur appelé [optionnel]. */
+	std::vector<Tree*> *superParameters;	/* Paramètres du super constructeur appelé [optionnel]. */
 	
 	ClassConstructor(std::string const &identifier, std::vector<Parameter> const &parameters, Block *body,
-		std::string *superIdentifier, std::vector<std::string> *superParameters);
+		std::string *superIdentifier, std::vector<Tree*> *superParameters);
 	ClassConstructor(ClassConstructor const &other);
 	ClassConstructor(ClassConstructor &&other);
 	~ClassConstructor() override;

@@ -105,7 +105,7 @@ LParamDecl : ParamDecl ',' LParamDecl      { $$.push_back($1); $$.insert(std::en
  | ParamDecl                               { $$.push_back($1); }	
 ;
 
-ParamDecl : OptVar IDENTIFIER ':' TYPENAME { $$ = new Parameter($2, $4, $1); }
+ParamDecl : OptVar IDENTIFIER ':' TYPENAME { $$ = Parameter($2, $4, $1); }
 ;
 
 OptVar : VAR                               { $$ = true; }
@@ -123,7 +123,7 @@ OptExtends : EXTENDS TYPENAME                                                   
 ;
 
 ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block                 { $$ = ClassConstructor($2, $4, $12, $7, $9); }
- | DEF TYPENAME '(' LOptParamDecl ')' IS Block                                                               { $$ = ClassConstructor($2, $4, $7, "", std::vector<std::string>()); }
+ | DEF TYPENAME '(' LOptParamDecl ')' IS Block                                                               { $$ = ClassConstructor($2, $4, $7, new std::string(), new std::vector<Tree*>()); }
 ;
 
 /* ===== Object ===== */
