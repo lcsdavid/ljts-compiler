@@ -42,12 +42,12 @@ var           return VAR;
 return        return RETURN;
 then          return THEN;
 :=            return ASSIGNMENT;
-(<)           { yylval = Operation::less_strict; return RELATIONAL_OPERATOR; }
-=<|<=         { yylval = Operation::less_equal; return RELATIONAL_OPERATOR; }
->             { yylval = Operation::greater_strict; return RELATIONAL_OPERATOR; }
-=>|>=         { yylval = Operation::greater_equal; return RELATIONAL_OPERATOR; }
-=             { yylval = Operation::equal; return RELATIONAL_OPERATOR; }
-(<>)          { yylval = Operation::not_equal; return RELATIONAL_OPERATOR; }
+(<)           { yylval = less_strict; return RELATIONAL_OPERATOR; }
+=<|<=         { yylval = less_equal; return RELATIONAL_OPERATOR; }
+>             { yylval = greater_strict; return RELATIONAL_OPERATOR; }
+=>|>=         { yylval = greater_equal; return RELATIONAL_OPERATOR; }
+=             { yylval = equal; return RELATIONAL_OPERATOR; }
+(<>)          { yylval = not_equal; return RELATIONAL_OPERATOR; }
 {integer}     { yylval = std::atoi(yytext); return INTEGER; }
 {string}      { yylval = std::string(yytext); return STRING; }
 {identifier}  { yylval = std::string(yytext); return IDENTIFIER; }

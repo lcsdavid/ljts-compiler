@@ -1,35 +1,43 @@
 #include "Method.hpp"
 
-#include "Block.hpp"
-#include "Parameter.hpp"
+#include "../trees/Block.hpp"
+#include "../trees/Tree.hpp"
 
 Method::Method(std::string const &identifier, std::string const &returnTypeIdentifier,
-	std::vector<Parameter*> const &parameters, Tree *body) : identifier(identifier), 
+	std::vector<Parameter> const &parameters, Tree *body) : identifier(identifier), 
 	returnTypeIdentifier(returnTypeIdentifier), parameters(parameters), body(body) {}
 
 Method::Method(std::string const &identifier, std::string const &returnTypeIdentifier, 
-	std::vector<Parameter*> const &parameters, Block *body) : identifier(identifier),
+	std::vector<Parameter> const &parameters, Block *body) : identifier(identifier),
 	returnTypeIdentifier(returnTypeIdentifier), parameters(parameters), body(body) {}
 
+Method::Method(Method const &other) : identifier(other.identifier), returnTypeIdentifier(other.returnTypeIdentifier),
+	parameters(other.parameters), body(other.body) {}
+	
+Method::Method(Method &&other) : identifier(other.identifier), returnTypeIdentifier(other.returnTypeIdentifier),
+	parameters(other.parameters), body(other.body) {}
+
+Method::~Method() {}
+	
 Method &Method::operator=(Method const &other) {
 	identifier = other.identifier;
 	returnTypeIdentifier = other.returnTypeIdentifier;
 	parameters = other.parameters;
 	return *this;
 }
-	
+
 bool Method::correctDecl() const {
 	return true;
 }
 
 Method &operator+=(Method &lhs, Parameter const &rhs) {
-	lhs.parameters.push_back(new Parameter(rhs));
+	lhs.parameters.push_back(rhs);
 	return lhs;
 }
 	
 Method operator+(Method const &lhs, Parameter const &rhs) {
     Method result = lhs;
-	result.parameters.push_back(new Parameter(rhs));
+	result.parameters.push_back(rhs);
     return result;
 }
 

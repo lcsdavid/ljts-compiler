@@ -5,6 +5,8 @@
 Constructor::Constructor(std::string const &identifier, std::vector<Parameter> const &parameters) 
 	: identifier(identifier), parameters(parameters) {}
 
+Constructor::Constructor(Constructor const &other) : identifier(other.identifier), parameters(other.parameters) {}
+	
 bool Constructor::correctDecl() const { /* Dans le cas d'un objet classique. */
 	return true;
 }

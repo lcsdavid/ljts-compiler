@@ -1,15 +1,18 @@
 #ifndef STRUCTURES_HPP
 #define STRUCTURES_HPP
 
-#include "Block.hpp"
-#include "Constructor.hpp"
-#include "Method.hpp"
-#include "Parameter.hpp"
-#include "Type.hpp"
-#include "Variable.hpp"
-#include "Tree.hpp"
+#include "trees/Block.hpp"
+#include "trees/Tree.hpp"
 
+#include "variables/Variable.hpp"
+	#include "variables/Parameter.hpp"
+	
+#include "types/Type.hpp"
+	#include "types/classes/Class.hpp"
+	#include "types/objects/Object.hpp"
 
+#include "types/Method.hpp"
+#include "types/Constructor.hpp"
 
 /*
 struct Programme {

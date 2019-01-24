@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "Parameter.hpp"
+#include "../variables/Parameter.hpp"
 
 struct Constructor {
 	std::string identifier;            /* Identifiant. */
@@ -12,7 +12,7 @@ struct Constructor {
     // Tree tree;
 
     Constructor(std::string const &identifier, std::vector<Parameter> const &parameters);
-	Constructor(Constructor const &other) = default;
+	Constructor(Constructor const &other);
 	virtual ~Constructor() = default;
 	
     virtual bool correctDecl() const;
