@@ -25,6 +25,7 @@ struct Method {
 	virtual ~Method();
 	
 	Method &operator=(Method const &other);
+	Method &operator=(Method &&other);
 	
 	virtual bool correctDecl() const;
 };

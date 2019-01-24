@@ -16,7 +16,21 @@ ClassConstructor::~ClassConstructor() {
 	delete superIdentifier;
 	delete superParameters;
 }
-	
+
+ClassConstructor &ClassConstructor::operator=(ClassConstructor const &other) {
+	Constructor::operator=(other);
+	superIdentifier = other.superIdentifier;
+	superParameters = other.superParameters;
+	return *this;
+}
+
+ClassConstructor &ClassConstructor::operator=(ClassConstructor &&other) {
+	Constructor::operator=(other);
+	superIdentifier = std::move(other.superIdentifier);
+	superParameters = std::move(other.superParameters);
+	return *this;
+}
+
 bool ClassConstructor::correctDecl() const {
     if (superIdentifier == nullptr)
 		return Constructor::correctDecl();

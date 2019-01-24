@@ -8,3 +8,11 @@ ObjectConstructor::ObjectConstructor(ObjectConstructor const &other) : Construct
 ObjectConstructor::ObjectConstructor(ObjectConstructor &&other) : Constructor(other) {}
 
 ObjectConstructor::~ObjectConstructor() {}
+
+ObjectConstructor &ObjectConstructor::operator=(ObjectConstructor const &other) {
+	return *this = Constructor::operator=(other);
+}
+
+ObjectConstructor &ObjectConstructor::operator=(ObjectConstructor &&other) {
+	return *this = Constructor::operator=(other);
+}

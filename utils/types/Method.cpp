@@ -14,8 +14,9 @@ Method::Method(std::string const &identifier, std::string const &returnTypeIdent
 Method::Method(Method const &other) : identifier(other.identifier), returnTypeIdentifier(other.returnTypeIdentifier),
 	parameters(other.parameters), body(other.body) {}
 	
-Method::Method(Method &&other) : identifier(other.identifier), returnTypeIdentifier(other.returnTypeIdentifier),
-	parameters(other.parameters), body(other.body) {}
+Method::Method(Method &&other) : identifier(std::move(other.identifier)), 
+	returnTypeIdentifier(std::move(other.returnTypeIdentifier)), parameters(std::move(other.parameters)), 
+	body(std::move(other.body)) {}
 
 Method::~Method() {}
 	
@@ -23,6 +24,15 @@ Method &Method::operator=(Method const &other) {
 	identifier = other.identifier;
 	returnTypeIdentifier = other.returnTypeIdentifier;
 	parameters = other.parameters;
+	body = other.body;
+	return *this;
+}
+
+Method &Method::operator=(Method &&other) {
+	identifier = std::move(other.identifier);
+	returnTypeIdentifier = std::move(other.returnTypeIdentifier);
+	parameters = std::move(other.parameters);
+	body = std::move(other.body);
 	return *this;
 }
 

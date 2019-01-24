@@ -13,6 +13,9 @@ struct ClassConstructor : Constructor {
 	ClassConstructor(ClassConstructor &&other);
 	~ClassConstructor() override;
 	
+	ClassConstructor &operator=(ClassConstructor const &other);
+	ClassConstructor &operator=(ClassConstructor &&other);
+	
 	bool correctDecl() const override;
 };
 

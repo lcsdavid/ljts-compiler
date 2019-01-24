@@ -9,6 +9,9 @@ struct ObjectConstructor : Constructor {
 	ObjectConstructor(ObjectConstructor &&other);
 	~ObjectConstructor() override;
 	
+	ObjectConstructor &operator=(ObjectConstructor const &other);
+	ObjectConstructor &operator=(ObjectConstructor &&other):
+	
 	bool correctDecl() const override {
 		return true;
 	}
