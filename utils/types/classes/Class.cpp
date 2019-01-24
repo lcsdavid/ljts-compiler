@@ -23,6 +23,6 @@ bool Class::correctDecl(std::map<std::string, Type*> &env) const {
 		if (!(*super).second->isInheritable())
 			return false;
 	}
-	return false;
+	return true;
 }
 	

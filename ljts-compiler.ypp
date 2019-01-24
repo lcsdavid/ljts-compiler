@@ -123,7 +123,7 @@ OptExtends : EXTENDS TYPENAME                                                   
 ;
 
 ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block                 { $$ = ClassConstructor($2, $4, $6, $8); }
- | DEF TYPENAME '(' LOptParamDecl ')' IS Block                                                               { $$ = ClassConstructor($2, $4, "",$8); }
+ | DEF TYPENAME '(' LOptParamDecl ')' IS Block                                                               { $$ = ClassConstructor($2, $4, "",$7); }
 ;
 
 /* ===== Object ===== */
