@@ -10,9 +10,11 @@ Constructor::Constructor(Constructor &&other) : Method(other) {}
 Constructor::~Constructor() {}
 
 Constructor &Constructor::operator=(Constructor const &other) {
-	return *this = Method::operator=(other);
+	Method::operator=(other);
+	return *this;
 }
 
 Constructor &Constructor::operator=(Constructor &&other) {
-	return *this = Method::operator=(other);
+	Method::operator=(other);
+	return *this;
 }

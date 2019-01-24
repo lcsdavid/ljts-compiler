@@ -9,6 +9,9 @@ struct Constructor : Method {
 	Constructor(Constructor &&other);
 	~Constructor() override;
 	
+	Constructor &operator=(Constructor const &other);
+	Constructor &operator=(Constructor &&other);
+	
     virtual bool correctDecl() const = 0;
 };
 

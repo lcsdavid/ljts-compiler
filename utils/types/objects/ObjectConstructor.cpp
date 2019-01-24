@@ -10,9 +10,11 @@ ObjectConstructor::ObjectConstructor(ObjectConstructor &&other) : Constructor(ot
 ObjectConstructor::~ObjectConstructor() {}
 
 ObjectConstructor &ObjectConstructor::operator=(ObjectConstructor const &other) {
-	return *this = Constructor::operator=(other);
+	Constructor::operator=(other);
+	return *this;
 }
 
 ObjectConstructor &ObjectConstructor::operator=(ObjectConstructor &&other) {
-	return *this = Constructor::operator=(other);
+	Constructor::operator=(other);
+	return *this; 
 }

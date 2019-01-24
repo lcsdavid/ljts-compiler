@@ -10,7 +10,7 @@ struct ObjectConstructor : Constructor {
 	~ObjectConstructor() override;
 	
 	ObjectConstructor &operator=(ObjectConstructor const &other);
-	ObjectConstructor &operator=(ObjectConstructor &&other):
+	ObjectConstructor &operator=(ObjectConstructor &&other);
 	
 	bool correctDecl() const override {
 		return true;
