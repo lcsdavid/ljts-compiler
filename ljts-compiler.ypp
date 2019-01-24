@@ -122,7 +122,7 @@ OptExtends : EXTENDS TYPENAME                                                   
  |                                                                                                           { $$ = ""; }
 ;
 
-ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block                 { $$ = ClassConstructor($2, $4, $12, $7, $9); }
+ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block                 { $$ = ClassConstructor($2, $4, $12, &$7, &$9); }
  | DEF TYPENAME '(' LOptParamDecl ')' IS Block                                                               { $$ = ClassConstructor($2, $4, $7, new std::string(), new std::vector<Tree*>()); }
 ;
 
