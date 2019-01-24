@@ -195,7 +195,7 @@ Block : '{' LOptInst '}'        { $$ = new Block(vector<Variable>(),$2);}
 /* Declaration variable */
 
 LOptVarDecl : LVarDecl                                { $$ = $1; }
- |                                                    { }
+ |                                                    { $$ = std::vector<Variable>()}
 ;
 
 LVarDecl : VarDecl LVarDecl                           { $$.push_back($1); $$.insert(std::end($$), std::begin($2), std::end($2)); } 
