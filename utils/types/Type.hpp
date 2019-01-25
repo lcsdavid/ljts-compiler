@@ -23,6 +23,8 @@ struct Type {
 
 	virtual bool isInheritable() const = 0;
 	
+	virtual bool isDuplicable() const = 0;
+	
 	virtual bool correctDecl(std::map<std::string, Type*> &env) const;
 };
 

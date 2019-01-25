@@ -18,6 +18,10 @@ struct Class : Type {
 		return true;
 	}
 	
+	bool isDuplicable() const override{
+		return true;
+	}
+	
 	bool correctDecl(std::map<std::string, Type*> &env) const override;
 };
 

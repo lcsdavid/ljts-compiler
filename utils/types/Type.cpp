@@ -19,6 +19,8 @@ bool Type::correctDecl(std::map<std::string, Type*> &env) const {
 	if (env.find(identifier) != env.end())
         return false;
 	/* Vérifie la validité du constructeur. */
+	/*if(this->fields != constructor.parameters)//si les paramètres de la classe et du constructeur ne sont pas les mêmes
+		return false;*/
 	if (!constructor.correctDecl())
 		return false;
 	/* Vérifie la validité des méthodes. */

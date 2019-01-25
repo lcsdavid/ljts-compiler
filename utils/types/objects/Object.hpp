@@ -14,6 +14,10 @@ struct Object : Type {
 	bool isInheritable() const override {
 		return false;
 	}
+	
+	bool isDuplicable() const override{
+		return false;
+	}
 		
 	bool correctDecl(std::map<std::string, Type*> &env) const override;
 };
