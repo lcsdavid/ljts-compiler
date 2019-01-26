@@ -1,7 +1,6 @@
 #include "Method.hpp"
 
-#include "../trees/Block.hpp"
-#include "../trees/Tree.hpp"
+
 
 Method::Method(std::string const &identifier, std::string const &returnTypeIdentifier,
 	std::vector<Parameter> const &parameters, Tree *body) : identifier(identifier), 
@@ -36,7 +35,7 @@ Method &Method::operator=(Method &&other) {
 	return *this;
 }
 
-bool Method::correctDecl() const {
+bool Method::correctDecl(std::map<std::string, Type*> &env, std::vector<Variable> envVar) const {
 	return true;
 }
 

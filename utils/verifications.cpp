@@ -10,10 +10,10 @@ bool verifications(Programme programme){
     //map des declarations connues
     //si la string est le nom d'une variable alors Type est son Type
     //si la string désigne le nom de la classe alors Type est la déclaration de cette classe
-    std::map<std::string, Type> *environnementType;
+    std::map<std::string, Type*> &envType;
 	
 	//le vecteur qui contient toutes les variables connues à cet endroit du programme
-	std::vector<Variables> envVar;
+	std::vector<Variable> envVar;
 
     for(int i = 0; i<programme.decls.size(); i++){
         if(!programme.decls.at(i)->typeCorrect(environnementType))

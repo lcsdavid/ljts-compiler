@@ -4,11 +4,18 @@
 #include <string>
 #include <variant>
 #include <vector>
+#include <map>
 
 #include "../variables/Parameter.hpp"
+#include "Type.hpp"
+#include "../variables/Variable.hpp"
+#include "../trees/Block.hpp"
+#include "../trees/Tree.hpp"
 
 struct Block;
 struct Tree;
+struct Type;
+struct Variable;
 
 struct Method {
 	std::string identifier;				/* Identifiant. */
@@ -27,7 +34,7 @@ struct Method {
 	Method &operator=(Method const &other);
 	Method &operator=(Method &&other);
 	
-	virtual bool correctDecl() const;
+	virtual bool correctDecl(std::map<std::string, Type*> &env, std::vector<Variable> envVar) const;
 };
 
 Method &operator+=(Method &lhs, Parameter const &rhs);

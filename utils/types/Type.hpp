@@ -9,6 +9,8 @@
 #include "Constructor.hpp"
 #include "Method.hpp"
 
+struct Method;
+
 struct Type {
 	std::string identifier;       /* Identifiant de la classe. */
 	std::vector<Variable> fields; /* Liste de champs de la classe. */

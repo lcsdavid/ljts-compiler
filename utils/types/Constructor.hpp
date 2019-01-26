@@ -12,7 +12,7 @@ struct Constructor : Method {
 	Constructor &operator=(Constructor const &other);
 	Constructor &operator=(Constructor &&other);
 	
-    virtual bool correctDecl() const = 0;
+    //virtual bool correctDecl() const = 0;
 };
 
 #endif

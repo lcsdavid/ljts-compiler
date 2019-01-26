@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Block.hpp"
+#include "../types/Type.hpp"
 
 struct Tree;
 
@@ -25,7 +26,11 @@ struct Tree {
 	Tree(std::string const& typeIdentifier);
 	//Tree(MethodCall const &methodCall);				/* Appel d'une méthode. */
 	
+	//renvoie une string correspondant au type de l'arbre si ça a un sens(exemple: 2+2) "" sinon.
+	std::string getType(std::map<std::string, Type*> &env, std::vector<Variable> envVar);
 	
+	//renvoie vrai si l'arbre est correct, false sinon
+	bool isCorrect(std::map<std::string, Type*> &env, std::vector<Variable> envVar);
 	
 	Tree(Tree const &other) = default;
 	~Tree() = default;
@@ -33,3 +38,17 @@ struct Tree {
 
 
 #endif
+
+/*
+std::string Type::getType(std::map<std::string, Type*> &env, std::vector<Variable> envVar){
+	std::string res = "";
+	
+	return res;	
+}
+	
+//renvoie vrai si l'arbre est correct, false sinon
+bool Type::isCorrect(std::map<std::string, Type*> &env, std::vector<Variable> envVarr){
+	
+	
+	return false;
+}*/
