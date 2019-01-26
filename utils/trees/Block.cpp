@@ -4,7 +4,7 @@
 
 Block::Block(std::vector<Variable> const &varDecls, std::vector<Tree*> const &insts): varDecls(varDecls), insts(insts) {}
 
-bool Block::correctDecl(std::map <std::string, Type*> &env) const {/* Dans le cas d'un bloc */
+bool Block::correctDecl(std::map <std::string, Type*> &env, std::vector<Variable> envVar) const {/* Dans le cas d'un bloc */
     if(varDecls.empty())
         return true;
     for (Variable const &varDecl : varDecls) {

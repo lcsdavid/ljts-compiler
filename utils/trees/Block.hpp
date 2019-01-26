@@ -17,7 +17,7 @@ struct Block {
 	Block(std::vector<Variable> const &varDecls, std::vector<Tree*> const &insts);
 	~Block() = default;
 
-	bool correctDecl(std::map<std::string, Type*> &env) const;
+	bool correctDecl(std::map<std::string, Type*> &env, std::vector<Variable> envVar) const;
 
 }; 
 
