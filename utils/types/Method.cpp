@@ -1,10 +1,10 @@
 #include "Method.hpp"
 
 
-
+/*
 Method::Method(std::string const &identifier, std::string const &returnTypeIdentifier,
 	std::vector<Parameter> const &parameters, Tree *body) : identifier(identifier), 
-	returnTypeIdentifier(returnTypeIdentifier), parameters(parameters), body(body) {}
+	returnTypeIdentifier(returnTypeIdentifier), parameters(parameters), body->insts(body) {}*/
 
 Method::Method(std::string const &identifier, std::string const &returnTypeIdentifier, 
 	std::vector<Parameter> const &parameters, Block *body) : identifier(identifier),

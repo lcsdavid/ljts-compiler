@@ -21,10 +21,10 @@ struct Method {
 	std::string identifier;				/* Identifiant. */
 	std::string returnTypeIdentifier;	/* Type de retour. */
 	std::vector<Parameter> parameters;
-	std::variant<Block*, Tree*> body;
+	Block* body;
 	
-	Method(std::string const &identifier, std::string const &returnTypeIdentifier,
-		std::vector<Parameter> const &parameters, Tree *body);
+	/*Method(std::string const &identifier, std::string const &returnTypeIdentifier,
+		std::vector<Parameter> const &parameters, Tree *body);*/
 	Method(std::string const &identifier, std::string const &returnTypeIdentifier,
 		std::vector<Parameter> const &parameters, Block *body);
 	Method(Method const &other);
