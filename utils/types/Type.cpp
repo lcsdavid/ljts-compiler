@@ -1,6 +1,6 @@
 #include "Type.hpp"
 
-Type::Type(std::string const &identifier, std::vector<Parameter> const &fields, Constructor &constructor,
+Type::Type(std::string const &identifier, std::vector<Variable> const &fields, Constructor &constructor,
 	std::vector<Method> const &methods) : identifier(identifier), fields(fields), constructor(constructor),
 	methods(methods) {}
 
@@ -16,7 +16,7 @@ Type::~Type() {
 	
 bool Type::correctDecl(std::map<std::string, Type*> &env) const {
 	//le vecteur qui contient toutes les variables connues dans ce type
-	std::vector<Parameter> envVar;
+	std::vector<Variable> envVar;
 	
     /* Cas où le nom de la classe est déjà pris. */
 	if (env.find(identifier) != env.end())
