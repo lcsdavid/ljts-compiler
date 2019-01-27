@@ -27,10 +27,10 @@ struct Tree {
 	//Tree(MethodCall const &methodCall);				/* Appel d'une méthode. */
 	
 	//renvoie une string correspondant au type de l'arbre si ça a un sens(exemple: 2+2) "" sinon.
-	std::string getType(std::map<std::string, Type*> &env, std::vector<Parameter> envVar);
+	std::string getType(std::map<std::string, Type*> &env, std::vector<Variable> envVar);
 	
 	//renvoie vrai si l'arbre est correct, false sinon
-	bool isCorrect(std::map<std::string, Type*> &env, std::vector<Parameter> envVar);
+	bool isCorrect(std::map<std::string, Type*> &env, std::vector<Variable> envVar);
 	
 	Tree(Tree const &other) = default;
 	~Tree() = default;
