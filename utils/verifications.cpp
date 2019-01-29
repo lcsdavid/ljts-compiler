@@ -13,7 +13,7 @@ bool verifications(Programme programme){
     std::map<std::string, Type> *environnementType;
 	
 	//le vecteur qui contient toutes les variables connues à cet endroit du programme
-	std::vector<Parameter> envVar;
+	std::vector<Variables> envVar;
 
     for(int i = 0; i<programme.decls.size(); i++){
         if(!programme.decls.at(i)->typeCorrect(environnementType))
