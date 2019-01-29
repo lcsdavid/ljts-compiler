@@ -5,7 +5,7 @@
 #include "ObjectConstructor.hpp"
 
 struct Object : Type {
-	Object(std::string const &identifier, std::vector<Variable> const &fields, ObjectConstructor &constructor,
+	Object(std::string const &identifier, std::vector<Parameter> const &fields, ObjectConstructor &constructor,
 		std::vector<Method> const &methods);
 	Object(Object const &other);
 	Object(Object &&other);

@@ -1,6 +1,6 @@
 #include "Type.hpp"
 
-Type::Type(std::string const &identifier, std::vector<Variable> const &fields, Constructor &constructor,
+Type::Type(std::string const &identifier, std::vector<Parameter> const &fields, Constructor &constructor,
 	std::vector<Method> const &methods) : identifier(identifier), fields(fields), constructor(constructor),
 	methods(methods) {}
 

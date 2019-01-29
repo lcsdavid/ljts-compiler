@@ -3,9 +3,8 @@
 
 #include <string>
 
-#include "Variable.hpp"
 
-struct Parameter : Variable {
+struct Parameter{
     std::string identifier;     /* Identifiant du paramètre. */
     std::string typeIdentifier; /* Identifiant du type du paramètre. */
     bool var;                   /* Est-ce que c'est un paramètre 'var'. */

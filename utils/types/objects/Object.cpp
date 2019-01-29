@@ -1,6 +1,6 @@
 #include "Object.hpp"
 
-Object::Object(std::string const &identifier, std::vector<Variable> const &fields, ObjectConstructor &constructor, 
+Object::Object(std::string const &identifier, std::vector<Parameter> const &fields, ObjectConstructor &constructor, 
 	std::vector<Method> const &methods) : Type(identifier, fields, constructor, methods) {}							 
 
 Object::Object(Object const &other) : Type(other) {}	

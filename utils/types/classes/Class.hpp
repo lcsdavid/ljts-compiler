@@ -9,7 +9,7 @@ struct Class : Type {
 	std::string superIdentifier;		/* Identifiant de la super-classe de la classe [optionnel]. */
 
 	Class(std::string const &identifier, std::vector<Parameter> const &parameters, std::string superIdentifier,
-		std::vector<Variable> const &fields, ClassConstructor &constructor, std::vector<Method> const &methods);
+		std::vector<Parameter> const &fields, ClassConstructor &constructor, std::vector<Method> const &methods);
 	Class(Class const &other);
 	Class(Class &&other);
 	~Class() override;
