@@ -3,6 +3,8 @@
 
 #include "Method.hpp"
 
+//struct Method;
+
 struct Constructor : Method {
     Constructor(std::string const &identifier, std::vector<Parameter> const &parameters, Block *body);
 	Constructor(Constructor const &other);

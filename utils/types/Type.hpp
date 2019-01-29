@@ -10,6 +10,7 @@
 #include "Method.hpp"
 
 struct Method;
+struct Constructor;
 
 struct Type {
 	std::string identifier;       /* Identifiant de la classe. */

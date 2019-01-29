@@ -37,9 +37,9 @@ Method &Method::operator=(Method &&other) {
 
 bool Method::correctDecl(std::map<std::string, Type*> &env, std::vector<Variable> envVar) const {
 	for(size_t i; i < parameters.size(); i++){
-		if(env.find(parameters(i).typeIdentifier) == env.end())
+		if(env.find(parameters.at(i).typeIdentifier) == env.end())
 			return false;
-		envVar.add(parameters(i)); // on ajoute la variable que l'on vient de déclarer à notre environnement
+		envVar.add(parameters.at(i)); // on ajoute la variable que l'on vient de déclarer à notre environnement
 	}
 	if(!(this->body->correctDecl(env, envVar)))
 		return false;
