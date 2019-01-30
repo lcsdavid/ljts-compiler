@@ -1,33 +1,28 @@
 #ifndef TREE_HPP
 #define TREE_HPP
 
+#include <string>
 #include <variant>
 #include <vector>
 
-#include "Block.hpp"
-
+struct Block;
 struct Tree;
 
 struct Tree {
-	int ligne;
+	int lineno;
 	int operation;
-	std::variant<int, std::string, Block, std::vector<Tree*>> children;
+	std::vector<std::variant<int, std::string, Block*, Tree*>> children;
 	
-	explicit Tree(int integer);			/* Constante entière. */
-	explicit Tree(std::string string);	/* Constante string. */
+	Tree(int lineno, int operation);							/* Return. */
+	Tree(int lineno, int operation, int value);					/* Constante entière. */
+	Tree(int lineno, int operation, const std::string &value);	/* Constante string. */
+	Tree(int lineno, int operation, Block *block);				/* Block. */
+	/* Constructeur subtrees. */
+	Tree(int lineno, int operation, std::initializer_list<std::variant<int, std::string, Tree*>> children);	
+
+	Tree(const Tree &other) = default;
+	Tree &operator=(const Tree &other) = default;
 	
-	Tree(int operation, Tree *rhs);				/* Opérateur unaire. */
-	Tree(int operation, Tree *lhs, Tree *rhs);	/* Opérateur binaire. */
-	
-	Tree(std::string const &lhs, Tree *rhs); /* Cast. */
-	
-	//Tree(ConstructorCall const &constructorCall);	/* Appel d'un constructeur. */
-	Tree(std::string const& typeIdentifier);
-	//Tree(MethodCall const &methodCall);				/* Appel d'une méthode. */
-	
-	
-	
-	Tree(Tree const &other) = default;
 	~Tree() = default;
 };
 

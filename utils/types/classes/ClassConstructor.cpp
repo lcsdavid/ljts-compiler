@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-ClassConstructor::ClassConstructor(bool override,const std::string &identifier, const std::vector<Parameter> &parameters,
+ClassConstructor::ClassConstructor(const std::string &identifier, const std::vector<Parameter> &parameters,
 	const std::string &superIdentifier, const std::vector<Tree*> &superParameters, Block *body) : 
 	Constructor(identifier, parameters, body), superIdentifier(superIdentifier), superParameters(superParameters) {}
 

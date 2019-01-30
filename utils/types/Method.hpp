@@ -11,15 +11,15 @@ struct Block;
 struct Tree;
 
 struct Method {
+	bool override;						/* Override? */
 	std::string identifier;				/* Identifiant. */
 	std::vector<Parameter> parameters;	/* Paramètre(s) de la Method [optionnel]. */
 	std::string returnTypeIdentifier;	/* Type de retour. */
-	std::variant<Block*, Tree*> body;
-	bool overriden;
+	std::variant<Block*, Tree*> body;	/* Corps de la Method. */
 	
-	Method(const std::string &identifier, const std::vector<Parameter> &parameters, 
+	Method(bool override, const std::string &identifier, const std::vector<Parameter> &parameters, 
 		const std::string &returnTypeIdentifier, Tree *body);
-	Method(const std::string &identifier, const std::vector<Parameter> &parameters, 
+	Method(bool override, const std::string &identifier, const std::vector<Parameter> &parameters, 
 		const std::string &returnTypeIdentifier, Block *body);
 	Method(const Method &other) = default;
 	Method(Method &&other) = default;

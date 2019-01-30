@@ -14,11 +14,10 @@ struct Block {
 	std::vector<Parameter> varDecls;
 	std::vector<Tree*> insts;
 
-	Block(std::vector<Parameter> const &varDecls, std::vector<Tree*> const &insts);
+	Block(const std::vector<Parameter> &varDecls, const std::vector<Tree*> &insts);
 	~Block() = default;
 
 	bool correctDecl(std::map<std::string, Type*> &env) const;
-
 }; 
 
 #endif

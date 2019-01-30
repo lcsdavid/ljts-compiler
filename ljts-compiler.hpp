@@ -65,7 +65,7 @@ enum operation : int {
 	less_strict, less_equal, greater_strict, greater_equal,
 	equal, not_equal,
 	/* MISCELLANEOUS */
-	if_then_else,
+	if_then_else, return_call, inst_block,
 	/* CONSTS & IDENTIFIER */
 	integer, string, identifier
 };

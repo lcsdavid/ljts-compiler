@@ -149,30 +149,30 @@ Field : VAR IDENTIFIER ':' TYPENAME ';' { $$ = Parameter($2, $4); }
 
 /* ===== Method ===== */
 
-LOptMethod : LMethod                                                                   { $$ = std::vector<Method>($1); }
- |                                                                                     { $$ = std::vector<Method>(); }
+LOptMethod : LMethod	{ $$ = std::vector<Method>($1); }
+ |						{ $$ = std::vector<Method>(); }
 ;
 
-LMethod : Method LMethod                                                               { $$.push_back($1); $$.insert(std::end($$), std::begin($2), std::end($2)); }
- | Method                                                                              { $$.push_back($1); }
+LMethod : Method LMethod	{ $$.push_back($1); $$.insert(std::end($$), std::begin($2), std::end($2)); }
+ | Method					{ $$.push_back($1); }
 ;
 
-Method : OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr { $$ = Method(/*$1,*/ $3, $8, $5, $10); } // TODO faire mieux eXPR
- | OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' OptReturn IS Block                 { $$ = Method(/*$1,*/ $3, $7, $5, $9); }
+Method : OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr { $$ = Method($1, $3, $5, $8, $10); }
+ | OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' OptReturn IS Block                 { $$ = Method($1, $3, $5, $7, $9); }
 ;
 
 OptOverride : OVERRIDE                                                                 { $$ = true; }
  |                                                                                     { $$ = false; }
 ;
 
-OptReturn : ':' TYPENAME                                                               { $$ = std::string($2); }
+OptReturn : ':' TYPENAME                                                               { $$ = $2; }
  |                                                                                     { $$ = ""; }
 ;
 
 /* ===== Instruction ===== */
 
 LOptInst : LInst               { $$ = $1; }
- |                             { }
+ |                             { $$ = std::vector<Tree*>(); }
 ;
 
 LInst : Inst LInst             { $$.push_back($1); $$.insert(std::end($$), std::begin($2), std::end($2)); }
@@ -180,10 +180,10 @@ LInst : Inst LInst             { $$.push_back($1); $$.insert(std::end($$), std::
 ;
 
 Inst : Expr ';'                { $$ = $1; }
- | Block                       { /*$$ = new Tree($1);*/}
- | RETURN ';'                  { $$ = new Tree(/* return op code */); }
- | Expr ASSIGNMENT Expr ';'    { $$ = new Tree(ASSIGNMENT, $1, $3); }
- | IF Expr THEN Inst ELSE Inst { $$ = new Tree(if_then_else, $2, $4, $6); }
+ | Block                       { $$ = new Tree(yylineno, inst_block, $1); }
+ | RETURN ';'                  { $$ = new Tree(yylineno, return_call); }
+ | Expr ASSIGNMENT Expr ';'    { $$ = new Tree(yylineno, assignment, { $1, $3 }); }
+ | IF Expr THEN Inst ELSE Inst { $$ = new Tree(yylineno, if_then_else, { $2, $4, $6 }); }
 ;
 
 /* Block */
@@ -209,30 +209,30 @@ VarDecl : IDENTIFIER ':' TYPENAME ASSIGNMENT Expr ';' { $$ = Parameter($1, $3/*,
 /* ===== Expression ===== */
 
 LOptExpr : LExpr       { $$ = $1; }
-|                      { }
+|                      { $$ = std::vector<Tree*>(); }
 ;
 
 LExpr : Expr ',' LExpr { $$.push_back($1); $$.insert(std::end($$), std::begin($3), std::end($3));  }
 | Expr                 { $$.push_back($1); }
 ;
 
-Expr : Expr RELATIONAL_OPERATOR Expr        { $$ = new Tree(/*yylineno,*/ $2, $1, $3); }
- | Expr '+' Expr                            { $$ = new Tree(/*yylineno,*/ addition, $1, $3); } 
- | Expr '-' Expr                            { $$ = new Tree(/*yylineno,*/ substraction, $1, $3); } 
- | Expr '*' Expr                            { $$ = new Tree(/*yylineno,*/ multiplication, $1, $3); }
- | Expr '/' Expr                            { $$ = new Tree(/*yylineno,*/ division, $1, $3); }
- | '+' Expr %prec unary                     { $$ = new Tree(/*yylineno,*/ unary_plus, $2); }
- | '-' Expr %prec unary                     { $$ = new Tree(/*yylineno,*/ unary_substract, $2); }
- | '(' TYPENAME Expr ')'                    { $$ = new Tree(/*yylineno,*/ cast, $2, $3); }
- | NEW TYPENAME '(' LOptExpr ')'            { $$ = new Tree(/*yylineno,*/ instanciation, $2, $4);}
- | Expr '.' IDENTIFIER                      { $$ = new Tree(/*yylineno,*/ member_access, $1, $3); }
- | TYPENAME '.' IDENTIFIER                  { $$ = new Tree(/*yylineno,*/ member_access, $1, $3); }
- | Expr '.' IDENTIFIER '(' LOptExpr ')'     { $$ = new Tree(/*yylineno,*/ method_call, $1, $3, $5); }
- | TYPENAME '.' IDENTIFIER '(' LOptExpr ')' { $$ = new Tree(/*yylineno,*/ method_call, $1, $3, $5); }
+Expr : Expr RELATIONAL_OPERATOR Expr        { $$ = new Tree(yylineno, $2, { $1, $3 }); }
+ | Expr '+' Expr                            { $$ = new Tree(yylineno, addition, { $1, $3 }); } 
+ | Expr '-' Expr                            { $$ = new Tree(yylineno, substraction, { $1, $3 }); } 
+ | Expr '*' Expr                            { $$ = new Tree(yylineno, multiplication, { $1, $3 }); }
+ | Expr '/' Expr                            { $$ = new Tree(yylineno, division, { $1, $3 }); }
+ | '+' Expr %prec unary                     { $$ = new Tree(yylineno, unary_plus, { $2 }); }
+ | '-' Expr %prec unary                     { $$ = new Tree(yylineno, unary_substract, { $2 }); }
+ | '(' TYPENAME Expr ')'                    { $$ = new Tree(yylineno, cast, { $2, $3 }); }
+ | NEW TYPENAME '(' LOptExpr ')'            { $$ = new Tree(yylineno, instanciation, { $2, $4 });}
+ | Expr '.' IDENTIFIER                      { $$ = new Tree(yylineno, member_access, { $1, $3 }); }
+ | TYPENAME '.' IDENTIFIER                  { $$ = new Tree(yylineno, member_access, { $1, $3 }); }
+ | Expr '.' IDENTIFIER '(' LOptExpr ')'     { $$ = new Tree(yylineno, method_call, { $1, $3, $5 }); }
+ | TYPENAME '.' IDENTIFIER '(' LOptExpr ')' { $$ = new Tree(yylineno, method_call, { $1, $3, $5 }); }
  | '(' Expr ')'                             { $$ = $2; }
- | INTEGER                                  { $$ = new Tree(/*yylineno,*/ integer, $1); }
- | STRING                                   { $$ = new Tree(/*yylineno,*/ string, $1); }
- | IDENTIFIER                               { $$ = new Tree(/*yylineno,*/ identifier, $1); }
+ | INTEGER                                  { $$ = new Tree(yylineno, integer, $1); }
+ | STRING                                   { $$ = new Tree(yylineno, string, $1); }
+ | IDENTIFIER                               { $$ = new Tree(yylineno, identifier, $1); }
 ;
 
 %%
