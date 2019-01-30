@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "../variables/Parameter.hpp"
+#include "../Environment.hpp"
 
 struct Block;
 struct Tree;
@@ -28,7 +29,7 @@ struct Method {
 	Method &operator=(const Method &other) = default;
 	Method &operator=(Method &&other) = default;
 	
-	virtual bool correctDecl() const;
+	virtual bool correctDecl(Environment env) const;
 };
 
 Method &operator+=(Method &lhs, Parameter const &rhs);

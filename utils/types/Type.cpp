@@ -14,7 +14,7 @@ Type::~Type() {
 	delete &constructor;
 }
 	
-bool Type::correctDecl(std::map<std::string, Type*> &env) const {
+bool Type::correctDecl(Environment env) const {
     /* Cas où le nom de la classe est déjà pris. */
 	if (env.find(identifier) != env.end())
         return false;

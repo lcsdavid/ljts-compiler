@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 
+#include "../Environment.hpp"
 #include "../variables/Parameter.hpp"
 #include "Constructor.hpp"
 #include "Method.hpp"
@@ -25,7 +26,7 @@ struct Type {
 	
 	virtual bool isDuplicable() const = 0;
 	
-	virtual bool correctDecl(std::map<std::string, Type*> &env) const;
+	virtual bool correctDecl(Environment env) const;
 	
 	virtual std::string getSuperClass();
 };

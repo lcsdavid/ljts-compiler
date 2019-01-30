@@ -11,7 +11,7 @@ Method::Method(bool override, const std::string &identifier, const std::vector<P
 	const std::string &returnTypeIdentifier, Block *body) : override(override), identifier(identifier), 
 	parameters(parameters), returnTypeIdentifier(returnTypeIdentifier), body(body) {}
 
-bool Method::correctDecl() const {
+bool Method::correctDecl(Environment env) const {
 	return true;
 }
 

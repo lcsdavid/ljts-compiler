@@ -6,6 +6,7 @@
 #include <map>
 
 #include "../variables/Parameter.hpp"
+#include "../Environment.hpp"
 
 struct Type;
 struct Tree;
@@ -17,7 +18,7 @@ struct Block {
 	Block(const std::vector<Parameter> &varDecls, const std::vector<Tree*> &insts);
 	~Block() = default;
 
-	bool correctDecl(std::map<std::string, Type*> &env) const;
+	bool correctDecl(Environment env) const;
 }; 
 
 #endif

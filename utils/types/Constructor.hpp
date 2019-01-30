@@ -2,6 +2,7 @@
 #define COMPILER_CONSTRUCTOR_HPP
 
 #include "Method.hpp"
+#include "Environment.hpp"
 
 struct Constructor : Method {
     Constructor(const std::string &identifier, const std::vector<Parameter> &parameters, Block *body);
@@ -12,7 +13,7 @@ struct Constructor : Method {
 	Constructor &operator=(Constructor const &other) = default;
 	Constructor &operator=(Constructor &&other) = default;
 	
-    virtual bool correctDecl() const = 0;
+    virtual bool correctDecl(Environment env) const = 0;
 };
 
 #endif
