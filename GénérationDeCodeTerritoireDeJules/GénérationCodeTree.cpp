@@ -1,4 +1,5 @@
 #include "../utils/trees/Tree.hpp"
+#include "../ljts-compiler.hpp"
 
 void genereCodeTree(Tree tree)
 {
