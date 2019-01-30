@@ -1,10 +1,10 @@
-#include "verifications.hpp"
+/*#include "verifications.hpp"
 
 /**
  * @return true si le programme est bon, false sinon
  * @param programme, le programme que l'on veut evaluer
 **/
-
+/*
 bool verifications(Programme programme){
 
     //map des declarations connues
@@ -23,4 +23,4 @@ bool verifications(Programme programme){
 
     return true;
 
-}
+}*/
