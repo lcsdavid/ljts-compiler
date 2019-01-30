@@ -82,7 +82,14 @@ void genereCodeTree(Tree *tree)
 
 std::string generateurLabel()
 {
-	return "Label";
+	unsigned int alea;
+	std::string res;
+	for(unsigned int i;i<10;i++)
+	{
+		alea = rand();
+		res+=(char)alea;
+	}
+	return res;
 }
 
 void fctif(Tree *tree)
