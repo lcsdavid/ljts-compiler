@@ -26,3 +26,6 @@ bool Class::correctDecl(std::map<std::string, Type*> &env) const {
 	return true;
 }
 	
+std::string Class::getSuperClass(){
+	return superIdentifier;	
+}

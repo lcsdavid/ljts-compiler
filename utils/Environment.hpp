@@ -6,6 +6,9 @@
 #include <map>
 
 #include "variables/Parameter.hpp"
+#include "types/Type.hpp"
+
+struct Type;
 
 struct Environment {
 	std::map<std::string, Type*> env;
@@ -20,7 +23,11 @@ struct Environment {
 	
 	//est-ce que la string passée en parametre correspond à un parametre connu
 	Parameter* contains(std::string param);
-
+	
+	//vérifie si le type numéro 1 est sous type du type numero 2
+	bool isSubClass(std::string type1, std::string type2);
+	
+};
 
 
 #endif //LJTS_COMPILER_VERIFICATIONS_H

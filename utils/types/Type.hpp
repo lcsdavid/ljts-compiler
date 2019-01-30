@@ -26,6 +26,8 @@ struct Type {
 	virtual bool isDuplicable() const = 0;
 	
 	virtual bool correctDecl(std::map<std::string, Type*> &env) const;
+	
+	virtual std::string getSuperClass();
 };
 
 #endif

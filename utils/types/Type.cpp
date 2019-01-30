@@ -29,3 +29,7 @@ bool Type::correctDecl(std::map<std::string, Type*> &env) const {
 			return false;
     return true;
 }
+
+std::string Type::getSuperClass(){
+	return "";
+}

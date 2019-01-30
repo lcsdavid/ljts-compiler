@@ -23,6 +23,8 @@ struct Class : Type {
 	}
 	
 	bool correctDecl(std::map<std::string, Type*> &env) const override;
+	
+	virtual std::string getSuperClass() override;
 };
 
 
