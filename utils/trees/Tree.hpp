@@ -18,7 +18,7 @@ struct Tree {
 	Tree(int lineno, int operation, const std::string &value);	/* Constante string. */
 	Tree(int lineno, int operation, Block *block);				/* Block. */
 	/* Constructeur subtrees. */
-	Tree(int lineno, int operation, std::initializer_list<std::variant<int, std::string, Tree*>> children);	
+	Tree(int lineno, int operation, std::initializer_list<std::variant<int, std::string, Block*, Tree*>> children);	
 
 	Tree(const Tree &other) = default;
 	Tree &operator=(const Tree &other) = default;

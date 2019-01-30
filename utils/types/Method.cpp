@@ -3,12 +3,12 @@
 #include "../trees/Block.hpp"
 #include "../trees/Tree.hpp"
 
-Method::Method(const std::string &identifier, const std::vector<Parameter> &parameters, 
-	const std::string &returnTypeIdentifier, Tree *body) : identifier(identifier), 
+Method::Method(bool override, const std::string &identifier, const std::vector<Parameter> &parameters, 
+	const std::string &returnTypeIdentifier, Tree *body) : override(override), identifier(identifier), 
 	 parameters(parameters), returnTypeIdentifier(returnTypeIdentifier), body(body) {}
 
-Method::Method(const std::string &identifier, const std::vector<Parameter> &parameters, 
-	const std::string &returnTypeIdentifier, Block *body) : identifier(identifier), 
+Method::Method(bool override, const std::string &identifier, const std::vector<Parameter> &parameters, 
+	const std::string &returnTypeIdentifier, Block *body) : override(override), identifier(identifier), 
 	parameters(parameters), returnTypeIdentifier(returnTypeIdentifier), body(body) {}
 
 bool Method::correctDecl() const {
