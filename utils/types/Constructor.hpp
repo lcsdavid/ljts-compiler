@@ -2,7 +2,6 @@
 #define COMPILER_CONSTRUCTOR_HPP
 
 #include "Method.hpp"
-#include "Environment.hpp"
 
 struct Constructor : Method {
     Constructor(const std::string &identifier, const std::vector<Parameter> &parameters, Block *body);
