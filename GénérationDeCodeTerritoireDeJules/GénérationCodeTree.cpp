@@ -54,7 +54,8 @@ void getVal(Tree *tree)
 {
 	for(int i=mesVar.size()-1;i>-1;i--)
 	{
-		if(mesVar[i].nom==tree->children;
+		if(mesVar[i].nom==tree->children)
+			cout << "PUSHL " << mesVar[i].valeur;
 	}
 }
 
