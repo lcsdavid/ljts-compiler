@@ -3,7 +3,6 @@
 
 #include <string>
 
-
 struct Parameter{
     std::string identifier;     /* Identifiant du paramètre. */
     std::string typeIdentifier; /* Identifiant du type du paramètre. */

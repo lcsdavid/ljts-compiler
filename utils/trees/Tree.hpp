@@ -11,7 +11,7 @@ struct Tree;
 struct Tree {
 	int ligne;
 	int operation;
-	std::variant<std::vector<int>, std::vector<std::string>, std::vector<Block>, std::vector<Tree*>> children;
+	std::variant<int, std::string, Block, std::vector<Tree*>> children;
 	
 	explicit Tree(int integer);			/* Constante entière. */
 	explicit Tree(std::string string);	/* Constante string. */
