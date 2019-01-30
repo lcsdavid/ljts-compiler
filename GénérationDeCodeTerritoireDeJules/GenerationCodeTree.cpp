@@ -1,17 +1,6 @@
-#include "../utils/trees/Tree.hpp"
-#include "../ljts-compiler.hpp"
-#include <vector>
+#include "GenerationCodeTree.hpp"
 
 using namespace std;
-
-struct Assignee
-{
-	std::string nom;
-	int valeur;
-};
-
-vector<Assignee> mesVar;
-int possp=0;
 
 void genereCodeTree(Tree *tree)
 {
@@ -65,13 +54,16 @@ void getVal(Tree *tree)
 void assignation(Tree *tree)
 {
 	Tree *id = tree->children[0];
-	if(tree->operation!=identifier)
+	if(tree->operation==identifier)
+	{
+		Assignee tempo;
+		tempo.nom = id->children;
+		tempo.valeur = possp;
+		mesVar.push_back(tempo);
+		possp++;
+	}
+	else
 		cout << "CEST LA MERDE JAI PAS PREVU CE CAS !!!" << tree->operation;
-	Assignee tempo;
-	tempo.nom = id->children;
-	tempo.valeur = possp;
-	mesVar.push_back(tempo);
-	possp++;
 }
 
 void creerVar(Tree *tree)
