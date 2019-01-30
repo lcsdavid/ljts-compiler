@@ -62,8 +62,8 @@ enum operation : int {
 	multiplication, division,
 	addition, substraction,
 	/* RELATIONAL_OPERATOR */
-	less_strict, inf_equal, greater_strict, sup_equal,
-	equalite, not_equal,
+	less_strict, less_equal, greater_strict, greater_equal,
+	equal, not_equal,
 	/* MISCELLANEOUS */
 	if_then_else, return_call, inst_block,
 	/* CONSTS & IDENTIFIER */

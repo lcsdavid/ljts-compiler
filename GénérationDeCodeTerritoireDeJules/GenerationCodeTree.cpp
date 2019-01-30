@@ -77,7 +77,9 @@ void genereCodeTree(Tree *tree) {
 			break;
 		default:
 			std::cout << "CEST LA MERDE JAI PAS PREVU CE CAS !!!" << tree->operation;
-
+			break;
+	}
+}
 std::string generateurLabel()
 {
 	unsigned int alea;
