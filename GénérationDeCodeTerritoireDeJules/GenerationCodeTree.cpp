@@ -38,7 +38,7 @@ void genereCodeTree(Tree *tree)
 		getVal(tree);
 	else if(tree->operation==if_then_else)
 		fctif(tree);
-	else if(tree->operation==equal)
+	else if(tree->operation==equalite)
 	{
 		genereCodeTree(get<Tree*>(tree->children[0]));
 		genereCodeTree(get<Tree*>(tree->children[1]));
@@ -50,7 +50,7 @@ void genereCodeTree(Tree *tree)
 		genereCodeTree(get<Tree*>(tree->children[1]));
 		cout << "INF" << endl;
 	}
-	else if(tree->operation==less_equal)
+	else if(tree->operation==inf_equal)
 	{
 		genereCodeTree(get<Tree*>(tree->children[0]));
 		genereCodeTree(get<Tree*>(tree->children[1]));
@@ -62,7 +62,7 @@ void genereCodeTree(Tree *tree)
 		genereCodeTree(get<Tree*>(tree->children[1]));
 		cout << "SUP" << endl;
 	}
-	else if(tree->operation==greater_equal)
+	else if(tree->operation==sup_equal)
 	{
 		genereCodeTree(get<Tree*>(tree->children[0]));
 		genereCodeTree(get<Tree*>(tree->children[1]));
