@@ -1,10 +1,10 @@
 #include "Class.hpp"
 
-Class::Class(std::string const &identifier, std::vector<Parameter> const &parameters, std::string superIdentifier, 
-	std::vector<Parameter> const &fields, ClassConstructor &constructor, std::vector<Method> const &methods) :
+Class::Class(const std::string &identifier, const std::vector<Parameter> &parameters, const std::string &superIdentifier, 
+	const std::vector<Parameter> &fields, ClassConstructor &constructor, const std::vector<Method> &methods) :
 	Type(identifier, fields, constructor, methods), parameters(parameters), superIdentifier(superIdentifier) {}
 	
-Class::Class(Class const &other) : Type(other), parameters(other.parameters), 
+Class::Class(const Class &other) : Type(other), parameters(other.parameters), 
 	superIdentifier(other.superIdentifier) {}
 
 Class::Class(Class &&other) : Type(other), parameters(other.parameters), 

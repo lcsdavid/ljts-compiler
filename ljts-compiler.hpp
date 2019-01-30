@@ -8,15 +8,7 @@
 #include "utils/Structures.hpp"
 
 /* YYSTYPE defintion */
-typedef std::variant<bool, int, std::string,
-	std::vector<Type*>, Type*,
-	std::vector<Parameter*>, Parameter*,
-	Class*, Object*,
-	std::vector<Variable*>, Variable*,
-	Constructor*,
-	std::vector<Method*>, Method*,
-	Block*,
-	std::vector<Tree*>, Tree*> YYSTYPE;
+typedef std::variant<bool, int, std::string> YYSTYPE;
 
 #define YYSTYPE YYSTYPE
 

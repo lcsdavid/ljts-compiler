@@ -26,6 +26,14 @@ bison_only: $(EXEC).o $(EXEC).yy.o $(wildcard utils/*.cpp)
 %.tab.cpp: %.ypp
 	bison -o $@ $<
 
+GénérationDeCodeTerritoireDeJules/GénérationCodeTree.o:
+	echo "pass"
+	
+utils/Environment.o:
+	echo "pass"
+	
+utils/verifications.o:
+	
 %.o: %.cpp
 	$(CC) -o $@ -c $< $(CXXFLAGS)
 

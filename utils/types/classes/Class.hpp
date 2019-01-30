@@ -8,9 +8,9 @@ struct Class : Type {
 	std::vector<Parameter> parameters;	/* Liste de paramètres de la classe. */
 	std::string superIdentifier;		/* Identifiant de la super-classe de la classe [optionnel]. */
 
-	Class(std::string const &identifier, std::vector<Parameter> const &parameters, std::string superIdentifier,
-		std::vector<Parameter> const &fields, ClassConstructor &constructor, std::vector<Method> const &methods);
-	Class(Class const &other);
+	Class(const std::string &identifier, const std::vector<Parameter> &parameters, const std::string &superIdentifier,
+		const std::vector<Parameter> &fields, ClassConstructor &constructor, const std::vector<Method> &methods);
+	Class(const Class &other);
 	Class(Class &&other);
 	~Class() override;
 	
@@ -18,7 +18,7 @@ struct Class : Type {
 		return true;
 	}
 	
-	bool isDuplicable() const override{
+	bool isDuplicable() const override {
 		return true;
 	}
 	
