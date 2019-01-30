@@ -4,13 +4,13 @@
 #include "Method.hpp"
 
 struct Constructor : Method {
-    Constructor(std::string const &identifier, std::vector<Parameter> const &parameters, Block *body);
-	Constructor(Constructor const &other);
-	Constructor(Constructor &&other);
-	~Constructor() override;
+    Constructor(const std::string &identifier, const std::vector<Parameter> &parameters, Block *body);
+	Constructor(const Constructor &other) = default;
+	Constructor(Constructor &&other) = default;
+	~Constructor() override = default;
 	
-	Constructor &operator=(Constructor const &other);
-	Constructor &operator=(Constructor &&other);
+	Constructor &operator=(Constructor const &other) = default;
+	Constructor &operator=(Constructor &&other) = default;
 	
     virtual bool correctDecl() const = 0;
 };

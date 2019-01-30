@@ -43,7 +43,7 @@
 %type <std::string> OptReturn
 
 /* Block */
-%type <Block> Block
+%type <Block*> Block
 
 /* Instructions */
 %type <std::vector<Tree*>> LOptInst LInst
@@ -118,12 +118,12 @@ OptVar : VAR                               { $$ = true; }
 ClassDecl : CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}' { $$ = new Class($2, $4, $6, $9, $10, $11); }
 ;
 
-OptExtends : EXTENDS TYPENAME                                                                                { $$ = $2; }
- |                                                                                                           { $$ = ""; }
+OptExtends : EXTENDS TYPENAME	{ $$ = $2; }
+ |								{ $$ = ""; }
 ;
 
-ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block                 { $$ = ClassConstructor($2, $4, $12, &$7, &$9); }
- | DEF TYPENAME '(' LOptParamDecl ')' IS Block                                                               { $$ = ClassConstructor($2, $4, $7, new std::string(), new std::vector<Tree*>()); }
+ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block	{ $$ = ClassConstructor($2, $4, $7, $9, $12); }
+ | DEF TYPENAME '(' LOptParamDecl ')' IS Block													{ $$ = ClassConstructor($2, $4, "", std::vector<Tree*>(), $7); }
 ;
 
 /* ===== Object ===== */

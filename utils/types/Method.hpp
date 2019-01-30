@@ -12,20 +12,21 @@ struct Tree;
 
 struct Method {
 	std::string identifier;				/* Identifiant. */
+	std::vector<Parameter> parameters;	/* Paramètre(s) de la Method [optionnel]. */
 	std::string returnTypeIdentifier;	/* Type de retour. */
-	std::vector<Parameter> parameters;
 	std::variant<Block*, Tree*> body;
+	bool overriden;
 	
-	Method(std::string const &identifier, std::string const &returnTypeIdentifier,
-		std::vector<Parameter> const &parameters, Tree *body);
-	Method(std::string const &identifier, std::string const &returnTypeIdentifier,
-		std::vector<Parameter> const &parameters, Block *body);
-	Method(Method const &other);
-	Method(Method &&other);
-	virtual ~Method();
+	Method(const std::string &identifier, const std::vector<Parameter> &parameters, 
+		const std::string &returnTypeIdentifier, Tree *body);
+	Method(const std::string &identifier, const std::vector<Parameter> &parameters, 
+		const std::string &returnTypeIdentifier, Block *body);
+	Method(const Method &other) = default;
+	Method(Method &&other) = default;
+	virtual ~Method() = default;
 	
-	Method &operator=(Method const &other);
-	Method &operator=(Method &&other);
+	Method &operator=(const Method &other) = default;
+	Method &operator=(Method &&other) = default;
 	
 	virtual bool correctDecl() const;
 };

@@ -3,12 +3,12 @@
 
 #include <string>
 
-struct Parameter{
+struct Parameter {
     std::string identifier;     /* Identifiant du paramètre. */
     std::string typeIdentifier; /* Identifiant du type du paramètre. */
     bool var;                   /* Est-ce que c'est un paramètre 'var'. */
 
-    Parameter(std::string const &identifier, std::string const &type, bool var);
+    Parameter(const std::string &identifier, const std::string &typeIdentifier, bool var = false);
 	Parameter(Parameter const &other) = default;
 	~Parameter() = default;
 };

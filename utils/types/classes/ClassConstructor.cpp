@@ -2,38 +2,12 @@
 
 #include <algorithm>
 
-ClassConstructor::ClassConstructor(std::string const &identifier, std::vector<Parameter> const &parameters, Block *body,
-	std::string *superIdentifier, std::vector<Tree*> *superParameters) : Constructor(identifier, parameters, body),
-	superIdentifier(superIdentifier), superParameters(superParameters) {}
-
-ClassConstructor::ClassConstructor(ClassConstructor const &other) : Constructor(other), superIdentifier(other.superIdentifier),
-	superParameters(other.superParameters) {}
-	
-ClassConstructor::ClassConstructor(ClassConstructor &&other) : Constructor(other), superIdentifier(other.superIdentifier),
-	superParameters(other.superParameters) {}
-	
-ClassConstructor::~ClassConstructor() {
-	delete superIdentifier;
-	delete superParameters;
-}
-
-ClassConstructor &ClassConstructor::operator=(ClassConstructor const &other) {
-	Constructor::operator=(other);
-	superIdentifier = other.superIdentifier;
-	superParameters = other.superParameters;
-	return *this;
-}
-
-ClassConstructor &ClassConstructor::operator=(ClassConstructor &&other) {
-	Constructor::operator=(other);
-	superIdentifier = std::move(other.superIdentifier);
-	superParameters = std::move(other.superParameters);
-	return *this;
-}
+ClassConstructor::ClassConstructor(bool override,const std::string &identifier, const std::vector<Parameter> &parameters,
+	const std::string &superIdentifier, const std::vector<Tree*> &superParameters, Block *body) : 
+	Constructor(identifier, parameters, body), superIdentifier(superIdentifier), superParameters(superParameters) {}
 
 bool ClassConstructor::correctDecl() const {
-    if (superIdentifier == nullptr)
-		return Constructor::correctDecl();
+	return Constructor::correctDecl();
 	/* Check si superIdentifier || superParameters ? bug track */
 	/* Check correct super constructor call ? */
 	/*
