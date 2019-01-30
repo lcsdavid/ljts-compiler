@@ -4,7 +4,7 @@ list_directories=$(foreach directory,$(sort $(dir $(wildcard $1*))),$(directory)
 CC = g++
 CXXFLAGS=-Wall -g -std=c++17
 EXEC=test
-SRCs=$(call find_sources, */)
+SRCs=$(call find_sources, *)
 OBJs=$(SRCs:.cpp=.o)
 
 all: $(OBJs)
