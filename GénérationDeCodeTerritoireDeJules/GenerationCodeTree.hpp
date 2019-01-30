@@ -6,6 +6,8 @@
 
 #include <vector>
 
+using namespace std;
+
 struct Assignee
 {
 	std::string nom;
