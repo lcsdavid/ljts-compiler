@@ -68,15 +68,15 @@ void genereCodeTree(Tree *tree)
 		cout << "CEST LA MERDE JAI PAS PREVU CE CAS !!!" << tree->operation;
 }
 
-string generateurLabel()
+std::string generateurLabel()
 {
 	return "Label";
 }
 
 void fctif(Tree *tree)
 {
-	string label=generateurLabel()
-	string label2=generateurLabel()
+	std::string label=generateurLabel();
+	std::string label2=generateurLabel();
 	genereCodeTree(get<vector<Tree*>> (tree->children)[0]);
 	cout << "JZ " << label << endl;
 	genereCodeTree(get<vector<Tree*>> (tree->children)[1]);
