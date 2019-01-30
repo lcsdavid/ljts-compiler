@@ -12,39 +12,78 @@ void genereCodeTree(Tree *tree)
 	{
 		genereCodeTree(get<vector<Tree*>> (tree->children)[0]);
 		genereCodeTree(get<vector<Tree*>> (tree->children)[1]);
-		cout << "ADD";
+		cout << "ADD" << endl;
 	}
 	else if(tree->operation==substraction)
 	{
 		genereCodeTree(get<vector<Tree*>> (tree->children)[0]);
 		genereCodeTree(get<vector<Tree*>> (tree->children)[1]);
-		cout << "SUB";
+		cout << "SUB" << endl;
 	}
 	else if(tree->operation==multiplication)
 	{
 		genereCodeTree(get<vector<Tree*>> (tree->children)[0]);
 		genereCodeTree(get<vector<Tree*>> (tree->children)[1]);
-		cout << "MUL";
+		cout << "MUL" << endl;
 	}
 	else if(tree->operation==division)
 	{
 		genereCodeTree(get<vector<Tree*>> (tree->children)[0]);
 		genereCodeTree(get<vector<Tree*>> (tree->children)[1]);
-		cout << "DIV";
+		cout << "DIV" << endl;
 	}
 	else if(tree->operation==assignment)
 		assignation(tree);
 	else if(tree->operation==identifier)
 		getVal(tree);
 	else if(tree->operation==if_then_else)
-		fctif(tree)
+		fctif(tree);
+	else if(tree->operation==equal)
+	{
+		genereCodeTree(get<vector<Tree*>> (tree->children)[0]);
+		genereCodeTree(get<vector<Tree*>> (tree->children)[1]);
+		cout << "EQUAL" << endl;
+	}
+	else if(tree->operation==less_strict)
+	{
+		genereCodeTree(get<vector<Tree*>> (tree->children)[0]);
+		genereCodeTree(get<vector<Tree*>> (tree->children)[1]);
+		cout << "INF" << endl;
+	}
+	else if(tree->operation==less_equal)
+	{
+		genereCodeTree(get<vector<Tree*>> (tree->children)[0]);
+		genereCodeTree(get<vector<Tree*>> (tree->children)[1]);
+		cout << "INFEQ" << endl;
+	}
+	else if(tree->operation==not_equal)
+	{
+		genereCodeTree(get<vector<Tree*>> (tree->children)[0]);
+		genereCodeTree(get<vector<Tree*>> (tree->children)[1]);
+		cout << "EQUAL" << endl;
+		cout << "PUSHI 0" << endl;
+		cout << "EQUAL" << endl;
+	}
 	else
 		cout << "CEST LA MERDE JAI PAS PREVU CE CAS !!!" << tree->operation;
 }
 
+string generateurLabel()
+{
+	return "Label";
+}
+
 void fctif(Tree *tree)
 {
-	
+	string label=generateurLabel()
+	string label2=generateurLabel()
+	genereCodeTree(get<vector<Tree*>> (tree->children)[0]);
+	cout << "JZ " << label << endl;
+	genereCodeTree(get<vector<Tree*>> (tree->children)[1]);
+	cout << "JUMP " << label2 << endl;
+	cout << "PUSHA " << label << endl;
+	genereCodeTree(get<vector<Tree*>> (tree->children)[2]);
+	cout << "PUSHA " << label2 << endl;
 }
 
 void getVal(Tree *tree)
