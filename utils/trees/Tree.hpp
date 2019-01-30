@@ -13,13 +13,23 @@ struct Tree {
 	int operation;
 	std::vector<std::variant<int, std::string, Block*, Tree*>> children;
 	
-	Tree(int lineno, int operation);							/* Return. */
-	Tree(int lineno, int operation, int value);					/* Constante entière. */
-	Tree(int lineno, int operation, const std::string &value);	/* Constante string. */
-	Tree(int lineno, int operation, Block *block);				/* Block. */
-	/* Constructeur subtrees. */
-	Tree(int lineno, int operation, std::initializer_list<std::variant<int, std::string, Block*, Tree*>> children);	
-
+	/* Return. */
+	Tree(int lineno, int operation);			
+	/* Constante entière. */
+	Tree(int lineno, int operation, int value);					
+	/* Constante string ou identifier. */
+	Tree(int lineno, int operation, const std::string &value);	
+	/* Block. */
+	Tree(int lineno, int operation, Block *block);				
+	/* Constructeur w/ sub-Trees. */
+	Tree(int lineno, int operation, std::initializer_list<Tree*> children);	
+	
+	/* Member acess. */
+	Tree(int lineno, int operation, const std::string &identifier, Tree* children);	
+	
+	/* Method call. */
+	Tree(int lineno, int operation, const std::string &value, Tree* children, Tree *params);	
+	
 	Tree(const Tree &other) = default;
 	Tree &operator=(const Tree &other) = default;
 	
