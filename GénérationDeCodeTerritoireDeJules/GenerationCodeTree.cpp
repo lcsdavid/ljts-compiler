@@ -56,6 +56,18 @@ void genereCodeTree(Tree *tree)
 		genereCodeTree(get<vector<Tree*>> (tree->children)[1]);
 		cout << "INFEQ" << endl;
 	}
+	else if(tree->operation==greater_strict)
+	{
+		genereCodeTree(get<vector<Tree*>> (tree->children)[0]);
+		genereCodeTree(get<vector<Tree*>> (tree->children)[1]);
+		cout << "SUP" << endl;
+	}
+	else if(tree->operation==greater_equal)
+	{
+		genereCodeTree(get<vector<Tree*>> (tree->children)[0]);
+		genereCodeTree(get<vector<Tree*>> (tree->children)[1]);
+		cout << "SUPEQ" << endl;
+	}
 	else if(tree->operation==not_equal)
 	{
 		genereCodeTree(get<vector<Tree*>> (tree->children)[0]);
