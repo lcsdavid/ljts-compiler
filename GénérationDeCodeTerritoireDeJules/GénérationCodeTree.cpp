@@ -1,7 +1,15 @@
 #include "../utils/trees/Tree.hpp"
 #include "../ljts-compiler.hpp"
 
-void genereCodeTree(Tree tree)
+vector<Assignee> mesVar;
+
+struct Assignee
+{
+	std::string nom;
+	int valeur;
+}
+
+void genereCodeTree(Tree *tree)
 {
 	if(tree.operation==unary_plus)
 		genereCodeTree(tree.children[0]);
@@ -33,15 +41,25 @@ void genereCodeTree(Tree tree)
 		genereCodeTree(tree.children[1]);
 		cout << "DIV";
 	}
+	else if(tree.operation==assignment)
+		assignation(tree);
 	
 }
 
-void creerVar(Tree tree)
+void assignation(Tree *tree)
+{
+	Tree *id = tree.children[0];
+	Assignee tempo;
+	tempo.nom = id->children;
+	tempo.valeur = genereCodeTree(tree.children[1]);
+}
+
+void creerVar(Tree *tree)
 {
 	cout << "PUSHI " << tree.children;
 }
 
-void negat(Tree tree)
+void negat(Tree *tree)
 {
 	genereCodeTree(tree.children[0]);
 	cout << "PUSHI -1\nMUL";
