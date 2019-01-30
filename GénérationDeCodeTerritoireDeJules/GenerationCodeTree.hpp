@@ -22,5 +22,6 @@ void getVal(Tree *tree);
 void assignation(Tree *tree);
 void creerVar(Tree *tree);
 void negat(Tree *tree);
+void fctif(Tree *tree);
 
 #endif

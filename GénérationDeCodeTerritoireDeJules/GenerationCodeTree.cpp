@@ -36,8 +36,15 @@ void genereCodeTree(Tree *tree)
 		assignation(tree);
 	else if(tree->operation==identifier)
 		getVal(tree);
+	else if(tree->operation==if_then_else)
+		fctif(tree)
 	else
 		cout << "CEST LA MERDE JAI PAS PREVU CE CAS !!!" << tree->operation;
+}
+
+void fctif(Tree *tree)
+{
+	
 }
 
 void getVal(Tree *tree)
