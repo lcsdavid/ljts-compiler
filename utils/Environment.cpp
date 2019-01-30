@@ -1,5 +1,7 @@
 #include "Environment.hpp"
 
+#include "types/Type.hpp"
+
 Environment::Environment(std::map<std::string, Type*> &env, std::vector<Parameter> const & fields) : env(env),	fields(fields) {}
 	
 	

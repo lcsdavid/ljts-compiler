@@ -12,13 +12,13 @@ Class::Class(Class &&other) : Type(other), parameters(other.parameters),
 	
 Class::~Class() {}
 
-bool Class::correctDecl(std::map<std::string, Type*> &env) const {
+bool Class::correctDecl(Environment env) const {
 	if (!Type::correctDecl(env))
 		return false;
 	/* Vérifie si la super classe est connue... */
 	if (!superIdentifier.empty()) {
-		auto super = env.find(identifier);
-		if (super == env.end())
+		auto super = env.env.find(identifier);
+		if (super == env.env.end())
 			return false;
 		if (!(*super).second->isInheritable())
 			return false;

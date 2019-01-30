@@ -12,7 +12,7 @@ struct Constructor : Method {
 	Constructor &operator=(Constructor const &other) = default;
 	Constructor &operator=(Constructor &&other) = default;
 	
-    virtual bool correctDecl(Environment env) const = 0;
+    bool correctDecl(Environment env) const override;
 };
 
 #endif

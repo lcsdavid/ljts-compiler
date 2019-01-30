@@ -9,6 +9,6 @@ Object::Object(Object &&other) : Type(other) {}
 
 Object::~Object() {}
 
-bool Object::correctDecl(std::map<std::string, Type*> &env) const {
+bool Object::correctDecl(Environment env) const {
 	return Type::correctDecl(env);
 }

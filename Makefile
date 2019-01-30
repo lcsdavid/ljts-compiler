@@ -5,9 +5,8 @@ CC=g++
 CXXFLAGS=-Wall -g -std=c++17
 LDFLAGS=-lfl
 EXEC=ljts-compiler
-SRCs=$(call find_sources, */)
+SRCs=$(call find_sources, *)
 OBJs=$(SRCs:.cpp=.o) $(EXEC).yy.o $(EXEC).tab.o
-
 
 $(EXEC): $(OBJs)
 	$(CC) -o $@ $^ $(LDFLAGS)
@@ -26,12 +25,6 @@ bison_only: $(EXEC).o $(EXEC).yy.o $(wildcard utils/*.cpp)
 %.tab.cpp: %.ypp
 	bison -o $@ $<
 
-GénérationDeCodeTerritoireDeJules/GenerationCodeTree.o:
-	
-utils/Environment.o:
-	
-utils/verifications.o:
-	
 %.o: %.cpp
 	$(CC) -o $@ -c $< $(CXXFLAGS)
 

@@ -18,3 +18,10 @@ struct ObjectConstructor : Constructor {
 };
 
 #endif
+
+#ifdef lel
+MethodCall : IDENTIFIER '.' Expr '(' LOptExpr ')' 	{ $$ = new Tree(yylineno, method_call, { $1, $3, $5 }); }
+ | STRING '.' Expr '(' LOptExpr ')'					{ $$ = new Tree(yylineno, method_call, $1, $3); }
+ | TYPENAME '.' Expr '(' LOptExpr ')'				{ $$ = new Tree(yylineno, method_call, { $1, $3, $5 }); }
+;
+#endif

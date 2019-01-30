@@ -54,7 +54,7 @@ enum operation : int {
 	/* DECLS */
 	class_decl, object_decl,
 	/* CLASSES & OBJECTS */
-	instanciation, cast, member_access, method_call,
+	instanciation, cast, member_access, object_member_access, method_call, object_method_call,
 	/* ASSIGNMENT */
 	assignment,
 	/* ARITHMETIC */
@@ -67,7 +67,7 @@ enum operation : int {
 	/* MISCELLANEOUS */
 	if_then_else, return_call, inst_block,
 	/* CONSTS & IDENTIFIER */
-	integer, string, identifier
+	integer, string, identifier, typename_identifier
 };
 
 #endif

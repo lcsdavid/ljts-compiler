@@ -1,83 +1,83 @@
 #include "GenerationCodeTree.hpp"
 
-void genereCodeTree(Tree *tree)
-{
-	if(tree->operation==unary_plus)
-		genereCodeTree(get<Tree*>(tree->children[0]));
-	else if(tree->operation==unary_substract)
-		negat(tree);
-	else if(tree->operation==integer)
-		creerVar(tree);
-	else if(tree->operation==addition)
-	{
-		genereCodeTree(get<Tree*>(tree->children[0]));
-		genereCodeTree(get<Tree*>(tree->children[1]));
-		cout << "ADD" << endl;
+#include <cassert>
+
+void genereCodeTree(Tree *tree) {
+	assert(tree);
+	switch (tree->operation) {
+		case operation::unary_plus:
+			genereCodeTree(std::get<Tree*>(tree->children[0]));
+			break;
+		case unary_substract:
+			negat(tree);
+			break;
+		case operation::integer:
+			creerVar(tree);
+			break;
+		case operation::addition:
+			genereCodeTree(std::get<Tree*>(tree->children[0]));
+			genereCodeTree(std::get<Tree*>(tree->children[1]));
+			std::cout << "ADD" << std::endl;
+			break;
+		case operation::substraction:
+			genereCodeTree(std::get<Tree*>(tree->children[0]));
+			genereCodeTree(std::get<Tree*>(tree->children[1]));
+			std::cout << "SUB" << std::endl;
+			break;
+		case operation::multiplication:
+			genereCodeTree(std::get<Tree*>(tree->children[0]));
+			genereCodeTree(std::get<Tree*>(tree->children[1]));
+			std::cout << "MUL" << std::endl;
+			break;
+		case operation::division:
+			genereCodeTree(std::get<Tree*>(tree->children[0]));
+			genereCodeTree(std::get<Tree*>(tree->children[1]));
+			std::cout << "DIV" << std::endl;
+			break;
+		case operation::assignment:
+			assignation(tree);
+			break;
+		case operation::identifier:
+			getVal(tree);
+			break;
+		case operation::if_then_else:
+			fctif(tree);
+			break;
+		case operation::equal:
+			genereCodeTree(std::get<Tree*>(tree->children[0]));
+			genereCodeTree(std::get<Tree*>(tree->children[1]));
+			std::cout << "EQUAL" << std::endl;
+			break;
+		case operation::less_strict:
+			genereCodeTree(std::get<Tree*>(tree->children[0]));
+			genereCodeTree(std::get<Tree*>(tree->children[1]));
+			std::cout << "INF" << std::endl;
+			break;
+		case operation::less_equal:
+			genereCodeTree(std::get<Tree*>(tree->children[0]));
+			genereCodeTree(std::get<Tree*>(tree->children[1]));
+			std::cout << "INFEQ" << std::endl;
+			break;
+		case operation::greater_strict:
+			genereCodeTree(std::get<Tree*>(tree->children[0]));
+			genereCodeTree(std::get<Tree*>(tree->children[1]));
+			std::cout << "SUP" << std::endl;
+			break;
+		case operation::greater_equal:
+			genereCodeTree(std::get<Tree*>(tree->children[0]));
+			genereCodeTree(std::get<Tree*>(tree->children[1]));
+			std::cout << "SUPEQ" << std::endl;
+			break;
+		case operation::not_equal:
+			genereCodeTree(std::get<Tree*>(tree->children[0]));
+			genereCodeTree(std::get<Tree*>(tree->children[1]));
+			std::cout << "EQUAL" << std::endl;
+			std::cout << "PUSHI 0" << std::endl;
+			std::cout << "EQUAL" << std::endl;
+			break;
+		default:
+			std::cout << "CEST LA MERDE JAI PAS PREVU CE CAS !!!" << tree->operation;
 	}
-	else if(tree->operation==substraction)
-	{
-		genereCodeTree(get<Tree*>(tree->children[0]));
-		genereCodeTree(get<Tree*>(tree->children[1]));
-		cout << "SUB" << endl;
-	}
-	else if(tree->operation==multiplication)
-	{
-		genereCodeTree(get<Tree*>(tree->children[0]));
-		genereCodeTree(get<Tree*>(tree->children[1]));
-		cout << "MUL" << endl;
-	}
-	else if(tree->operation==division)
-	{
-		genereCodeTree(get<Tree*>(tree->children[0]));
-		genereCodeTree(get<Tree*>(tree->children[1]));
-		cout << "DIV" << endl;
-	}
-	else if(tree->operation==assignment)
-		assignation(tree);
-	else if(tree->operation==identifier)
-		getVal(tree);
-	else if(tree->operation==if_then_else)
-		fctif(tree);
-	else if(tree->operation==equal)
-	{
-		genereCodeTree(get<Tree*>(tree->children[0]));
-		genereCodeTree(get<Tree*>(tree->children[1]));
-		cout << "EQUAL" << endl;
-	}
-	else if(tree->operation==less_strict)
-	{
-		genereCodeTree(get<Tree*>(tree->children[0]));
-		genereCodeTree(get<Tree*>(tree->children[1]));
-		cout << "INF" << endl;
-	}
-	else if(tree->operation==less_equal)
-	{
-		genereCodeTree(get<Tree*>(tree->children[0]));
-		genereCodeTree(get<Tree*>(tree->children[1]));
-		cout << "INFEQ" << endl;
-	}
-	else if(tree->operation==greater_strict)
-	{
-		genereCodeTree(get<Tree*>(tree->children[0]));
-		genereCodeTree(get<Tree*>(tree->children[1]));
-		cout << "SUP" << endl;
-	}
-	else if(tree->operation==greater_equal)
-	{
-		genereCodeTree(get<Tree*>(tree->children[0]));
-		genereCodeTree(get<Tree*>(tree->children[1]));
-		cout << "SUPEQ" << endl;
-	}
-	else if(tree->operation==not_equal)
-	{
-		genereCodeTree(get<Tree*>(tree->children[0]));
-		genereCodeTree(get<Tree*>(tree->children[1]));
-		cout << "EQUAL" << endl;
-		cout << "PUSHI 0" << endl;
-		cout << "EQUAL" << endl;
-	}
-	else
-		cout << "CEST LA MERDE JAI PAS PREVU CE CAS !!!" << tree->operation;
 }
 
 std::string generateurLabel()
@@ -89,47 +89,47 @@ void fctif(Tree *tree)
 {
 	std::string label=generateurLabel();
 	std::string label2=generateurLabel();
-	genereCodeTree(get<Tree*>(tree->children[0]));
-	cout << "JZ " << label << endl;
-	genereCodeTree(get<Tree*>(tree->children[1]));
-	cout << "JUMP " << label2 << endl;
-	cout << "PUSHA " << label << endl;
-	genereCodeTree(get<Tree*>(tree->children[2]));
-	cout << "PUSHA " << label2 << endl;
+	genereCodeTree(std::get<Tree*>(tree->children[0]));
+	std::cout << "JZ " << label << std::endl;
+	genereCodeTree(std::get<Tree*>(tree->children[1]));
+	std::cout << "JUMP " << label2 << std::endl;
+	std::cout << "PUSHA " << label << std::endl;
+	genereCodeTree(std::get<Tree*>(tree->children[2]));
+	std::cout << "PUSHA " << label2 << std::endl;
 }
 
 void getVal(Tree *tree)
 {
 	for(int i=mesVar.size()-1;i>-1;i--)
 	{
-		if(mesVar[i].nom==get<std::string>(tree->children[0]))
-			cout << "PUSHL " << mesVar[i].valeur;
+		if(mesVar[i].nom==std::get<std::string>(tree->children[0]))
+			std::cout << "PUSHL " << mesVar[i].valeur;
 	}
 }
 
 void assignation(Tree *tree)
 {
-	Tree *id = get<Tree*>(tree->children[0]);
+	Tree *id = std::get<Tree*>(tree->children[0]);
 	if(id->operation==identifier)
 	{
 		Assignee tempo;
-		tempo.nom = get<std::string>(tree->children[0]);
+		tempo.nom = std::get<std::string>(tree->children[0]);
 		tempo.valeur = possp;
 		mesVar.push_back(tempo);
 		possp++;
-		genereCodeTree(get<Tree*>(tree->children[1]));
+		genereCodeTree(std::get<Tree*>(tree->children[1]));
 	}
 	else
-		cout << "CEST LA MERDE JAI PAS PREVU CE CAS !!!" << tree->operation;
+		std::cout << "CEST LA MERDE JAI PAS PREVU CE CAS !!!" << tree->operation;
 }
 
 void creerVar(Tree *tree)
 {
-	cout << "PUSHI " << get<int>(tree->children[0]);
+	std::cout << "PUSHI " << std::get<int>(tree->children[0]);
 }
 
 void negat(Tree *tree)
 {
-	genereCodeTree(get<Tree*>(tree->children[0]));
-	cout << "PUSHI -1\nMUL";
+	genereCodeTree(std::get<Tree*>(tree->children[0]));
+	std::cout << "PUSHI -1\nMUL";
 }
