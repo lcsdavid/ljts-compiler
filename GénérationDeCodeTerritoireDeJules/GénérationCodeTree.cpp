@@ -1,3 +1,5 @@
+#include "../utils/trees/Tree.hpp"
+
 void genereCodeTree(Tree tree)
 {
 	if(tree.operation==unary_plus)
