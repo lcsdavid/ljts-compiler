@@ -52,6 +52,7 @@ void assignation(Tree *tree)
 	Assignee tempo;
 	tempo.nom = id->children;
 	tempo.valeur = genereCodeTree(tree.children[1]);
+	mesVar.push_back(tempo);
 }
 
 void creerVar(Tree *tree)
