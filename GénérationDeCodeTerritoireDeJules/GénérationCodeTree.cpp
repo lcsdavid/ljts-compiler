@@ -6,6 +6,30 @@ void genereCodeTree(Tree tree)
 		negat(tree);
 	else if(tree.operation==integer)
 		creerVar(tree)
+	else if(tree.operation==addition)
+	{
+		genereCodeTree(tree.children[0]);
+		genereCodeTree(tree.children[1]);
+		cout << "ADD";
+	}
+	else if(tree.operation==substraction)
+	{
+		genereCodeTree(tree.children[0]);
+		genereCodeTree(tree.children[1]);
+		cout << "SUB";
+	}
+	else if(tree.operation==multiplication)
+	{
+		genereCodeTree(tree.children[0]);
+		genereCodeTree(tree.children[1]);
+		cout << "MUL";
+	}
+	else if(tree.operation==division)
+	{
+		genereCodeTree(tree.children[0]);
+		genereCodeTree(tree.children[1]);
+		cout << "DIV";
+	}
 	
 }
 
