@@ -19,7 +19,7 @@ struct Object : Type {
 		return false;
 	}
 		
-	bool correctDecl(std::map<std::string, Type*> &env) const override;
+	bool correctDecl(Environment env) const override;
 };
 
 #endif

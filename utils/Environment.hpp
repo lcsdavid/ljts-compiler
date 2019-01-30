@@ -6,7 +6,6 @@
 #include <map>
 
 #include "variables/Parameter.hpp"
-#include "types/Type.hpp"
 
 struct Type;
 
@@ -29,5 +28,4 @@ struct Environment {
 	
 };
 
-
-#endif //LJTS_COMPILER_VERIFICATIONS_H
+#endif
