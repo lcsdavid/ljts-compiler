@@ -16,7 +16,7 @@ int possp=0;
 void genereCodeTree(Tree *tree)
 {
 	if(tree->operation==unary_plus)
-		genereCodeTree(tree->children[0]);
+		genereCodeTree(get<vector<Tree*>> (tree->children)[0]);
 	else if(tree->operation==unary_substract)
 		negat(tree);
 	else if(tree.operation==integer)
