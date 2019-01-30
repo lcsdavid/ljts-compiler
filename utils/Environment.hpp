@@ -14,7 +14,12 @@ struct Environment {
 	Environment();
 	Environment(std::map<std::string, Type*> &env, std::vector<Parameter> const & fields);
 	~Environment() = default;
-}
+
+	//est-ce que l'on connait le type qui est passé en parametre
+	bool know(std::string type);
+	
+	//est-ce que la string passée en parametre correspond à un parametre connu
+	Parameter* contains(std::string param);
 
 
 
