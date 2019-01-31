@@ -18,8 +18,8 @@ struct Type {
 
 	Type(std::string const &identifier, std::vector<Parameter> const &fields, Constructor &constructor,
 		std::vector<Method> const &methods);
-	Type(Type const &other);
-	Type(Type &&other);
+	Type(Type const &other) = default;
+	Type(Type &&other) = default;
 	virtual ~Type();
 
 	virtual bool isInheritable() const = 0;
