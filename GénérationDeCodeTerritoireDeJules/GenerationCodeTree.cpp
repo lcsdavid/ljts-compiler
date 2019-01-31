@@ -5,8 +5,9 @@
 void genereCode(Tree *tree)
 {
 	cout << "START" << endl;
-	mesVar.push_back(vector<Assignee> tempo);
-	possp.push_back(unsigned int tempo2);
+	vector<Assignee> tempo;
+	mesVar.push_back(tempo);
+	possp.push_back(0);
 	genereCodeTree(tree);
 	cout << "STOP" << endl;
 }
@@ -16,8 +17,9 @@ void genereCodeTree(Tree *tree) {
 	switch (tree->operation) {
 		case operation::method_call:
 			cout << "CALL\n";
-			mesVar.push_back(vector<Assignee> tempo);
-			possp.push_back(unsigned int tempo2);
+			vector<Assignee> tempo;
+			mesVar.push_back(tempo);
+			possp.push_back(0);
 			fctcour++;
 			genereCodeTree(std::get<Tree*>(tree->children[0]));
 			mesVar.pop_back();
@@ -129,9 +131,13 @@ void getVal(Tree *tree)
 {
 	for(int i=mesVar.size()-1;i>-1;i--)
 	{
-		if(mesVar[i].nom==std::get<std::string>(tree->children[0]))
+		if(mesVar[fctcour][i].nom==std::get<std::string>(tree->children[0]))
+		{
 			std::cout << "PUSHL " << mesVar[fctcour][i].valeur;
+			return;
+		}
 	}
+	cout << "Y a un soucis" << endl;
 }
 
 void assignation(Tree *tree)
