@@ -81,7 +81,7 @@ void* program = nullptr;
 %left '('
 
 %%
-Program : LOptDecls Block { /*program = new Program($1, $2);*/ }
+Program : LOptDecls Block { Program program($1, $2); }
 ;
 
 LOptDecls : LDecls   { $$ = std::vector<Type*>($1); }
