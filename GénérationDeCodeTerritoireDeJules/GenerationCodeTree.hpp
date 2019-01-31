@@ -8,15 +8,14 @@
 
 using namespace std;
 
-struct Assignee
-{
+struct Assignee {
 	std::string nom;
 	int valeur;
 };
 
-vector<vector<Assignee>> mesVar;
+std::vector<std::vector<Assignee>> mesVar;
 
-vector<unsigned int> possp;
+std::vector<unsigned int> possp;
 unsigned int fctcour=0;
 
 void genereCodeTree(Tree *tree);

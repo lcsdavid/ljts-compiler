@@ -14,10 +14,6 @@
 #include "types/Constructor.hpp"
 
 /*
-struct Programme {
-    std::vector<Type *> decls;//la liste optionnelle de declarations
-    Tree tree;//le bloc d'opéraction
-};
 
 void regressionTesting(); */
 

@@ -17,7 +17,7 @@ void genereCodeTree(Tree *tree) {
 	switch (tree->operation) {
 		case operation::method_call:
 			cout << "CALL\n";
-			vector<Assignee> tempo;
+			std::vector<Assignee> tempo;
 			mesVar.push_back(tempo);
 			possp.push_back(0);
 			fctcour++;
@@ -25,7 +25,7 @@ void genereCodeTree(Tree *tree) {
 			mesVar.pop_back();
 			possp.pop_back();
 			fctcour--;
-			cout << "RETURN\n";
+			std::cout << "RETURN" << std::endl;
 			break;
 		case operation::unary_plus:
 			genereCodeTree(std::get<Tree*>(tree->children[0]));
@@ -93,15 +93,15 @@ void genereCodeTree(Tree *tree) {
 		case operation::not_equal:
 			genereCodeTree(std::get<Tree*>(tree->children[0]));
 			genereCodeTree(std::get<Tree*>(tree->children[1]));
-			std::cout << "EQUAL" << std::endl;
-			std::cout << "PUSHI 0" << std::endl;
-			std::cout << "EQUAL" << std::endl;
+			std::cout << "EQUAL" << std::endl << "PUSHI 0" << std::endl << "EQUAL" << std::endl;
 			break;
 		default:
 			std::cout << "CEST LA MERDE JAI PAS PREVU CE CAS !!!" << tree->operation;
 			break;
 	}
 }
+
+
 std::string generateurLabel()
 {
 	char alea;
