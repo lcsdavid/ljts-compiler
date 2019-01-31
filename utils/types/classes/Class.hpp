@@ -10,9 +10,9 @@ struct Class : Type {
 
 	Class(const std::string &identifier, const std::vector<Parameter> &parameters, const std::string &superIdentifier,
 		const std::vector<Parameter> &fields, ClassConstructor &constructor, const std::vector<Method> &methods);
-	Class(const Class &other);
-	Class(Class &&other);
-	~Class() override;
+	Class(const Class &other) = default;
+	Class(Class &&other) = default;
+	~Class() override = default;
 	
 	bool isInheritable() const override {
 		return true;
