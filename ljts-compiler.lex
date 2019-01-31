@@ -1,18 +1,18 @@
-digit        [0-9]
-upperletter  [A-Z]
-lowerletter  [a-z]
-letter       ({lowerletter}|{upperletter})
-newline      (\r\n?)|\n
-commentary   \/{2}[^{newline}]*{newline}|\/\*([^\*]*|\*[^\/])*\*\/
+digit		[0-9]
+upperletter	[A-Z]
+lowerletter	[a-z]
+letter		({lowerletter}|{upperletter})
+newline		(\r\n?)|\n
+commentary	\/{2}[^{newline}]*{newline}|\/\*([^\*]*|\*[^\/])*\*\/
 
-identifier   {lowerletter}({letter}|{digit})*
-typename     {upperletter}({letter}|{digit})*
+identifier	{lowerletter}({letter}|{digit})*
+typename	{upperletter}({letter}|{digit})*
 
-char         \'[^\']+\'
-integer      {digit}+
-float        {double}f
-double       {integer}\.{digit}*
-string       \"[^\"]*\"
+char		\'[^\']+\'
+integer		{digit}+
+float		{double}f
+double		{integer}\.{digit}*
+string		\"[^\"]*\"
 
 %{
 
@@ -26,33 +26,34 @@ string       \"[^\"]*\"
 %}
 
 %%
-{commentary}  { std::string ctary = yytext; yylineno += std::count(ctary.begin(), ctary.end(), '\n'); }
-{newline}     yylineno++;
+{commentary}	{ std::string ctary = yytext; yylineno += std::count(ctary.begin(), ctary.end(), '\n'); }
+{newline}		yylineno++;
 [ \t]
-class         return CLASS;
-def           return DEF;
-else          return ELSE;
-extends       return EXTENDS;
-is            return IS;
-if            return IF;
-new           return NEW;
-object        return OBJECT;
-override      return OVERRIDE;
-var           return VAR;
-return        return RETURN;
-then          return THEN;
-:=            return ASSIGNMENT;
-(<)           { yylval = less_strict; return RELATIONAL_OPERATOR; }
-=<|<=         { yylval = less_equal; return RELATIONAL_OPERATOR; }
->             { yylval = greater_strict; return RELATIONAL_OPERATOR; }
-=>|>=         { yylval = greater_equal; return RELATIONAL_OPERATOR; }
-=             { yylval = equal; return RELATIONAL_OPERATOR; }
-(<>)          { yylval = not_equal; return RELATIONAL_OPERATOR; }
-{integer}     { yylval = std::atoi(yytext); return INTEGER; }
-{string}      { yylval = std::string(yytext); return STRING; }
-{identifier}  { yylval = std::string(yytext); return IDENTIFIER; }
-{typename}    { yylval = std::string(yytext); return TYPENAME; }
-.             { /* std::cerr << "Error: lexical error, unexpected '" << yytext << "' at line " << yylineno << std::endl; */ return yytext[0]; }
+class			return CLASS;
+def				return DEF;
+else			return ELSE;
+extends			return EXTENDS;
+is				return IS;
+if				return IF;
+new				return NEW;
+object			return OBJECT;
+override		return OVERRIDE;
+var				return VAR;
+return			return RETURN;
+then			return THEN;
+this			return THIS;
+:=				return ASSIGNMENT;
+(<)				{ yylval = less_strict; return RELATIONAL_OPERATOR; }
+=<|<=			{ yylval = less_equal; return RELATIONAL_OPERATOR; }
+>				{ yylval = greater_strict; return RELATIONAL_OPERATOR; }
+=>|>=			{ yylval = greater_equal; return RELATIONAL_OPERATOR; }
+=				{ yylval = equal; return RELATIONAL_OPERATOR; }
+(<>)			{ yylval = not_equal; return RELATIONAL_OPERATOR; }
+{integer}		{ yylval = std::atoi(yytext); return INTEGER; }
+{string}		{ yylval = std::string(yytext); return STRING; }
+{identifier}	{ yylval = std::string(yytext); return IDENTIFIER; }
+{typename}		{ yylval = std::string(yytext); return TYPENAME; }
+.				{ /* std::cerr << "Error: lexical error, unexpected '" << yytext << "' at line " << yylineno << std::endl; */ return yytext[0]; }
 %%
 
 std::ostream& operator<<(std::ostream& os, yytokentype t) {
@@ -70,28 +71,28 @@ std::ostream& operator<<(std::ostream& os, yytokentype t) {
 			os << "DEF";
 			break;
 		case ELSE:
-		    os << "ELSE";
+			os << "ELSE";
 			break;
 		case EXTENDS:
 			os << "EXTENDS";
 			break;
 		case IDENTIFIER:
-		    os << "IDENTIFIER: " << std::get<std::string>(yylval);
+			os << "IDENTIFIER: " << std::get<std::string>(yylval);
 			break;
 		case IF:
 			os << "IF";
 			break;
 		case INTEGER:
-		    os << "INTEGER: " << std::get<int>(yylval);
+			os << "INTEGER: " << std::get<int>(yylval);
 			break;
 		case IS:
-		    os << "IS";
+			os << "IS";
 			break;
-	    case OBJECT:
-		    os << "OBJECT";
+		case OBJECT:
+			os << "OBJECT";
 			break;
 		case OVERRIDE:
-            os << "OVERRIDE";
+			os << "OVERRIDE";
 			break;
 		case RELATIONAL_OPERATOR:
 			os << "RELATIONAL_OPERATOR: " << yytext;

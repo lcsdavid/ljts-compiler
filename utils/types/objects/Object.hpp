@@ -19,7 +19,7 @@ struct Object : Type {
 		return false;
 	}
 		
-	bool correctDecl(Environment env) const override;
+	bool correctDecl(const Environment &env) const override;
 };
 
 #endif

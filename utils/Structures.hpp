@@ -1,6 +1,8 @@
 #ifndef STRUCTURES_HPP
 #define STRUCTURES_HPP
 
+#include "Program.hpp"
+
 #include "trees/Block.hpp"
 #include "trees/Tree.hpp"
 
