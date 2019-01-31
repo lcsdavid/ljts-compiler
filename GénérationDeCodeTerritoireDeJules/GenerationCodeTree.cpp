@@ -2,6 +2,13 @@
 
 #include <cassert>
 
+void genereCode(Tree *tree)
+{
+	cout << "START" << endl;
+	genereCodeTree(tree);
+	cout << "STOP" << endl;
+}
+
 void genereCodeTree(Tree *tree) {
 	assert(tree);
 	switch (tree->operation) {
