@@ -14,8 +14,10 @@ struct Assignee
 	int valeur;
 };
 
-vector<Assignee> mesVar;
-int possp=0;
+vector<vector<Assignee>> mesVar;
+
+vector<unsigned int> possp;
+unsigned int fctcour=0;
 
 void genereCodeTree(Tree *tree);
 void getVal(Tree *tree);

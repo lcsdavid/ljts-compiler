@@ -5,6 +5,8 @@
 void genereCode(Tree *tree)
 {
 	cout << "START" << endl;
+	mesVar.push_back(vector<Assignee> tempo);
+	possp.push_back(unsigned int tempo2);
 	genereCodeTree(tree);
 	cout << "STOP" << endl;
 }
@@ -13,9 +15,16 @@ void genereCodeTree(Tree *tree) {
 	assert(tree);
 	switch (tree->operation) {
 		case operation::method_call:
-			cout << "CALL\n"
+			cout << "CALL\n";
+			mesVar.push_back(vector<Assignee> tempo);
+			possp.push_back(unsigned int tempo2);
+			fctcour++;
 			genereCodeTree(std::get<Tree*>(tree->children[0]));
-			cout << "RETURN\n"
+			mesVar.pop_back();
+			possp.pop_back();
+			fctcour--;
+			cout << "RETURN\n";
+			break;
 		case operation::unary_plus:
 			genereCodeTree(std::get<Tree*>(tree->children[0]));
 			break;
@@ -93,12 +102,12 @@ void genereCodeTree(Tree *tree) {
 }
 std::string generateurLabel()
 {
-	unsigned int alea;
+	char alea;
 	std::string res;
 	for(unsigned int i;i<10;i++)
 	{
 		alea = rand();
-		res+=(char)alea;
+		res+=alea;
 	}
 	return res;
 }
@@ -121,7 +130,7 @@ void getVal(Tree *tree)
 	for(int i=mesVar.size()-1;i>-1;i--)
 	{
 		if(mesVar[i].nom==std::get<std::string>(tree->children[0]))
-			std::cout << "PUSHL " << mesVar[i].valeur;
+			std::cout << "PUSHL " << mesVar[fctcour][i].valeur;
 	}
 }
 
@@ -132,9 +141,9 @@ void assignation(Tree *tree)
 	{
 		Assignee tempo;
 		tempo.nom = std::get<std::string>(tree->children[0]);
-		tempo.valeur = possp;
-		mesVar.push_back(tempo);
-		possp++;
+		tempo.valeur = possp[fctcour];
+		mesVar[fctcour].push_back(tempo);
+		possp[fctcour]++;
 		genereCodeTree(std::get<Tree*>(tree->children[1]));
 	}
 	else
