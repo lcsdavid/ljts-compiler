@@ -16,8 +16,8 @@ struct Type {
 	Constructor &constructor;     /* Constructeur de la classe. */
 	std::vector<Method> methods;  /* Liste de méthodes de la classe. */
 
-	Type(std::string const &identifier, std::vector<Parameter> const &fields, Constructor &constructor,
-		std::vector<Method> const &methods);
+	Type(const std::string &identifier, const std::vector<Parameter> &fields, Constructor &constructor,
+		const std::vector<Method> &methods);
 	Type(Type const &other) = default;
 	Type(Type &&other) = default;
 	virtual ~Type();
@@ -26,7 +26,7 @@ struct Type {
 	
 	virtual bool isDuplicable() const = 0;
 	
-	virtual bool correctDecl(Environment env) const;
+	virtual bool correctDecl(const Environment &env) const;
 	
 	virtual std::string getSuperClass();
 };

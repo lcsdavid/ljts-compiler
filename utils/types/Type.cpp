@@ -1,20 +1,14 @@
 #include "Type.hpp"
 
-Type::Type(std::string const &identifier, std::vector<Parameter> const &fields, Constructor &constructor,
-	std::vector<Method> const &methods) : identifier(identifier), fields(fields), constructor(constructor),
+Type::Type(const std::string &identifier, const std::vector<Parameter> &fields, Constructor &constructor,
+	const std::vector<Method> &methods) : identifier(identifier), fields(fields), constructor(constructor),
 	methods(methods) {}
-
-Type::Type(Type const &other) : identifier(other.identifier), fields(other.fields), constructor(other.constructor),
-	methods(other.methods) {}
-
-Type::Type(Type &&other) : identifier(other.identifier), fields(other.fields), constructor(other.constructor),
-	methods(other.methods) {}
 	
 Type::~Type() {
 	delete &constructor;
 }
 	
-bool Type::correctDecl(Environment env) const {
+bool Type::correctDecl(const Environment &env) const {
     /* Cas où le nom de la classe est déjà pris. */
 	if (env.env.find(identifier) != env.env.end())
         return false;
@@ -30,6 +24,6 @@ bool Type::correctDecl(Environment env) const {
     return true;
 }
 
-std::string Type::getSuperClass(){
+std::string Type::getSuperClass() {
 	return "";
 }

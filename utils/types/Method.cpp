@@ -5,13 +5,13 @@
 
 Method::Method(bool override, const std::string &identifier, const std::vector<Parameter> &parameters, 
 	const std::string &returnTypeIdentifier, Tree *body) : override(override), identifier(identifier), 
-	 parameters(parameters), returnTypeIdentifier(returnTypeIdentifier), body(body) {}
+	parameters(parameters), returnTypeIdentifier(returnTypeIdentifier), body(body) {}
 
 Method::Method(bool override, const std::string &identifier, const std::vector<Parameter> &parameters, 
 	const std::string &returnTypeIdentifier, Block *body) : override(override), identifier(identifier), 
 	parameters(parameters), returnTypeIdentifier(returnTypeIdentifier), body(body) {}
 
-bool Method::correctDecl(Environment env) const {
+bool Method::correctDecl(const Environment &env) const {
 	return true;
 }
 

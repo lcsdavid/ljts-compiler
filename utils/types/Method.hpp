@@ -29,27 +29,20 @@ struct Method {
 	Method &operator=(const Method &other) = default;
 	Method &operator=(Method &&other) = default;
 	
-	virtual bool correctDecl(Environment env) const;
+	virtual bool correctDecl(const Environment &env) const;
 };
 
-Method &operator+=(Method &lhs, Parameter const &rhs);
+Method &operator+=(Method &lhs, const Parameter &rhs);
 
 /**
  * Surcharge de '+' entre Method et Parameter.
  * Ajout d'un Parameter sur une Method.
  */
-Method operator+(Method const &lhs, Parameter const &rhs);
+Method operator+(const Method &lhs, const Parameter &rhs);
 
 /** 
  * Surcharge de '==' pour les Method.
  */
-bool operator ==(Method const &lhs, Method const &rhs);
-
-struct MethodCall {
-	std::string identifier;
-	std::vector<std::string> parameters;
-	
-	MethodCall(std::string const &identifier, std::vector<Parameter> const &parameters);
-};
+bool operator ==(const Method &lhs, const Method &rhs);
 
 #endif
