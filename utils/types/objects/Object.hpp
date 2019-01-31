@@ -7,15 +7,15 @@
 struct Object : Type {
 	Object(std::string const &identifier, std::vector<Parameter> const &fields, ObjectConstructor &constructor,
 		std::vector<Method> const &methods);
-	Object(Object const &other);
-	Object(Object &&other);
-	~Object() override;
+	Object(Object const &other) = default;
+	Object(Object &&other) = default;
+	~Object() override = default;
 	
 	bool isInheritable() const override {
 		return false;
 	}
 	
-	bool isDuplicable() const override{
+	bool isDuplicable() const override {
 		return false;
 	}
 		
