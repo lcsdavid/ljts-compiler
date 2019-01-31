@@ -12,6 +12,10 @@ void genereCode(Tree *tree)
 void genereCodeTree(Tree *tree) {
 	assert(tree);
 	switch (tree->operation) {
+		case operation::method_call:
+			cout << "CALL\n"
+			genereCodeTree(std::get<Tree*>(tree->children[0]));
+			cout << "RETURN\n"
 		case operation::unary_plus:
 			genereCodeTree(std::get<Tree*>(tree->children[0]));
 			break;
