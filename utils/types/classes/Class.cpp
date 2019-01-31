@@ -4,7 +4,7 @@ Class::Class(const std::string &identifier, const std::vector<Parameter> &parame
 	const std::vector<Parameter> &fields, ClassConstructor &constructor, const std::vector<Method> &methods) :
 	Type(identifier, fields, constructor, methods), parameters(parameters), superIdentifier(superIdentifier) {}
 
-bool Class::correctDecl(Environment env) const {
+bool Class::correctDecl(const Environment &env) const {
 	if (!Type::correctDecl(env))
 		return false;
 	/* Vérifie si la super classe est connue... */

@@ -6,7 +6,7 @@ ClassConstructor::ClassConstructor(const std::string &identifier, const std::vec
 	const std::string &superIdentifier, const std::vector<Tree*> &superParameters, Block *body) : 
 	Constructor(identifier, parameters, body), superIdentifier(superIdentifier), superParameters(superParameters) {}
 
-bool ClassConstructor::correctDecl(Environment env) const {
+bool ClassConstructor::correctDecl(const Environment &env) const {
 	return Constructor::correctDecl(env);
 	/* Check si superIdentifier || superParameters ? bug track */
 	/* Check correct super constructor call ? */

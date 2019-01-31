@@ -12,7 +12,7 @@ struct ObjectConstructor : Constructor {
 	ObjectConstructor &operator=(ObjectConstructor const &other) = default;
 	ObjectConstructor &operator=(ObjectConstructor &&other) = default;
 	
-	bool correctDecl(Environment env) const override {
+	bool correctDecl(const Environment &env) const override {
 		return true;
 	}
 };

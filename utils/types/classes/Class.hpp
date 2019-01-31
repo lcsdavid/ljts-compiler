@@ -22,7 +22,7 @@ struct Class : Type {
 		return true;
 	}
 	
-	bool correctDecl(Environment env) const override;
+	bool correctDecl(const Environment &env) const override;
 	
 	virtual std::string getSuperClass() override;
 };

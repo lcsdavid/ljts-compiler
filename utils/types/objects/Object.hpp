@@ -5,9 +5,9 @@
 #include "ObjectConstructor.hpp"
 
 struct Object : Type {
-	Object(std::string const &identifier, std::vector<Parameter> const &fields, ObjectConstructor &constructor,
-		std::vector<Method> const &methods);
-	Object(Object const &other) = default;
+	Object(const std::string &identifier, const std::vector<Parameter> &fields, ObjectConstructor &constructor,
+		const std::vector<Method> &methods);
+	Object(const Object &other) = default;
 	Object(Object &&other) = default;
 	~Object() override = default;
 	

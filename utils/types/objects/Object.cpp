@@ -1,8 +1,8 @@
 #include "Object.hpp"
 
-Object::Object(std::string const &identifier, std::vector<Parameter> const &fields, ObjectConstructor &constructor, 
-	std::vector<Method> const &methods) : Type(identifier, fields, constructor, methods) {}							 
+Object::Object(const std::string &identifier, const std::vector<Parameter> &fields, ObjectConstructor &constructor, 
+	const std::vector<Method> &methods) : Type(identifier, fields, constructor, methods) {}							 
 
-bool Object::correctDecl(Environment env) const {
+bool Object::correctDecl(const Environment &env) const {
 	return Type::correctDecl(env);
 }
