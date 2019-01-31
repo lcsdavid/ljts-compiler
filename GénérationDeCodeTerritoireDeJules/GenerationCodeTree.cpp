@@ -14,10 +14,10 @@ void genereCode(Tree *tree)
 
 void genereCodeTree(Tree *tree) {
 	assert(tree);
+	std::vector<Assignee> tempo;
 	switch (tree->operation) {
 		case operation::method_call:
 			cout << "CALL\n";
-			std::vector<Assignee> tempo;
 			mesVar.push_back(tempo);
 			possp.push_back(0);
 			fctcour++;
