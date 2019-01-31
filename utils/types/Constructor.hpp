@@ -9,10 +9,10 @@ struct Constructor : Method {
 	Constructor(Constructor &&other) = default;
 	~Constructor() override = default;
 	
-	Constructor &operator=(Constructor const &other) = default;
+	Constructor &operator=(const Constructor  &other) = default;
 	Constructor &operator=(Constructor &&other) = default;
 	
-    bool correctDecl(Environment env) const override;
+    bool correctDecl(const Environment &env) const override;
 };
 
 #endif

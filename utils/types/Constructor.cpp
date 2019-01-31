@@ -4,6 +4,6 @@ Constructor::Constructor(const std::string &identifier, const std::vector<Parame
 	Method(false, identifier, parameters, identifier, body) {}
 	
 	
-bool Constructor::correctDecl(Environment env) const {
+bool Constructor::correctDecl(const Environment &env) const {
 	return Method::correctDecl(env);
 }
