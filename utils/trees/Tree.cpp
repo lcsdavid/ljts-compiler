@@ -71,7 +71,7 @@ Tree::Tree(int lineno, int operation, const std::string &var, const std::string 
 }
 
 int Tree::isCorrect(Environment& env){
-	switch(this->operation){
+	switch(operation){
 		case 258:
 		
 		break;
@@ -87,10 +87,10 @@ int Tree::isCorrect(Environment& env){
 		case 262:
 		
 		break;
-		case 263 :
+		case 263:
 			for(size_t i; i < env.fields.size(); i++){
-				if(env.fields.at(i).identifier == (std::string)this->children)
-					return -1;//l'identifier appartient effectivement à la liste des variables connues
+				if (env.fields.at(i).identifier == std::get<std::string>(children.at(0)))
+					return -1; //l'identifier appartient effectivement à la liste des variables connues
 			}
 			return this->lineno;
 		
@@ -137,8 +137,7 @@ int Tree::isCorrect(Environment& env){
 		case 277 :
 		
 		break;
-		
-		
+
 	}
 
 	return -1;

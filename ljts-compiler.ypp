@@ -174,8 +174,8 @@ LVar : Var LVar	{ $$ = $2; $$->insert(std::begin($$), *$1); }
  | Var			{ $$ = new std::vector<Variable>(*$1); }
 ;
 
-Var : IDENTIFIER ':' TYPENAME ASSIGNMENT Expr ';'	{ $$ = new Variable($1, $3, /*$5*/); }
- | IDENTIFIER ':' TYPENAME ';'						{ $$ = new Variable($1, $3); }
+Var : IDENTIFIER ':' TYPENAME ASSIGNMENT Expr ';'	{ $$ = new Variable(std::to_string($1), std::to_string($3), /*$5*/); }
+ | IDENTIFIER ':' TYPENAME ';'						{ $$ = new Variable(std::to_string($1), std::to_string($3)); }
 ;
 
 /* ===== Expression ===== */
