@@ -70,6 +70,13 @@ Tree::Tree(int lineno, int operation, const std::string &var, const std::string 
 		children.push_back(param);
 }
 
+bool Tree::isCorrect(Environment& env){
+
+
+		return true;
+}
+
+
 	
 
 

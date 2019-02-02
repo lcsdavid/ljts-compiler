@@ -4,6 +4,7 @@
 #include <string>
 #include <variant>
 #include <vector>
+#include "../Environment.hpp"
 
 struct Block;
 struct Tree;
@@ -41,6 +42,8 @@ struct Tree {
 	Tree(const Tree &other) = default;
 	Tree &operator=(const Tree &other) = default;
 	~Tree() = default;
+	
+	bool isCorrect(Environment& env);
 };
 
 /* Pour récuperer une valeur d'un variant en particulier children. On part du principe que tu as un Tree t;
