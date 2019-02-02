@@ -15,7 +15,7 @@ void genereCode(Program *program)
 
 void generationCodeDecls(std::vector<Type*> typesDecls)
 {
-	for(unsigned int i=0;i<typesDecls;i++)
+	for(Type* type :typesDecls)
 	{
 		cout << "Bon j'ai pas encore fait les classes toi-même tu sais" << endl;
 	}
