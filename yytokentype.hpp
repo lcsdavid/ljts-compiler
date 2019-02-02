@@ -1,0 +1,30 @@
+#ifndef YYTOKENTYPE_HPP
+#define YYTOKENTYPE_HPP
+
+/* Token type. */
+enum yytokentype {
+	ASSIGNMENT = 258,
+	CLASS = 259,
+	DEF = 260,
+	ELSE = 261,
+	EXTENDS = 262,
+	IDENTIFIER = 263,
+	IF = 264,
+	INTEGER = 265,
+	IS = 266,
+	NEW = 267,
+	OBJECT = 268,
+	OVERRIDE = 269,
+	RELATIONAL_OPERATOR = 270,
+	RETURN = 271,
+	STRING = 272,
+	THEN = 273,
+	THIS = 274,
+	TYPENAME = 275,
+	VAR = 276,
+	unary = 277
+};
+
+#define YYTOKENTYPE YYTOKENTYPE
+
+#endif

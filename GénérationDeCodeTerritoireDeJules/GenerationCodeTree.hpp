@@ -1,8 +1,8 @@
 #ifndef GENERE_HPP
 #define GENERE_HPP
 
-#include "../utils/trees/Tree.hpp"
-#include "../ljts-compiler.hpp"
+#include "../utils/Structures.hpp"
+#include "../optype.hpp"
 
 #include <vector>
 

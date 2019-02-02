@@ -1,6 +1,8 @@
 #include "GenerationCodeTree.hpp"
 
 #include <cassert>
+#include <iostream>
+#include <string>
 
 void genereCode(Program *program)
 {
@@ -49,7 +51,7 @@ void genereCodeTree(Tree *tree) {
 	assert(tree);
 	std::vector<Assignee> tempo;
 	switch (tree->operation) {
-		case operation::method_call:
+		case optype::method_call:
 			cout << "CALL\n";
 			mesVar.push_back(tempo);
 			possp.push_back(0);
@@ -60,70 +62,70 @@ void genereCodeTree(Tree *tree) {
 			fctcour--;
 			std::cout << "RETURN" << std::endl;
 			break;
-		case operation::unary_plus:
+		case optype::unary_plus:
 			genereCodeTree(std::get<Tree*>(tree->children[0]));
 			break;
 		case unary_substract:
 			negat(tree);
 			break;
-		case operation::integer:
+		case optype::integer:
 			creerVar(tree);
 			break;
-		case operation::addition:
+		case optype::addition:
 			genereCodeTree(std::get<Tree*>(tree->children[0]));
 			genereCodeTree(std::get<Tree*>(tree->children[1]));
 			std::cout << "ADD" << std::endl;
 			break;
-		case operation::substraction:
+		case optype::substraction:
 			genereCodeTree(std::get<Tree*>(tree->children[0]));
 			genereCodeTree(std::get<Tree*>(tree->children[1]));
 			std::cout << "SUB" << std::endl;
 			break;
-		case operation::multiplication:
+		case optype::multiplication:
 			genereCodeTree(std::get<Tree*>(tree->children[0]));
 			genereCodeTree(std::get<Tree*>(tree->children[1]));
 			std::cout << "MUL" << std::endl;
 			break;
-		case operation::division:
+		case optype::division:
 			genereCodeTree(std::get<Tree*>(tree->children[0]));
 			genereCodeTree(std::get<Tree*>(tree->children[1]));
 			std::cout << "DIV" << std::endl;
 			break;
-		case operation::assignment:
+		case optype::assignment:
 			assignation(tree);
 			break;
-		case operation::identifier:
+		case optype::identifier:
 			getVal(tree);
 			break;
-		case operation::if_then_else:
+		case optype::if_then_else:
 			fctif(tree);
 			break;
-		case operation::equal:
+		case optype::equal:
 			genereCodeTree(std::get<Tree*>(tree->children[0]));
 			genereCodeTree(std::get<Tree*>(tree->children[1]));
 			std::cout << "EQUAL" << std::endl;
 			break;
-		case operation::less_strict:
+		case optype::less_strict:
 			genereCodeTree(std::get<Tree*>(tree->children[0]));
 			genereCodeTree(std::get<Tree*>(tree->children[1]));
 			std::cout << "INF" << std::endl;
 			break;
-		case operation::less_equal:
+		case optype::less_equal:
 			genereCodeTree(std::get<Tree*>(tree->children[0]));
 			genereCodeTree(std::get<Tree*>(tree->children[1]));
 			std::cout << "INFEQ" << std::endl;
 			break;
-		case operation::greater_strict:
+		case optype::greater_strict:
 			genereCodeTree(std::get<Tree*>(tree->children[0]));
 			genereCodeTree(std::get<Tree*>(tree->children[1]));
 			std::cout << "SUP" << std::endl;
 			break;
-		case operation::greater_equal:
+		case optype::greater_equal:
 			genereCodeTree(std::get<Tree*>(tree->children[0]));
 			genereCodeTree(std::get<Tree*>(tree->children[1]));
 			std::cout << "SUPEQ" << std::endl;
 			break;
-		case operation::not_equal:
+		case optype::not_equal:
 			genereCodeTree(std::get<Tree*>(tree->children[0]));
 			genereCodeTree(std::get<Tree*>(tree->children[1]));
 			std::cout << "EQUAL" << std::endl << "PUSHI 0" << std::endl << "EQUAL" << std::endl;

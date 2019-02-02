@@ -11,7 +11,7 @@
 extern int yyparse();
 
 void yyerror (char const *s) {
-	std::cerr << "error: " << s << " at line " << yylineno << std::endl;
+	std::cout << "\033[91merror:\033[0m " << s << " at line " << yylineno << std::endl << yytext << std::endl;
 	exit(1);
 }
 

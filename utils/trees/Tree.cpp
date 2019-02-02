@@ -1,6 +1,7 @@
 #include "Tree.hpp"
 
 #include "Block.hpp"
+#include "../../optype.hpp"
 
 /* return_call */
 Tree::Tree(int lineno, int operation) : lineno(lineno), operation(operation) {}
