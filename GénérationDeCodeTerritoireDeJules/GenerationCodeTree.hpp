@@ -13,6 +13,8 @@ struct Assignee {
 	int valeur;
 };
 
+std::vector<Assignee> VarGenerale;
+
 std::vector<std::vector<Assignee>> mesVar;
 
 std::vector<unsigned int> possp;

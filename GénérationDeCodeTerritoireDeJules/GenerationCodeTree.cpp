@@ -2,14 +2,20 @@
 
 #include <cassert>
 
-void genereCode(Tree *tree)
+void genereCode(Program *program)
 {
 	cout << "START" << endl;
-	vector<Assignee> tempo;
+	/*vector<Assignee> tempo;
 	mesVar.push_back(tempo);
 	possp.push_back(0);
-	genereCodeTree(tree);
+	genereCodeTree(tree);*/
+	generationCodeDecls(program->typesDecls);
 	cout << "STOP" << endl;
+}
+
+void generationCodeDecls(std::vector<Type*> typesDecls)
+{
+	
 }
 
 void genereCodeTree(Tree *tree) {
@@ -129,11 +135,19 @@ void fctif(Tree *tree)
 
 void getVal(Tree *tree)
 {
-	for(int i=mesVar.size()-1;i>-1;i--)
+	for(int i=mesVar[fctcour].size()-1;i>-1;i--)
 	{
 		if(mesVar[fctcour][i].nom==std::get<std::string>(tree->children[0]))
 		{
 			std::cout << "PUSHL " << mesVar[fctcour][i].valeur;
+			return;
+		}
+	}
+	for(int i=VarGenerale.size()-1;i>-1;i--)
+	{
+		if(VarGenerale[i].nom==std::get<std::string>(tree->children[0]))
+		{
+			std::cout << "PUSHL " << VarGenerale[i].valeur;
 			return;
 		}
 	}
