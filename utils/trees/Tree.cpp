@@ -71,9 +71,72 @@ Tree::Tree(int lineno, int operation, const std::string &var, const std::string 
 }
 
 bool Tree::isCorrect(Environment& env){
+	switch(this->operation){
+		case 258:
+		
+		break;
+		case 259 :
+		
+		break;
+		case 260:
+		
+		break;
+		case 261 :
+		
+		break;
+		case 262:
+		
+		break;
+		case 263 :
+		
+		break;
+		case 264:
+		
+		break;
+		case 265 :
+		
+		break;
+		case 266:
+		
+		break;
+		case 267 :
+		
+		break;
+		case 268:
+		
+		break;
+		case 269 :
+		
+		break;
+		case 270:
+		
+		break;
+		case 271 :
+		
+		break;
+		case 272:
+		
+		break;
+		case 273 :
+		
+		break;
+		case 274:
+		
+		break;
+		case 275 :
+		
+		break;
+		case 276:
+		
+		break;
+		case 277 :
+		
+		break;
+		
+		
+	}
 
-
-		return true;
+	return true;
 }
 
 
