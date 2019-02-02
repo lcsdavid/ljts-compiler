@@ -11,6 +11,15 @@ struct Object : Type {
 	Object(Object &&other) = default;
 	~Object() override = default;
 	
+	virtual bool isStatic() const {
+		return true;
+	}
+	
+	virtual bool hasSuper() const {
+		throw NotInheritableException();
+	}
+	virtual std::string super() const = 0;
+	
 	bool isInheritable() const override {
 		return false;
 	}

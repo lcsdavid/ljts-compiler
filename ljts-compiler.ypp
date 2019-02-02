@@ -217,7 +217,7 @@ LExpr : Expr ',' LExpr	{ $$.push_back($1); $$.insert(std::end($$), std::begin($3
  | Expr					{ $$.push_back($1); }
 ;
 
-Expr : Expr RELATIONAL_OPERATOR Expr 	{ $$ = new Tree(yylineno, $2, { $1, $3 }); }
+Expr : Expr RELATIONAL_OPERATOR Expr	{ $$ = new Tree(yylineno, $2, { $1, $3 }); }
  | Expr '+' Expr						{ $$ = new Tree(yylineno, addition, { $1, $3 }); } /* integer */
  | Expr '-' Expr						{ $$ = new Tree(yylineno, substraction, { $1, $3 }); } 
  | Expr '*' Expr						{ $$ = new Tree(yylineno, multiplication, { $1, $3 }); }
@@ -234,14 +234,14 @@ Expr : Expr RELATIONAL_OPERATOR Expr 	{ $$ = new Tree(yylineno, $2, { $1, $3 });
  | IDENTIFIER							{ $$ = new Tree(yylineno, identifier, $1); }
 ;
 
-MemberAccess : Expr '.' Expr	{ $$ = new Tree(yylineno, member_access, {$1, $3}); }
- | THIS '.' Expr				{ $$ = new Tree(yylineno, member_access, "this", $3); }
- | TYPENAME '.' Expr			{ $$ = new Tree(yylineno, object_member_access, $1, $3); }
+MemberAccess : Expr '.' IDENTIFIER	{ $$ = new Tree(yylineno, member_access, $1, $3); }
+ | THIS '.' IDENTIFIER				{ $$ = new Tree(yylineno, member_access, "this", $3); }
+ | TYPENAME '.' IDENTIFIER			{ $$ = new Tree(yylineno, object_member_access, $1, $3); }
 ;
  
-MethodCall : Expr '.' Expr '(' LOptExpr ')' { $$ = new Tree(yylineno, method_call, $1, $3, $5); }
- | THIS '.' Expr '(' LOptExpr ')'			{ $$ = new Tree(yylineno, method_call, "this", $3, $5); }
- | TYPENAME '.' Expr '(' LOptExpr ')' 		{ $$ = new Tree(yylineno, object_method_call, $1, $3, $5); }
+MethodCall : Expr '.' IDENTIFIER '(' LOptExpr ')'	{ $$ = new Tree(yylineno, method_call, $1, $3, $5); }
+ | THIS '.' IDENTIFIER '(' LOptExpr ')'				{ $$ = new Tree(yylineno, method_call, "this", $3, $5); }
+ | TYPENAME '.' IDENTIFIER '(' LOptExpr ')' 		{ $$ = new Tree(yylineno, object_method_call, $1, $3, $5); }
 ;
 
 %%

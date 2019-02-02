@@ -1,17 +1,24 @@
-#ifndef COMPILER_ENVIRONMENT_H
-#define COMPILER_ENVIRONMENT_H
+#ifndef COMPILER_PROGRAM_HPP
+#define COMPILER_PROGRAM_HPP
+
+#include <vector>
 
 struct Block;
 struct Type;
 
-struct Programme {
-    std::vector<Type*> declarations;	/* Liste [optionnelle] de déclarations des types. */
-    Block *main;						/* Le bloc d'opération principal e.g. main. */
+struct Program {
+    std::vector<Type*> typesDecls;	/* Liste [optionnelle] de déclarations des types. */
+    Block *main;					/* Le bloc d'opération principal e.g. main(). */
 	
-	Programme(const std::vector<Type*> declarations, Block *main);
-	~Programme() = default;
-	
-	
+	Program(const std::vector<Type*> typesDecls, Block *main);
+	~Program();
 };
 
-#endif COMPILER_ENVIRONMENT_H
+std::ostream &operator<<(std::ostream &os, const Program &program) {
+	os << "Déclarations:" << std::endl;
+	for (auto it = typesDecls.begin(); it != typesDecls.end(); it++)
+		os << program.typesDecls << std::endl;
+	return os << std::endl << "main():" << std::endl << main;
+}
+
+#endif 

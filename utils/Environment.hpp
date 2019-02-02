@@ -1,5 +1,5 @@
-#ifndef COMPILER_ENVIRONMENT_H
-#define COMPILER_ENVIRONMENT_H
+#ifndef COMPILER_ENVIRONMENT_HPP
+#define COMPILER_ENVIRONMENT_HPP
 
 #include <string>
 #include <vector>

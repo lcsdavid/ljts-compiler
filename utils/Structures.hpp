@@ -15,8 +15,6 @@
 #include "types/Method.hpp"
 #include "types/Constructor.hpp"
 
-/*
-
-void regressionTesting(); */
+/* void regressionTesting(); */
 
 #endif

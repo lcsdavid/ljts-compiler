@@ -7,7 +7,7 @@ Environment::Environment(std::map<std::string, Type*> &env, std::vector<Paramete
 	
 bool Environment::know(std::string type){
 	if(this->env.find(type) != env.end())
-		return true;//on a trouvé le type que l'on cherchait
+		return true; /* On a trouvé le type que l'on cherchait. */
 	
 	return false;
 	
@@ -22,15 +22,15 @@ Parameter* Environment::contains(std::string param){
 }
 
 bool Environment::isSubClass(std::string type1, std::string type2){
-	if(this->env.find(type1) == env.end())
-		return false;//on a trouvé le type que l'on cherchait
+	if(env.find(type1) == env.end())
+		return false; /* On a trouvé le type que l'on cherchait
 	
-	if((this->env.find(type1)->second)->getSuperClass() == "")
+	if(env.find(type1)->second->getSuperClass() == "")
 		return false;//pas de super classe
 	
 	
-	//il y a une super classe
-	if((this->env.find(type1)->second)->getSuperClass() ==  type2)
+	/* Il y a une super classe. */
+	if(env.find(type1)->second->getSuperClass() ==  type2)
 		return true;
 		
 	return isSubClass((this->env.find(type1)->second)->getSuperClass(), type2);

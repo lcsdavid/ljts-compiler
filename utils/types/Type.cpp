@@ -7,6 +7,17 @@ Type::Type(const std::string &identifier, const std::vector<Parameter> &fields, 
 Type::~Type() {
 	delete &constructor;
 }
+
+std::ostream &operator<<(std::ostream &os, const Type &type) {
+	os << (type.isStatic() ? "object " : "class ") << type.identifier 
+		<< (!type.isStatic() and hasSuper() ? "extends " + super() : "") << std::endl;
+	for (auto it = fields.begin(); it != fields.end(); it++)
+		os << "  " << *it << std::endl;
+	os << "  " << constructor;
+	for (auto it = methods.begin(); it != methods.end(); it++)
+		os << "  " << *it << std::endl;
+	return os << std::endl;
+}
 	
 bool Type::correctDecl(const Environment &env) const {
     /* Cas où le nom de la classe est déjà pris. */
@@ -24,6 +35,6 @@ bool Type::correctDecl(const Environment &env) const {
     return true;
 }
 
-std::string Type::getSuperClass() {
-	return "";
-}
+NotInheritableException::NotInheritableException(const std::string& what_arg) : std::logic_error(what_arg) {}
+
+NotInheritableException::NotInheritableException(const char* what_arg) : std::logic_error(what_arg) {}
