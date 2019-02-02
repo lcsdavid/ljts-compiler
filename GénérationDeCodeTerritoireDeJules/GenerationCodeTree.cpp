@@ -15,6 +15,15 @@ void genereCode(Program *program)
 
 void generationCodeDecls(std::vector<Type*> typesDecls)
 {
+	for(int i=0;i<typesDecls;i++)
+	{
+		cout << "Bon j'ai pas encore fait les classes toi-même tu sais" << endl;
+	}
+	
+}
+
+void genereCodeBloc(Block *block)
+{
 	
 }
 
@@ -135,19 +144,19 @@ void fctif(Tree *tree)
 
 void getVal(Tree *tree)
 {
-	for(int i=mesVar[fctcour].size()-1;i>-1;i--)
+	for(unsigned int i=mesVar[fctcour].size();i>0;i--)
 	{
-		if(mesVar[fctcour][i].nom==std::get<std::string>(tree->children[0]))
+		if(mesVar[fctcour][i-1].nom==std::get<std::string>(tree->children[0]))
 		{
-			std::cout << "PUSHL " << mesVar[fctcour][i].valeur;
+			std::cout << "PUSHL " << mesVar[fctcour][i-1].valeur;
 			return;
 		}
 	}
-	for(int i=VarGenerale.size()-1;i>-1;i--)
+	for(unsigned int i=VarGenerale.size();i>0;i--)
 	{
-		if(VarGenerale[i].nom==std::get<std::string>(tree->children[0]))
+		if(VarGenerale[i-1].nom==std::get<std::string>(tree->children[0]))
 		{
-			std::cout << "PUSHL " << VarGenerale[i].valeur;
+			std::cout << "PUSHL " << VarGenerale[i-1].valeur;
 			return;
 		}
 	}

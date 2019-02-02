@@ -20,6 +20,8 @@ std::vector<std::vector<Assignee>> mesVar;
 std::vector<unsigned int> possp;
 unsigned int fctcour=0;
 
+void genereCode(Program *program);
+void generationCodeDecls(std::vector<Type*> typesDecls);
 void genereCodeTree(Tree *tree);
 void getVal(Tree *tree);
 void assignation(Tree *tree);
