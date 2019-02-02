@@ -24,8 +24,8 @@ bool Type::correctDecl(const Environment &env) const {
 	if (env.env.find(identifier) != env.env.end())
         return false;
 	/* Vérifie la validité du constructeur. */
-	/*if(this->fields != constructor.parameters)//si les paramètres de la classe et du constructeur ne sont pas les mêmes
-		return false;*/
+	if(this->fields != constructor.parameters)//si les paramètres de la classe et du constructeur ne sont pas les mêmes
+		return false;
 	if (!constructor.correctDecl(env))
 		return false;
 	
