@@ -13,9 +13,6 @@ struct Program {
 	Program(const std::vector<Type*> typesDecls, Block *main);
 	~Program();
 	
-	/**
-	 * Si return true tout va bien, si retourne faux erreur de compilation.
-	 */
 	void contextualCheck() const;
 };
 
