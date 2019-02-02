@@ -20,9 +20,9 @@ Parameter* Environment::contains(std::string param){
 
 bool Environment::isSubClass(std::string type1, std::string type2){
 	if(env.find(type1) == env.end())
-		return false; /* On a trouvé le type que l'on cherchait
+		return false; /* On a trouvé le type que l'on cherchait*/
 	
-	if(env.find(type1)->second->getSuperClass() == "")
+	if(env.find(type1)->second->super() == "")
 		return false;//pas de super classe
 	
 	

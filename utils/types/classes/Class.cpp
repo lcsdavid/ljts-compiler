@@ -9,12 +9,17 @@ bool Class::correctDecl(const Environment &env) const {
 		return false;
 	/* Vérifie si la super classe est connue... */
 	if (!superIdentifier.empty()) {
-		auto super = env.env.find(identifier);
+		auto super = env.env.find(superIdentifier);
 		if (super == env.env.end())
 			return false;
 		if (!(*super).second->isInheritable())
 			return false;
 	}
+	
+	//on vérifie qu'il ni a pas d'héritage circulaire
+	if(env.isSubClass(this->typename, this->typename)
+		return false;
+	
 	return true;
 }
 	
