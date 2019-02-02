@@ -16,9 +16,12 @@ struct Object : Type {
 	}
 	
 	virtual bool hasSuper() const {
+		throw NotInheritableException("Bah c'est un objet du coup il a pas de super....");
+	}
+	
+	virtual std::string super() const {
 		throw NotInheritableException();
 	}
-	virtual std::string super() const = 0;
 	
 	bool isInheritable() const override {
 		return false;

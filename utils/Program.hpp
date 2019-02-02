@@ -12,13 +12,13 @@ struct Program {
 	
 	Program(const std::vector<Type*> typesDecls, Block *main);
 	~Program();
+	
+	/**
+	 * Si return true tout va bien, si retourne faux erreur de compilation.
+	 */
+	void contextualCheck() const;
 };
 
-std::ostream &operator<<(std::ostream &os, const Program &program) {
-	os << "Déclarations:" << std::endl;
-	for (auto it = typesDecls.begin(); it != typesDecls.end(); it++)
-		os << program.typesDecls << std::endl;
-	return os << std::endl << "main():" << std::endl << main;
-}
+std::ostream &operator<<(std::ostream &os, const Program &program);
 
 #endif 

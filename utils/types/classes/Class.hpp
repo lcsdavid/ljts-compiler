@@ -14,6 +14,20 @@ struct Class : Type {
 	Class(Class &&other) = default;
 	~Class() override = default;
 	
+	bool isStatic() const override {
+		return false;
+	}
+	
+	bool hasSuper() const override {
+		return !superIdentifier.empty();
+	}
+	
+	std::string super() const override {
+		if (!hasSuper())
+			throw NotInheritableException();
+		return superIdentifier;
+	}
+	
 	bool isInheritable() const override {
 		return true;
 	}
