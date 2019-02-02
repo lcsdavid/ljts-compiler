@@ -16,7 +16,7 @@ struct Program {
 
 std::ostream &operator<<(std::ostream &os, const Program &program) {
 	os << "Déclarations:" << std::endl;
-	for (auto it = typesDecls.begin(); it != typesDecls.end(); it++)
+	for (auto it = program.typesDecls.begin(); it != program.typesDecls.end(); it++)
 		os << program.typesDecls << std::endl;
 	return os << std::endl << "main():" << std::endl << main;
 }

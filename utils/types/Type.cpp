@@ -28,11 +28,27 @@ bool Type::correctDecl(const Environment &env) const {
 		return false;*/
 	if (!constructor.correctDecl(env))
 		return false;
+	
+	//on ajoute les variables au scope si elles existent, sinon on retourne une erreure
+	for(size_t i; i<parameters.size; i++){
+		if(env.env.find(parameters.at(i).identifier) == env.env.end)
+			return false;
+		env.fields.push_back(parameters.at(i);
+	}
+	
 	/* Vérifie la validité des méthodes. */
 	for (Method const &method : methods)
 		if (!method.correctDecl(env))
 			return false;
-    return true;
+	
+	//en sortie de la classe on supprimer les variables locales
+	for(size_t i; i<parameters.size(); i++){
+		env.fields.pop_back();
+	}
+	
+	env.env[this->typename] = this;
+	
+	return true;
 }
 
 NotInheritableException::NotInheritableException(const std::string& what_arg) : std::logic_error(what_arg) {}
