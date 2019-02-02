@@ -2,7 +2,7 @@
 
 #include "types/Type.hpp"
 
-Environment::Environment(std::map<std::string, Type*> &env, const std::vector<Parameter> &fields) : env(env), fields(fields) {}
+Environment::Environment(std::map<std::string, Type*> &env, const std::vector<Variable> &fields) : env(env), fields(fields) {}
 	
 bool Environment::know(std::string type){
 	if(env.find(type) != env.end())
@@ -10,7 +10,7 @@ bool Environment::know(std::string type){
 	return false;
 }
 
-Parameter* Environment::contains(std::string param){
+Variable* Environment::contains(std::string param){
 	for(size_t i = 0; i < fields.size(); i++){
 		if(fields.at(i).identifier == param)
 			return &fields.at(i);

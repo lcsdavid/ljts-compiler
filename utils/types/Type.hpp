@@ -2,11 +2,12 @@
 #define COMPILER_TYPE_HPP
 
 #include <map>
+#include <ostream>
 #include <stdexcept>
 #include <string>
 #include <vector>
 
-#include "../variables/Parameter.hpp"
+#include "../Variable.hpp"
 #include "Constructor.hpp"
 #include "Method.hpp"
 
@@ -14,11 +15,11 @@
 
 struct Type {
 	std::string identifier;       /* Identifiant de la classe. */
-	std::vector<Parameter> fields; /* Liste de champs de la classe. */
+	std::vector<Variable> fields; /* Liste de champs de la classe. */
 	Constructor &constructor;     /* Constructeur de la classe. */
 	std::vector<Method> methods;  /* Liste de méthodes de la classe. */
 
-	Type(const std::string &identifier, const std::vector<Parameter> &fields, Constructor &constructor,
+	Type(const std::string &identifier, const std::vector<Variable> &fields, Constructor &constructor,
 		const std::vector<Method> &methods);
 	Type(Type const &other) = default;
 	Type(Type &&other) = default;
@@ -29,20 +30,8 @@ struct Type {
 	virtual std::string super() const = 0;
 	
 	virtual bool correctDecl(const Environment &env) const;
-	
-	
-	/* delete */
-	virtual bool isInheritable() const = 0;
-	virtual bool isDuplicable() const = 0;
-	
-	virtual std::string getSuperClass();
 };
 
 std::ostream &operator<<(std::ostream &os, const Type &type);
-
-class NotInheritableException : public std::logic_error {
-	explicit NotInheritableException(const std::string& what_arg);
-	explicit NotInheritableException(const char* what_arg);
-};
 
 #endif

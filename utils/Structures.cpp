@@ -1,9 +1,9 @@
 #include "Structures.hpp"
 
 /*void regressionTesting() {
-    Parameter p("nom", "String", false);
-    Method m("toString", std::vector<Parameter *>());
-    Constructor("Compiler", std::vector<Parameter *>(), nullptr);
+    Variable p("nom", "String", false);
+    Method m("toString", std::vector<Variable *>());
+    Constructor("Compiler", std::vector<Variable *>(), nullptr);
 
 
 };*/

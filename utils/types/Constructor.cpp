@@ -1,8 +1,17 @@
 #include "Constructor.hpp"
 
-Constructor::Constructor(const std::string &identifier, const std::vector<Parameter> &parameters, Block *body) : 
+Constructor::Constructor(const std::string &identifier, const std::vector<Variable> &parameters, Block *body) : 
 	Method(false, identifier, parameters, identifier, body) {}
 	
+std::ostream &operator<<(std::ostream &os, const Constructor &c) {
+	os << c.identifier << '(';
+	for (auto it = c.parameters.begin(); it != c.parameters.end(); it++) {
+		os << *it;
+		if (it != c.parameters.end() - 1)
+			os << ", ";
+	}
+	os << ')' << std::endl;
+}
 	
 bool Constructor::correctDecl(const Environment &env) const {
 	return Method::correctDecl(env);

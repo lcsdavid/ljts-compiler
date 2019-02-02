@@ -1,6 +1,6 @@
 #include "Type.hpp"
 
-Type::Type(const std::string &identifier, const std::vector<Parameter> &fields, Constructor &constructor,
+Type::Type(const std::string &identifier, const std::vector<Variable> &fields, Constructor &constructor,
 	const std::vector<Method> &methods) : identifier(identifier), fields(fields), constructor(constructor),
 	methods(methods) {}
 	
@@ -10,11 +10,11 @@ Type::~Type() {
 
 std::ostream &operator<<(std::ostream &os, const Type &type) {
 	os << (type.isStatic() ? "object " : "class ") << type.identifier 
-		<< (!type.isStatic() and hasSuper() ? "extends " + super() : "") << std::endl;
-	for (auto it = fields.begin(); it != fields.end(); it++)
+		<< (!type.isStatic() and type.hasSuper() ? "extends " + type.super() : "") << std::endl;
+	for (auto it = type.fields.begin(); it != type.fields.end(); it++)
 		os << "  " << *it << std::endl;
-	os << "  " << constructor;
-	for (auto it = methods.begin(); it != methods.end(); it++)
+	os << "  " << type.constructor;
+	for (auto it = type.methods.begin(); it != type.methods.end(); it++)
 		os << "  " << *it << std::endl;
 	return os << std::endl;
 }
@@ -50,7 +50,3 @@ bool Type::correctDecl(const Environment &env) const {
 	
 	return true;
 }
-
-NotInheritableException::NotInheritableException(const std::string& what_arg) : std::logic_error(what_arg) {}
-
-NotInheritableException::NotInheritableException(const char* what_arg) : std::logic_error(what_arg) {}

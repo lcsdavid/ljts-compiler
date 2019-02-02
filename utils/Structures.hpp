@@ -6,7 +6,7 @@
 #include "trees/Block.hpp"
 #include "trees/Tree.hpp"
 
-#include "variables/Parameter.hpp"
+#include "Variable.hpp"
 	
 #include "types/Type.hpp"
 	#include "types/classes/Class.hpp"

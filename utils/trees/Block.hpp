@@ -5,17 +5,17 @@
 #include <vector>
 #include <map>
 
-#include "../variables/Parameter.hpp"
+#include "../Variable.hpp"
 #include "../Environment.hpp"
 
 struct Type;
 struct Tree;
 
 struct Block {
-	std::vector<Parameter> varDecls;
+	std::vector<Variable> varDecls;
 	std::vector<Tree*> insts;
 
-	Block(const std::vector<Parameter> &varDecls, const std::vector<Tree*> &insts);
+	Block(const std::vector<Variable> &varDecls, const std::vector<Tree*> &insts);
 	~Block() = default;
 
 	bool correctDecl(Environment env) const;

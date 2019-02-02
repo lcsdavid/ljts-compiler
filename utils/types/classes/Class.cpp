@@ -1,7 +1,7 @@
 #include "Class.hpp"
 
-Class::Class(const std::string &identifier, const std::vector<Parameter> &parameters, const std::string &superIdentifier, 
-	const std::vector<Parameter> &fields, ClassConstructor &constructor, const std::vector<Method> &methods) :
+Class::Class(const std::string &identifier, const std::vector<Variable> &parameters, const std::string &superIdentifier, 
+	const std::vector<Variable> &fields, ClassConstructor &constructor, const std::vector<Method> &methods) :
 	Type(identifier, fields, constructor, methods), parameters(parameters), superIdentifier(superIdentifier) {}
 
 bool Class::correctDecl(const Environment &env) const {
@@ -21,8 +21,4 @@ bool Class::correctDecl(const Environment &env) const {
 		return false;
 	
 	return true;
-}
-	
-std::string Class::getSuperClass(){
-	return superIdentifier;	
 }

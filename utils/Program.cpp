@@ -17,17 +17,17 @@ Program::~Program() {
 }
 
 void Program::contextualCheck() const {
-	Environment env();
+	Environment env;
 	for (auto it = typesDecls.begin(); it != typesDecls.end(); it++)
 		if ((*it)->correctDecl(env))
 			env.env[(*it)->identifier] = *it;
 
-	
+	/* Vérife de main */
 }
 
 std::ostream &operator<<(std::ostream &os, const Program &program) {
 	os << "Déclarations:" << std::endl;
-	for (auto it = typesDecls.begin(); it != typesDecls.end(); it++)
+	for (auto it = program.typesDecls.begin(); it != program.typesDecls.end(); it++)
 		os << *it << std::endl;
-	return os << std::endl << "main():" << std::endl << main;
+	return os << std::endl << "main():" << std::endl << program.main;
 }
