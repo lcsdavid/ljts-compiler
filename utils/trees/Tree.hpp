@@ -43,7 +43,8 @@ struct Tree {
 	Tree &operator=(const Tree &other) = default;
 	~Tree() = default;
 	
-	bool isCorrect(Environment& env);
+	//renvoie -1 si tout va bien, sinon renvoie la ligne a laquelle on a le problème
+	int isCorrect(Environment& env);
 };
 
 /* Pour récuperer une valeur d'un variant en particulier children. On part du principe que tu as un Tree t;
