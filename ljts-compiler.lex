@@ -26,8 +26,8 @@ string		\"[^\"]*\"
 %}
 
 %%
-{commentary}	{ std::string ctary = yytext; yylineno += std::count(ctary.begin(), ctary.end(), '\n'); }
-{newline}		yylineno++;
+{commentary}	{ std::string ctary = yytext; }
+{newline}
 [ \t]
 class			return CLASS;
 def				return DEF;

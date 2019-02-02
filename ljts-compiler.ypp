@@ -53,7 +53,6 @@ using namespace std::string_literals;
 %left '*' '/'
 %nonassoc unary NEW
 %left '.'
-%left '('
 
 %%
 Program : LOptDecls Block { Program program(*$1, $2); std::cout << program; }
@@ -94,7 +93,7 @@ ClassDecl : CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField Cla
 ;
 
 OptExtends : EXTENDS TYPENAME	{ $$ = $2; }
- |								{ $$ = nullptr; }
+ |								{ $$ = new char[1]; $$[0] = '\0'; }
 ;
 
 ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block	{ $$ = new ClassConstructor($2, *$4, $7, *$9, $12); }
@@ -206,15 +205,14 @@ Expr : Expr RELATIONAL_OPERATOR Expr	{ $$ = new Tree(yylineno, $2, { $1, $3 }); 
  | INTEGER								{ $$ = new Tree(yylineno, integer, $1); }
  | STRING								{ $$ = new Tree(yylineno, string, $1); }
  | IDENTIFIER							{ $$ = new Tree(yylineno, identifier, $1); }
+ | THIS									{ $$ = new Tree(yylineno, identifier, "this"); }
 ;
 
 MemberAccess : Expr '.' IDENTIFIER	{ $$ = new Tree(yylineno, member_access, $1, $3); }
- | THIS '.' IDENTIFIER				{ $$ = new Tree(yylineno, member_access, "this", $3); }
  | TYPENAME '.' IDENTIFIER			{ $$ = new Tree(yylineno, member_access, $1, $3); }
 ;
 
 MethodCall : Expr '.' IDENTIFIER '(' LOptExpr ')'	{ $$ = new Tree(yylineno, method_call, $1, $3, *$5); }
- | THIS '.' IDENTIFIER '(' LOptExpr ')'				{ $$ = new Tree(yylineno, method_call, "this", $3, *$5); }
  | TYPENAME '.' IDENTIFIER '(' LOptExpr ')' 		{ $$ = new Tree(yylineno, method_call, $1, $3, *$5); }
 ;
 

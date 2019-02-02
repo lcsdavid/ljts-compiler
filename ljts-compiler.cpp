@@ -10,8 +10,8 @@
 
 extern int yyparse();
 
-void yyerror (char const *s) {
-	std::cout << "\033[91merror:\033[0m " << s << " at line " << yylineno << std::endl << yytext << std::endl;
+void yyerror(const char *s) {
+	std::cout << "\033[91merror:\033[0m " << s << " at line " << yylineno << std::endl;
 	exit(1);
 }
 
