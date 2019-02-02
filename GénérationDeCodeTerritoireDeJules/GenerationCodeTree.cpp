@@ -34,7 +34,7 @@ void genereCodeBloc(Block *block)
 	}
 }
 
-void genereCodeParam(Parameter *param)
+void genereCodeParam(Variable param)
 {
 	cout << "J'ai pas capté" << endl;
 		/*Assignee tempo;
