@@ -40,6 +40,6 @@ std::ostream &operator<<(std::ostream &os, const Type &type);
 class NotInheritableException : public std::logic_error {
 	explicit NotInheritableException(const std::string& what_arg);
 	explicit NotInheritableException(const char* what_arg);
-}
+};
 
 #endif
