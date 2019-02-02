@@ -13,7 +13,7 @@ struct Environment {
 	std::map<std::string, Type*> env;
 	std::vector<Variable> fields;
 	
-	Environment();
+	Environment() = default;
 	Environment(std::map<std::string, Type*> &env, std::vector<Variable> const & fields);
 	~Environment() = default;
 

@@ -1,5 +1,5 @@
-#ifndef METHOD_HPP
-#define METHOD_HPP
+#ifndef COMPILER_METHOD_HPP
+#define COMPILER_METHOD_HPP
 
 #include <string>
 #include <variant>
@@ -11,6 +11,8 @@
 
 struct Block;
 struct Tree;
+
+struct Type;
 
 struct Method {
 	bool override;						/* Override? */
@@ -31,9 +33,12 @@ struct Method {
 	Method &operator=(const Method &other) = default;
 	Method &operator=(Method &&other) = default;
 	
-	virtual bool correctDecl(const Environment &env) const;
+	virtual bool correctDecl(const Type &parent, const Environment &env) const;
 };
 
+/**
+ * Surchage de l'opérateur de flux de sortie.
+ */
 std::ostream &operator<<(std::ostream &os, const Method &m);
 
 Method &operator+=(Method &lhs, const Variable &rhs);

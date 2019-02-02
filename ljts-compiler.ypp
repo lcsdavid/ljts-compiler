@@ -16,9 +16,9 @@
 %type <std::vector<Type*>> LOptDecls LDecls
 %type <Type*> Decl
 
-/* Parameters */
-%type <std::vector<Parameter>> LOptParamDecl LParamDecl
-%type <Parameter> ParamDecl
+/* Variables */
+%type <std::vector<Variable>> LOptParamDecl LParamDecl
+%type <Variable> ParamDecl
 %type <bool> OptVar
 
 /* Classes */
@@ -29,8 +29,8 @@
 %type <Object*> ObjectDecl
 
 /* Fields */
-%type <std::vector<Parameter>> LOptField LField
-%type <Parameter> Field
+%type <std::vector<Variable>> LOptField LField
+%type <Variable> Field
 
 /* Constructors */
 %type <ClassConstructor> ClassConstructor
@@ -50,8 +50,8 @@
 %type <Tree*> Inst
 
 /* Declaration variable */
-%type <std::vector<Parameter>> LOptVarDecl LVarDecl
-%type <Parameter> VarDecl
+%type <std::vector<Variable>> LOptVarDecl LVarDecl
+%type <Variable> VarDecl
 
 /* Expressions */
 %type <std::vector<Tree*>> LOptExpr LExpr
@@ -96,17 +96,17 @@ Decl : ClassDecl	 { $$ = $1; }
  | ObjectDecl		{ $$ = $1; }
 ;
 
-/* Parameter declaration */
+/* Variable declaration */
 
 LOptParamDecl : LParamDecl				 { $$ = $1; }
- |										 { $$ = std::vector<Parameter>(); }
+ |										 { $$ = std::vector<Variable>(); }
 ;
 
 LParamDecl : ParamDecl ',' LParamDecl	  { $$.push_back($1); $$.insert(std::end($$), std::begin($3), std::end($3)); }
  | ParamDecl							   { $$.push_back($1); }	
 ;
 
-ParamDecl : OptVar IDENTIFIER ':' TYPENAME { $$ = Parameter($2, $4, $1); }
+ParamDecl : OptVar IDENTIFIER ':' TYPENAME { $$ = Variable($2, $4, $1); }
 ;
 
 OptVar : VAR							   { $$ = true; }
@@ -114,7 +114,7 @@ OptVar : VAR							   { $$ = true; }
 ;
 
 /* ===== Class ===== */
-/* Class(std::string const &, std::vector<Parameter*> const &, std::string *, std::vector<Parameter*> const &, ClassConstructor &, std::vector<Method*> const &); */
+/* Class(std::string const &, std::vector<Variable*> const &, std::string *, std::vector<Variable*> const &, ClassConstructor &, std::vector<Method*> const &); */
 
 ClassDecl : CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}' { $$ = new Class($2, $4, $6, $9, $10, $11); }
 ;
@@ -138,14 +138,14 @@ ObjectConstructor : DEF TYPENAME IS Block									  { $$ = ObjectConstructor($2,
 /* ===== Champ ===== */
 
 LOptField : LField	{ $$ = $1; }
-|					{ $$ = std::vector<Parameter>(); }
+|					{ $$ = std::vector<Variable>(); }
 ;
 
 LField : Field LField				   { $$.push_back($1); $$.insert(std::end($$), std::begin($2), std::end($2)); }
 | Field								 { $$.push_back($1); }  
 ;
 
-Field : VAR IDENTIFIER ':' TYPENAME ';' { $$ = Parameter($2, $4); }
+Field : VAR IDENTIFIER ':' TYPENAME ';' { $$ = Variable($2, $4); }
 ;
 
 /* ===== Method ===== */
@@ -189,22 +189,22 @@ Inst : Expr ';'				{ $$ = $1; }
 
 /* Block */
 
-Block : '{' LOptInst '}'		{ $$ = new Block(std::vector<Parameter>(),$2);}
+Block : '{' LOptInst '}'		{ $$ = new Block(std::vector<Variable>(),$2);}
  | '{' LOptVarDecl IS LInst '}' { $$ = new Block($2, $4); }
 ;
 
 /* Declaration variable */
 
 LOptVarDecl : LVarDecl								{ $$ = $1; }
- |													{ $$ = std::vector<Parameter>();}
+ |													{ $$ = std::vector<Variable>();}
 ;
 
 LVarDecl : VarDecl LVarDecl						   { $$.push_back($1); $$.insert(std::end($$), std::begin($2), std::end($2)); } 
  | VarDecl											{ $$.push_back($1); }
 ;
 
-VarDecl : IDENTIFIER ':' TYPENAME ASSIGNMENT Expr ';' { $$ = Parameter($1, $3/*, $5*/); } 
- | IDENTIFIER ':' TYPENAME ';'						{ $$ = Parameter($1, $3); }
+VarDecl : IDENTIFIER ':' TYPENAME ASSIGNMENT Expr ';' { $$ = Variable($1, $3/*, $5*/); } 
+ | IDENTIFIER ':' TYPENAME ';'						{ $$ = Variable($1, $3); }
 ;
 
 /* ===== Expression ===== */

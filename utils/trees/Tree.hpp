@@ -21,22 +21,25 @@ struct Tree {
 	Tree(int lineno, int operation, const std::string &value);	
 	/* inst_block */
 	Tree(int lineno, int operation, Block *block);			
-	/* subtrees > operators | member_access */
-	Tree(int lineno, int operation, std::initializer_list<Tree*> children);	
+	/* subtrees > operators */
+	Tree(int lineno, int operation, std::initializer_list<Tree*> exprs);	
 	
-	/* cast | object_member_access */
-	Tree(int lineno, int operation, const std::string &identifier, Tree* tree);	
+	/* cast */
+	Tree(int lineno, int operation, const std::string &identifier, Tree* expr);
+	
 	/* instanciation */
 	Tree(int lineno, int operation, const std::string &identifier, const std::vector<Tree*> &params);	
 	
+	/* member_access */
+	Tree(int lineno, int operation, Tree *expr, const std::string &field);	
+	Tree(int lineno, int operation, const std::string &var, const std::string &field);	
+	
 	/* method_call */
-	Tree(int lineno, int operation, Tree* tree1, Tree* tree2, const std::vector<Tree*> &params);	
-	/* object_method_call */
-	Tree(int lineno, int operation, const std::string &identifier, Tree* tree, const std::vector<Tree*> &params);	
+	Tree(int lineno, int operation, Tree* expr, const std::string &method, const std::vector<Tree*> &params);	
+	Tree(int lineno, int operation, const std::string &var, const std::string &method, const std::vector<Tree*> &params);	
 	
 	Tree(const Tree &other) = default;
 	Tree &operator=(const Tree &other) = default;
-	
 	~Tree() = default;
 };
 
@@ -45,6 +48,5 @@ struct Tree {
  * alors pour récuperer le contenu tu ferras si tu que tu as un std::vector<Tree>* std::get<std::vector<*Tree>>(t.children);
  * si le type stocké dans le variant n'est pas celui ci alors ça balance une exception.
  */
-
 
 #endif

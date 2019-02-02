@@ -1,5 +1,7 @@
 #include "Constructor.hpp"
 
+#include "Type.hpp"
+
 Constructor::Constructor(const std::string &identifier, const std::vector<Variable> &parameters, Block *body) : 
 	Method(false, identifier, parameters, identifier, body) {}
 	
@@ -10,9 +12,9 @@ std::ostream &operator<<(std::ostream &os, const Constructor &c) {
 		if (it != c.parameters.end() - 1)
 			os << ", ";
 	}
-	os << ')' << std::endl;
+	return os << ')' << std::endl;
 }
 	
-bool Constructor::correctDecl(const Environment &env) const {
-	return Method::correctDecl(env);
+bool Constructor::correctDecl(const Type &parent, const Environment &env) const {
+	return Method::correctDecl(parent, env);
 }

@@ -7,18 +7,24 @@ Class::Class(const std::string &identifier, const std::vector<Variable> &paramet
 bool Class::correctDecl(const Environment &env) const {
 	if (!Type::correctDecl(env))
 		return false;
-	/* Vérifie si la super classe est connue... */
-	if (!superIdentifier.empty()) {
+	/* Si la class a une super class. */
+	if (hasSuper()) {
 		auto super = env.env.find(superIdentifier);
-		if (super == env.env.end())
+		/* Vérifie si la super class est connue. */
+		if (super == env.env.end()) {
+			std::cout << "\033[91merreur:\033[0m utilisation invalide d'un type non déclaré '" << superIdentifier << '\'' << std::endl;
 			return false;
-		if (!(*super).second->isInheritable())
+		}
+		/* Si la super class est un type static. */
+		if (!(*super).second->isStatic()) { 
+			std::cout << "\033[91merreur:\033[0m héritage impossible depuis un type statique '" << identifier << '\'' << std::endl;
 			return false;
+		}
 	}
-	
-	//on vérifie qu'il ni a pas d'héritage circulaire
-	if(env.isSubClass(this->typename, this->typename)
-		return false;
+
+	/* Vérifie qu'il ni a pas d'héritage circulaire. */
+	//if (env.isSubClass(identifier, identifier))
+		//return false;
 	
 	return true;
 }

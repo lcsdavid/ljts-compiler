@@ -3,6 +3,8 @@
 #include "../trees/Block.hpp"
 #include "../trees/Tree.hpp"
 
+#include "Type.hpp"
+
 Method::Method(bool override, const std::string &identifier, const std::vector<Variable> &parameters, 
 	const std::string &returnTypeIdentifier, Tree *body) : override(override), identifier(identifier), 
 	parameters(parameters), returnTypeIdentifier(returnTypeIdentifier), body(body) {}
@@ -11,7 +13,7 @@ Method::Method(bool override, const std::string &identifier, const std::vector<V
 	const std::string &returnTypeIdentifier, Block *body) : override(override), identifier(identifier), 
 	parameters(parameters), returnTypeIdentifier(returnTypeIdentifier), body(body) {}
 
-bool Method::correctDecl(const Environment &env) const {
+bool Method::correctDecl(const Type &parent, const Environment &env) const {
 	return true;
 }
 
@@ -22,7 +24,7 @@ std::ostream &operator<<(std::ostream &os, const Method &m) {
 		if (it != m.parameters.end() - 1)
 			os << ", ";
 	}
-	os << ')' << std::endl;
+	return os << ')' << std::endl;
 }
 
 Method &operator+=(Method &lhs, const Variable &rhs) {

@@ -11,10 +11,6 @@ struct ObjectConstructor : Constructor {
 	
 	ObjectConstructor &operator=(ObjectConstructor const &other) = default;
 	ObjectConstructor &operator=(ObjectConstructor &&other) = default;
-	
-	bool correctDecl(const Environment &env) const override {
-		return true;
-	}
 };
 
 #endif

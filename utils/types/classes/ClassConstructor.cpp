@@ -2,12 +2,14 @@
 
 #include <algorithm>
 
+#include "Class.hpp"
+
 ClassConstructor::ClassConstructor(const std::string &identifier, const std::vector<Variable> &parameters,
 	const std::string &superIdentifier, const std::vector<Tree*> &superVariables, Block *body) : 
 	Constructor(identifier, parameters, body), superIdentifier(superIdentifier), superVariables(superVariables) {}
 
-bool ClassConstructor::correctDecl(const Environment &env) const {
-	return Constructor::correctDecl(env);
+bool ClassConstructor::correctDecl(const Type &parent, const Environment &env) const {
+	return Constructor::correctDecl(parent, env);
 	/* Check si superIdentifier || superVariables ? bug track */
 	/* Check correct super constructor call ? */
 	/*

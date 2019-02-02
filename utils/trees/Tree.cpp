@@ -22,12 +22,12 @@ Tree::Tree(int lineno, int operation, std::initializer_list<Tree*> subtrees) : l
 	for (Tree* tree : subtrees)
 		children.push_back(tree);
 }
-	
-/* cast | object_member_access */
-Tree::Tree(int lineno, int operation, const std::string &identifier, Tree* tree) : lineno(lineno),
+
+/* cast */
+Tree::Tree(int lineno, int operation, const std::string &identifier, Tree* expr) : lineno(lineno),
 	operation(operation), children() {
 	children.push_back(identifier);
-	children.push_back(tree);
+	children.push_back(expr);
 }
 
 /* instanciation */
@@ -38,20 +38,38 @@ Tree::Tree(int lineno, int operation, const std::string &identifier, const std::
 		children.push_back(param);
 }
 
-/* method_call */
-Tree::Tree(int lineno, int operation, Tree* tree1, Tree* tree2, const std::vector<Tree*> &params) : lineno(lineno),
+	
+/* member_access */
+Tree::Tree(int lineno, int operation, Tree *expr, const std::string &field) : lineno(lineno),
 	operation(operation), children() {
-	children.push_back(tree1);
-	children.push_back(tree2);
+	children.push_back(expr);
+	children.push_back(field);
+}	
+
+Tree::Tree(int lineno, int operation, const std::string &var, const std::string &field) : lineno(lineno),
+	operation(operation), children() {
+	children.push_back(var);
+	children.push_back(field);
+}	
+
+	
+/* method_call */
+Tree::Tree(int lineno, int operation, Tree* expr, const std::string &method, const std::vector<Tree*> &params)
+	: lineno(lineno), operation(operation), children() {
+	children.push_back(expr);
+	children.push_back(method);
 	for (Tree *param : params)
 		children.push_back(param);
 }
 
-/* object_method_call */
-Tree::Tree(int lineno, int operation, const std::string &identifier, Tree* tree, const std::vector<Tree*> &params) : lineno(lineno),
-	operation(operation), children() {
-	children.push_back(identifier);
-	children.push_back(tree);
+Tree::Tree(int lineno, int operation, const std::string &var, const std::string &method, const std::vector<Tree*> &params)
+	: lineno(lineno), operation(operation), children() {
+	children.push_back(var);
+	children.push_back(method);
 	for (Tree *param : params)
 		children.push_back(param);
 }
+
+	
+
+

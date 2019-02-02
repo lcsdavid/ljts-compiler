@@ -21,32 +21,32 @@ std::ostream &operator<<(std::ostream &os, const Type &type) {
 	
 bool Type::correctDecl(const Environment &env) const {
     /* Cas où le nom de la classe est déjà pris. */
-	if (env.env.find(identifier) != env.env.end())
+	if (env.env.find(identifier) != env.env.end()) {
+		std::cout << "\033[91merreur:\033[0m redéfinition de '" << identifier << '\'' << std::endl;
         return false;
+	}
 	/* Vérifie la validité du constructeur. */
-	if(fields != constructor.parameters)//si les paramètres de la classe et du constructeur ne sont pas les mêmes
+	if (!constructor.correctDecl(*this, env))
 		return false;
-	if (!constructor.correctDecl(env))
-		return false;
+	/* Vérifie la validité des méthodes. */
+	for (const Method &method : methods)
+		if (!method.correctDecl(*this, env))
+			return false;
 	
-	//on ajoute les variables au scope si elles existent, sinon on retourne une erreure
-	for(size_t i; i<parameters.size; i++){
+	/* ??? */
+	/* On ajoute les variables au scope si elles existent, sinon on retourne une erreur. */
+	/*for(size_t i; i<parameters.size; i++){
 		if(env.env.find(parameters.at(i).identifier) == env.env.end)
 			return false;
 		env.fields.push_back(parameters.at(i);
 	}
 	
-	/* Vérifie la validité des méthodes. */
-	for (Method const &method : methods)
-		if (!method.correctDecl(env))
-			return false;
-	
 	//en sortie de la classe on supprimer les variables locales
 	for(size_t i; i<parameters.size(); i++){
 		env.fields.pop_back();
-	}
+	}*/
 	
-	env.env[this->typename] = this;
+	// env.env[this->typename] = this;
 	
 	return true;
 }

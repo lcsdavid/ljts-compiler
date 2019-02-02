@@ -1,8 +1,8 @@
 #ifndef COMPILER_TYPE_HPP
 #define COMPILER_TYPE_HPP
 
+#include <iostream>
 #include <map>
-#include <ostream>
 #include <stdexcept>
 #include <string>
 #include <vector>
