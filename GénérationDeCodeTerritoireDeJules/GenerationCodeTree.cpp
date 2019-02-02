@@ -15,7 +15,7 @@ void genereCode(Program *program)
 
 void generationCodeDecls(std::vector<Type*> typesDecls)
 {
-	for(int i=0;i<typesDecls;i++)
+	for(unsigned int i=0;i<typesDecls;i++)
 	{
 		cout << "Bon j'ai pas encore fait les classes toi-même tu sais" << endl;
 	}
@@ -24,7 +24,25 @@ void generationCodeDecls(std::vector<Type*> typesDecls)
 
 void genereCodeBloc(Block *block)
 {
-	
+	for(unsigned int i=0;i<block->varDecls.size();i++)
+	{
+		genereCodeParam(block->varDecls[i]);
+	}
+	for(unsigned int i=0;i<block->insts.size();i++)
+	{
+		genereCode(block->insts[i]);
+	}
+}
+
+void genereCodeParam(Parameter *param)
+{
+	cout << "J'ai pas capté" << endl;
+		/*Assignee tempo;
+		tempo.nom = param->identifier;
+		tempo.valeur = possp[fctcour];
+		mesVar[fctcour].push_back(tempo);
+		possp[fctcour]++;
+		genereCodeTree(std::get<Tree*>(tree->children[1]));*/
 }
 
 void genereCodeTree(Tree *tree) {
