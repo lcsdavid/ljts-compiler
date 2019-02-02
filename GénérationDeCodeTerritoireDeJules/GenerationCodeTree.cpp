@@ -30,7 +30,7 @@ void genereCodeBloc(Block *block)
 	}
 	for(unsigned int i=0;i<block->insts.size();i++)
 	{
-		genereCode(block->insts[i]);
+		genereCodeTree(block->insts[i]);
 	}
 }
 
