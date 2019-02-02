@@ -11,11 +11,13 @@ Type::~Type() {
 std::ostream &operator<<(std::ostream &os, const Type &type) {
 	os << (type.isStatic() ? "object " : "class ") << type.identifier 
 		<< (!type.isStatic() and type.hasSuper() ? "extends " + type.super() : "") << std::endl;
+	/*
 	for (auto it = type.fields.begin(); it != type.fields.end(); it++)
 		os << "  " << *it << std::endl;
 	os << "  " << type.constructor;
 	for (auto it = type.methods.begin(); it != type.methods.end(); it++)
 		os << "  " << *it << std::endl;
+	*/
 	return os << std::endl;
 }
 	

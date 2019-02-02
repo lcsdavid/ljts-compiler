@@ -22,12 +22,12 @@ void Program::contextualCheck() const {
 		if ((*it)->correctDecl(env))
 			env.env[(*it)->identifier] = *it;
 
-	/* Vérife de main */
+	/* VÃ©rife de main */
 }
 
 std::ostream &operator<<(std::ostream &os, const Program &program) {
-	os << "Déclarations:" << std::endl;
+	os << "DÃ©clarations:" << std::endl;
 	for (auto it = program.typesDecls.begin(); it != program.typesDecls.end(); it++)
-		os << *it << std::endl;
+		os << **it << std::endl;
 	return os << std::endl << "main():" << std::endl << program.main;
 }
