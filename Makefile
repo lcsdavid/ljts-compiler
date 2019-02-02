@@ -5,8 +5,8 @@ CC=g++
 CXXFLAGS=-Wall -g -std=c++17
 LDFLAGS=-lfl
 EXEC=ljts-compiler
-SRCs=$(call find_sources, *)
-OBJs=$(SRCs:.cpp=.o) $(EXEC).yy.o $(EXEC).tab.o
+SRCs=$(call find_sources, *) $(EXEC).yy.cpp $(EXEC).tab.cpp
+OBJs=$(SRCs:.cpp=.o)
 
 $(EXEC): $(OBJs)
 	$(CC) -o $@ $^ $(LDFLAGS)
@@ -18,19 +18,19 @@ lex_only: $(EXEC).o
 bison_only: $(EXEC).o $(EXEC).yy.o $(wildcard utils/*.cpp)
 	$(CC) -DBISON_MAIN -o $(EXEC).tab.o -c $(EXEC).tab.cpp $(CXXFLAGS)
 	$(CC) -o $@ $(EXEC).o $(EXEC).yy.o $(EXEC).tab.o $(LDFLAGS)
-
-%.yy.cpp: %.lex
-	flex -o $@ $<
-	
-%.tab.cpp: %.ypp
-	bison -o $@ $<
-
-#GénérationDeCodeTerritoireDeJules/GenerationCodeTree.o:
 	
 %.o: %.cpp
 	$(CC) -o $@ -c $< $(CXXFLAGS)
 
+%.yy.cpp: %.lex
+	flex --yylineno -o $@ $<
+	
+%.tab.cpp: %.ypp
+	bison --verbose -d -o $@ $<
+
+.PRECIOUS: %.o %.yy.cpp %.tab.cpp
+	
 .Phony: clean
 
 clean:
-	rm -rfv $(EXEC) $(OBJs) *.yy.cpp *.tab.h *.tab.cpp
+	rm -rfv $(EXEC) $(OBJs) *.yy.cpp *.tab.cpp

@@ -43,17 +43,17 @@ return			return RETURN;
 then			return THEN;
 this			return THIS;
 :=				return ASSIGNMENT;
-(<)				{ yylval = less_strict; return RELATIONAL_OPERATOR; }
-=<|<=			{ yylval = less_equal; return RELATIONAL_OPERATOR; }
->				{ yylval = greater_strict; return RELATIONAL_OPERATOR; }
-=>|>=			{ yylval = greater_equal; return RELATIONAL_OPERATOR; }
-=				{ yylval = equal; return RELATIONAL_OPERATOR; }
-(<>)			{ yylval = not_equal; return RELATIONAL_OPERATOR; }
-{integer}		{ yylval = std::atoi(yytext); return INTEGER; }
-{string}		{ yylval = std::string(yytext); return STRING; }
-{identifier}	{ yylval = std::string(yytext); return IDENTIFIER; }
-{typename}		{ yylval = std::string(yytext); return TYPENAME; }
-.				{ /* std::cerr << "Error: lexical error, unexpected '" << yytext << "' at line " << yylineno << std::endl; */ return yytext[0]; }
+(<)				{ yylval.Integer = less_strict; return RELATIONAL_OPERATOR; }
+=<|<=			{ yylval.Integer = less_equal; return RELATIONAL_OPERATOR; }
+>				{ yylval.Integer = greater_strict; return RELATIONAL_OPERATOR; }
+=>|>=			{ yylval.Integer = greater_equal; return RELATIONAL_OPERATOR; }
+=				{ yylval.Integer = equal; return RELATIONAL_OPERATOR; }
+(<>)			{ yylval.Integer = not_equal; return RELATIONAL_OPERATOR; }
+{integer}		{ yylval.Integer = std::atoi(yytext); return INTEGER; }
+{string}		{ yylval.String = yytext; return STRING; }
+{identifier}	{ yylval.String = yytext; return IDENTIFIER; }
+{typename}		{ yylval.String = yytext; return TYPENAME; }
+.				return yytext[0];
 %%
 
 std::ostream& operator<<(std::ostream& os, yytokentype t) {
@@ -65,7 +65,7 @@ std::ostream& operator<<(std::ostream& os, yytokentype t) {
 			os << "CLASS";
 			break;
 		case TYPENAME:
-			os << "TYPENAME: " << std::get<std::string>(yylval);
+			os << "TYPENAME: " << yylval.Integer;
 			break;
 		case DEF:
 			os << "DEF";
@@ -77,13 +77,13 @@ std::ostream& operator<<(std::ostream& os, yytokentype t) {
 			os << "EXTENDS";
 			break;
 		case IDENTIFIER:
-			os << "IDENTIFIER: " << std::get<std::string>(yylval);
+			os << "IDENTIFIER: " << yylval.Integer;
 			break;
 		case IF:
 			os << "IF";
 			break;
 		case INTEGER:
-			os << "INTEGER: " << std::get<int>(yylval);
+			os << "INTEGER: " << yylval.Integer;
 			break;
 		case IS:
 			os << "IS";

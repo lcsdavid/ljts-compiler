@@ -34,6 +34,7 @@ struct Method {
 	Method &operator=(Method &&other) = default;
 	
 	virtual bool correctDecl(const Type &parent, const Environment &env) const;
+	virtual bool correctDef(const Type &parent, const Environment &env) const;
 };
 
 /**

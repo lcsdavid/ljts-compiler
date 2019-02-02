@@ -1,61 +1,37 @@
 /* Tokens placés en ordre alphabétique pour mieux si retrouver. */
 %token ASSIGNMENT CLASS
 %token DEF ELSE EXTENDS
-%token <std::string> IDENTIFIER 
+%token <String> IDENTIFIER 
 %token IF
-%token <int> INTEGER
+%token <Integer> INTEGER
 %token IS NEW OBJECT OVERRIDE
-%token <int> RELATIONAL_OPERATOR
+%token <Integer> RELATIONAL_OPERATOR
 %token RETURN
-%token <std::string> STRING
+%token <String> STRING
 %token THEN THIS
-%token <std::string> TYPENAME
+%token <String> TYPENAME
 %token VAR
 
-/* Declarations */
-%type <std::vector<Type*>> LOptDecls LDecls
-%type <Type*> Decl
+%type <Boolean> OptVar OptOverride
+%type <String> OptExtends OptReturn
 
-/* Variables */
-%type <std::vector<Variable>> LOptParamDecl LParamDecl
-%type <Variable> ParamDecl
-%type <bool> OptVar
+%type <VarList> LOptParamDecl LParamDecl LOptVar LVar LOptField LField
+%type <PVar> ParamDecl Var Field
 
-/* Classes */
-%type <Class*> ClassDecl
-%type <std::string> OptExtends
-
-/* Objects */
-%type <Object*> ObjectDecl
-
-/* Fields */
-%type <std::vector<Variable>> LOptField LField
-%type <Variable> Field
-
-/* Constructors */
-%type <ClassConstructor> ClassConstructor
-%type <ObjectConstructor> ObjectConstructor
+/* Types */
+%type <PTypeList> LOptDecls LDecls
+%type <PType> Decl
+%type <PClass> ClassDecl
+%type <PObject> ObjectDecl
 
 /* Methods */
-%type <std::vector<Method>> LOptMethod LMethod
-%type <Method> Method
-%type <bool> OptOverride
-%type <std::string> OptReturn
+%type <MethodList> LOptMethod LMethod
+%type <PMethod> Method ClassConstructor ObjectConstructor 
 
-/* Block */
-%type <Block*> Block
-
-/* Instructions */
-%type <std::vector<Tree*>> LOptInst LInst
-%type <Tree*> Inst
-
-/* Declaration variable */
-%type <std::vector<Variable>> LOptVarDecl LVarDecl
-%type <Variable> VarDecl
-
-/* Expressions */
-%type <std::vector<Tree*>> LOptExpr LExpr
-%type <Tree*> Expr MemberAccess MethodCall
+/* Instructions & Expressions */
+%type <PTreeList> LOptInst LInst LOptExpr LExpr
+%type <PTree> Inst Expr MemberAccess MethodCall
+%type <PBlock> Block
 
 %{
 
@@ -63,11 +39,7 @@
 
 #include "ljts-compiler.hpp"
 
-void* program = nullptr;
-
 %}
-%define api.value.type union
-
 %debug
 %error-verbose
 
@@ -84,127 +56,126 @@ void* program = nullptr;
 Program : LOptDecls Block { Program program($1, $2); }
 ;
 
-LOptDecls : LDecls   { $$ = std::vector<Type*>($1); }
- |				   { $$ = std::vector<Type*>(); }
+LOptDecls : LDecls		{ $$ = $1; }
+ |						{ $$ = std::vector<Type*>(); }
 ;
 
-LDecls : Decl LDecls { $$.push_back($1); $$.insert(std::end($$), std::begin($2), std::end($2)); }
- | Decl			  { $$.push_back($1); }
+LDecls : Decl LDecls	{ $$ = $2; $$->insert(std::begin($$), $1); }
+ | Decl					{ $$ = new std::vector<Type*>($1); }
 ;
 
-Decl : ClassDecl	 { $$ = $1; }
- | ObjectDecl		{ $$ = $1; }
+Decl : ClassDecl		{ $$ = $1; }
+ | ObjectDecl			{ $$ = $1; }
 ;
 
 /* Variable declaration */
 
-LOptParamDecl : LParamDecl				 { $$ = $1; }
- |										 { $$ = std::vector<Variable>(); }
+LOptParamDecl : LParamDecl					{ $$ = $1; }
+ |											{ $$ = std::vector<Variable>(); }
 ;
 
-LParamDecl : ParamDecl ',' LParamDecl	  { $$.push_back($1); $$.insert(std::end($$), std::begin($3), std::end($3)); }
- | ParamDecl							   { $$.push_back($1); }	
+LParamDecl : ParamDecl ',' LParamDecl		{ $$ = $2; $$->insert(std::begin($$), *$1); }
+ | ParamDecl								{ $$ = new std::vector<Variable>(*$1); }
 ;
 
-ParamDecl : OptVar IDENTIFIER ':' TYPENAME { $$ = Variable($2, $4, $1); }
+ParamDecl : OptVar IDENTIFIER ':' TYPENAME	{ $$ = new Variable($2, $4, $1); }
 ;
 
-OptVar : VAR							   { $$ = true; }
- |										 { $$ = false; }
+OptVar : VAR	{ $$ = true; }
+ |				{ $$ = false; }
 ;
 
 /* ===== Class ===== */
-/* Class(std::string const &, std::vector<Variable*> const &, std::string *, std::vector<Variable*> const &, ClassConstructor &, std::vector<Method*> const &); */
 
-ClassDecl : CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}' { $$ = new Class($2, $4, $6, $9, $10, $11); }
+ClassDecl : CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'	{ $$ = new Class(std::to_string($2), $4, std::to_string($6), $9, $10, $11); }
 ;
 
 OptExtends : EXTENDS TYPENAME	{ $$ = $2; }
  |								{ $$ = ""; }
 ;
 
-ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block	{ $$ = ClassConstructor($2, $4, $7, $9, $12); }
- | DEF TYPENAME '(' LOptParamDecl ')' IS Block													{ $$ = ClassConstructor($2, $4, "", std::vector<Tree*>(), $7); }
+ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block	{ $$ = new ClassConstructor(std::to_string($2), $4, std::to_string($7), $9, $12); }
+ | DEF TYPENAME '(' LOptParamDecl ')' IS Block													{ $$ = new ClassConstructor(std::to_string($2), $4, "", std::vector<Tree*>(), $7); }
 ;
 
 /* ===== Object ===== */
 
-ObjectDecl : OBJECT TYPENAME IS '{' LOptField ObjectConstructor LOptMethod '}' { $$ = new Object($2, $5, $6, $7); }
+ObjectDecl : OBJECT TYPENAME IS '{' LOptField ObjectConstructor LOptMethod '}'	{ $$ = new Object(std::to_string($2), $5, $6, $7); }
 ;
 
-ObjectConstructor : DEF TYPENAME IS Block									  { $$ = ObjectConstructor($2, $4); }
+ObjectConstructor : DEF TYPENAME IS Block										{ $$ = new ObjectConstructor(std::to_string($2), $4); }
 ;
 
 /* ===== Champ ===== */
 
-LOptField : LField	{ $$ = $1; }
-|					{ $$ = std::vector<Variable>(); }
+LOptField : LField						{ $$ = $1; }
+ |										{ $$ = new std::vector<Variable>(); }
 ;
 
-LField : Field LField				   { $$.push_back($1); $$.insert(std::end($$), std::begin($2), std::end($2)); }
-| Field								 { $$.push_back($1); }  
+LField : Field LField					{ $$ = $2; $$->insert(std::begin($$), *$1); }
+ | Field								{ $$ = new std::vector<Variable>(*$1); }
 ;
 
-Field : VAR IDENTIFIER ':' TYPENAME ';' { $$ = Variable($2, $4); }
+Field : VAR IDENTIFIER ':' TYPENAME ';'	{ $$ = new Variable($2, $4); }
 ;
 
 /* ===== Method ===== */
 
-LOptMethod : LMethod	{ $$ = std::vector<Method>($1); }
- |						{ $$ = std::vector<Method>(); }
+LOptMethod : LMethod		{ $$ = $1; }
+ |							{ $$ = new std::vector<Method>(); }
 ;
 
-LMethod : Method LMethod	{ $$.push_back($1); $$.insert(std::end($$), std::begin($2), std::end($2)); }
- | Method					{ $$.push_back($1); }
+LMethod : Method LMethod	{ $$ = $2; $$->insert(std::begin($$), *$1); }
+ | Method					{ $$ = new std::vector<Method>(*$1); }
 ;
 
-Method : OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr { $$ = Method($1, $3, $5, $8, $10); }
- | OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' OptReturn IS Block				 { $$ = Method($1, $3, $5, $7, $9); }
+Method : OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr	{ $$ = new Method($1, std::to_string($3), $5, std::to_string($8), $10); }
+ | OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' OptReturn IS Block					{ $$ = new Method($1, std::to_string($3), $5, std::to_string($7), $9); }
 ;
 
-OptOverride : OVERRIDE																 { $$ = true; }
- |																					 { $$ = false; }
+OptOverride : OVERRIDE	{ $$ = true; }
+ |						{ $$ = false; }
 ;
 
-OptReturn : ':' TYPENAME															   { $$ = $2; }
- |																					 { $$ = ""; }
+OptReturn : ':' TYPENAME	{ $$ = $2; }
+ |							{ $$ = ""; }
 ;
 
 /* ===== Instruction ===== */
 
-LOptInst : LInst			   { $$ = $1; }
- |							 { $$ = std::vector<Tree*>(); }
+LOptInst : LInst	{ $$ = $1; }
+ |					{ $$ = new std::vector<Tree*>(); }
 ;
 
-LInst : Inst LInst			 { $$.push_back($1); $$.insert(std::end($$), std::begin($2), std::end($2)); }
- | Inst						{ $$.push_back($1); }
+LInst : Inst LInst	{ $$ = $2; $$->insert(std::begin($$), $1); }
+ | Inst				{ $$ = new std::vector<Tree*>($1); }
 ;
 
-Inst : Expr ';'				{ $$ = $1; }
- | Block					   { $$ = new Tree(yylineno, inst_block, $1); }
- | RETURN ';'				  { $$ = new Tree(yylineno, return_call); }
- | Expr ASSIGNMENT Expr ';'	{ $$ = new Tree(yylineno, assignment, { $1, $3 }); }
- | IF Expr THEN Inst ELSE Inst { $$ = new Tree(yylineno, if_then_else, { $2, $4, $6 }); }
+Inst : Expr ';'					{ $$ = $1; }
+ | Block						{ $$ = new Tree(yylineno, inst_block, $1); }
+ | RETURN ';'					{ $$ = new Tree(yylineno, return_call); }
+ | Expr ASSIGNMENT Expr ';'		{ $$ = new Tree(yylineno, assignment, { $1, $3 }); }
+ | IF Expr THEN Inst ELSE Inst	{ $$ = new Tree(yylineno, if_then_else, { $2, $4, $6 }); }
 ;
 
 /* Block */
 
 Block : '{' LOptInst '}'		{ $$ = new Block(std::vector<Variable>(),$2);}
- | '{' LOptVarDecl IS LInst '}' { $$ = new Block($2, $4); }
+ | '{' LOptVar IS LInst '}'		{ $$ = new Block($2, $4); }
 ;
 
 /* Declaration variable */
 
-LOptVarDecl : LVarDecl								{ $$ = $1; }
- |													{ $$ = std::vector<Variable>();}
+LOptVar : LVar	{ $$ = $1; }
+ |				{ $$ = new std::vector<Variable>();}
 ;
 
-LVarDecl : VarDecl LVarDecl						   { $$.push_back($1); $$.insert(std::end($$), std::begin($2), std::end($2)); } 
- | VarDecl											{ $$.push_back($1); }
+LVar : Var LVar	{ $$ = $2; $$->insert(std::begin($$), *$1); }
+ | Var			{ $$ = new std::vector<Variable>(*$1); }
 ;
 
-VarDecl : IDENTIFIER ':' TYPENAME ASSIGNMENT Expr ';' { $$ = Variable($1, $3/*, $5*/); } 
- | IDENTIFIER ':' TYPENAME ';'						{ $$ = Variable($1, $3); }
+Var : IDENTIFIER ':' TYPENAME ASSIGNMENT Expr ';'	{ $$ = new Variable($1, $3, /*$5*/); }
+ | IDENTIFIER ':' TYPENAME ';'						{ $$ = new Variable($1, $3); }
 ;
 
 /* ===== Expression ===== */
