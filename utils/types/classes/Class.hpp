@@ -24,7 +24,7 @@ struct Class : Type {
 	
 	std::string super() const override {
 		if (!hasSuper())
-			throw NotInheritableException();
+			throw std::logic_error(identifier + " n'a pas de super classe.");
 		return superIdentifier;
 	}
 	

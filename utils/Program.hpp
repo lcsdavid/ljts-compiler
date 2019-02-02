@@ -2,6 +2,7 @@
 #define COMPILER_PROGRAM_HPP
 
 #include <vector>
+#include <ostream>
 
 struct Block;
 struct Type;

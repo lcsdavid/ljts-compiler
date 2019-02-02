@@ -16,11 +16,11 @@ struct Object : Type {
 	}
 	
 	virtual bool hasSuper() const {
-		throw NotInheritableException("Bah c'est un objet du coup il a pas de super....");
+		throw std::logic_error(identifier + " est un object (static class) donc elle ne peut être dérivée d'une autre classe.");
 	}
 	
 	virtual std::string super() const {
-		throw NotInheritableException();
+		throw std::logic_error(identifier + " est un object (static class) donc elle ne peut être dérivée d'une autre classe.");
 	}
 	
 	bool isInheritable() const override {

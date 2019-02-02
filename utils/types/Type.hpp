@@ -6,10 +6,11 @@
 #include <string>
 #include <vector>
 
-#include "../Environment.hpp"
 #include "../variables/Parameter.hpp"
 #include "Constructor.hpp"
 #include "Method.hpp"
+
+#include "../Environment.hpp"
 
 struct Type {
 	std::string identifier;       /* Identifiant de la classe. */
@@ -27,10 +28,12 @@ struct Type {
 	virtual bool hasSuper() const = 0;
 	virtual std::string super() const = 0;
 	
+	virtual bool correctDecl(const Environment &env) const;
+	
+	
+	/* delete */
 	virtual bool isInheritable() const = 0;
 	virtual bool isDuplicable() const = 0;
-	
-	virtual bool correctDecl(const Environment &env) const;
 	
 	virtual std::string getSuperClass();
 };
