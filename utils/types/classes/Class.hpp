@@ -30,7 +30,10 @@ struct Class : Type {
 	}
 	
 	bool correctDecl(const Environment &env) const override;
+	
+	std::ostream &print(std::ostream &os) const override;
 };
 
+std::ostream &operator<<(std::ostream &os, const Class &c);
 
 #endif

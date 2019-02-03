@@ -21,8 +21,6 @@ struct Type {
 
 	Type(const std::string &identifier, const std::vector<Variable> &fields, Constructor &constructor,
 		const std::vector<Method> &methods);
-	Type(Type const &other) = default;
-	Type(Type &&other) = default;
 	virtual ~Type();
 
 	virtual bool isStatic() const = 0;
@@ -30,6 +28,8 @@ struct Type {
 	virtual std::string super() const = 0;
 	
 	virtual bool correctDecl(const Environment &env) const;
+	
+	virtual std::ostream &print(std::ostream &os) const = 0;
 };
 
 std::ostream &operator<<(std::ostream &os, const Type &type);

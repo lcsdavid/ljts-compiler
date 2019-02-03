@@ -13,6 +13,8 @@ struct Constructor : Method {
 	Constructor &operator=(Constructor &&other) = default;
 	
     bool correctDecl(const Type &parent, const Environment &env) const override;
+	
+	std::ostream &print(std::ostream &os) const override;
 };
 
 std::ostream &operator<<(std::ostream &os, const Constructor &c);

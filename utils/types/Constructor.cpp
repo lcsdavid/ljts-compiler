@@ -4,17 +4,22 @@
 
 Constructor::Constructor(const std::string &identifier, const std::vector<Parameter> &parameters, Block *body) : 
 	Method(false, identifier, parameters, identifier, body) {}
-	
-std::ostream &operator<<(std::ostream &os, const Constructor &c) {
-	os << c.identifier << '(';
-	for (auto it = c.parameters.begin(); it != c.parameters.end(); it++) {
+
+bool Constructor::correctDecl(const Type &parent, const Environment &env) const {
+	return Method::correctDecl(parent, env);
+}
+
+std::ostream &Constructor::print(std::ostream &os) const {
+	os << identifier << '(';
+	for (auto it = parameters.cbegin(); it != parameters.cend(); it++) {
 		os << *it;
-		if (it != c.parameters.end() - 1)
+		if (it != parameters.cend() - 1)
 			os << ", ";
 	}
 	return os << ')' << std::endl;
 }
-	
-bool Constructor::correctDecl(const Type &parent, const Environment &env) const {
-	return Method::correctDecl(parent, env);
+
+std::ostream &operator<<(std::ostream &os, const Constructor &c) {
+	return c.print(os);
 }
+

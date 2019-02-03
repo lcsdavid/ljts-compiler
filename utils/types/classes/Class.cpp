@@ -28,3 +28,26 @@ bool Class::correctDecl(const Environment &env) const {
 	
 	return true;
 }
+
+std::ostream &Class::print(std::ostream &os) const {
+	os << "class " << identifier;
+	if (hasSuper())
+		os << " extends " << super();
+	os << '(';
+	for (auto it = parameters.cbegin(); it != parameters.cend(); it++) {
+		os << *it;
+		if (it == parameters.cend() - 1)
+			os << ", ";
+	}
+	os << ')' << std::endl;
+	for (auto it = fields.cbegin(); it != fields.cend(); it++)
+		os << "  " << *it << std::endl;
+	os << "  " << constructor;
+	for (auto it = methods.cbegin(); it != methods.cend(); it++)
+		os << "  " << *it << std::endl;
+	return os;
+}
+
+std::ostream &operator<<(std::ostream &os, const Class &c) {
+	return c.print(os);
+}

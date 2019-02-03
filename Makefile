@@ -18,7 +18,7 @@ $(EXEC): $(OBJs)
 	flex --yylineno -o $@ $<
 	
 %.tab.cpp: %.ypp
-	bison --verbose -d -o $@ $<
+	bison --verbose -o $@ $<
 
 .Phony: clean
 

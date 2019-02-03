@@ -1,6 +1,7 @@
 #ifndef COMPILER_METHOD_HPP
 #define COMPILER_METHOD_HPP
 
+#include <ostream>
 #include <string>
 #include <variant>
 #include <vector>
@@ -29,6 +30,8 @@ struct Method {
 	
 	virtual bool correctDecl(const Type &parent, const Environment &env) const;
 	virtual bool correctDef(const Type &parent, const Environment &env) const;
+	
+	virtual std::ostream &print(std::ostream &os) const;
 };
 
 /**

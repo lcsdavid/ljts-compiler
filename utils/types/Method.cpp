@@ -21,15 +21,25 @@ bool Method::correctDef(const Type &parent, const Environment &env) const {
 	
 }
 
-std::ostream &operator<<(std::ostream &os, const Method &m) {
-	os << m.identifier << '(';
-	for (auto it = m.parameters.begin(); it != m.parameters.end(); it++) {
+std::ostream &Method::print(std::ostream &os) const {
+	if (override)
+		os << "override ";
+	os << identifier << '(';
+	for (auto it = parameters.cbegin(); it != parameters.cend(); it++) {
 		os << *it;
-		if (it != m.parameters.end() - 1)
+		if (it != parameters.cend() - 1)
 			os << ", ";
 	}
-	return os << ')' <<(m.returnTypeIdentifier.empty() ? "" : " : ") << m.returnTypeIdentifier;
+	os << ')';
+	if (!returnTypeIdentifier.empty())
+		os << " : " << returnTypeIdentifier;
+	return os;
 }
+
+std::ostream &operator<<(std::ostream &os, const Method &m) {
+	return m.print(os);
+}
+
 /*
 Method &operator+=(Method &lhs, const Variable &rhs) {
 	lhs.parameters.push_back(rhs);

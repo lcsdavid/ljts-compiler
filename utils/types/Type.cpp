@@ -7,17 +7,6 @@ Type::Type(const std::string &identifier, const std::vector<Variable> &fields, C
 Type::~Type() {
 	delete &constructor;
 }
-
-std::ostream &operator<<(std::ostream &os, const Type &type) {
-	os << (type.isStatic() ? "object " : "class ") << type.identifier
-		<< (!type.isStatic() and type.hasSuper() ? "extends " + type.super() : "") << std::endl;
-	for (auto it = type.fields.begin(); it != type.fields.end(); it++)
-		os << "  " << *it << std::endl;
-	os << "  " << type.constructor;
-	for (auto it = type.methods.begin(); it != type.methods.end(); it++)
-		os << "  " << *it << std::endl;
-	return os;
-}
 	
 bool Type::correctDecl(const Environment &env) const {
     /* Cas où le nom de la classe est déjà pris. */
@@ -49,4 +38,8 @@ bool Type::correctDecl(const Environment &env) const {
 	// env.env[this->typename] = this;
 	
 	return true;
+}
+
+std::ostream &operator<<(std::ostream &os, const Type &t) {
+	return t.print(os);
 }
