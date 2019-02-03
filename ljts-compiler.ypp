@@ -15,8 +15,10 @@
 %type <Boolean> OptVar OptOverride
 %type <String> OptExtends OptReturn
 
-%type <VarList> LOptParamDecl LParamDecl LOptVar LVar LOptField LField
-%type <PVar> ParamDecl Var Field
+%type <PParamList> LOptParamDecl LParamDecl
+%type <PParam> ParamDecl
+%type <PVarList> LOptVar LVar LOptField LField
+%type <PVar> Var Field
 
 /* Types */
 %type <PTypeList> LOptDecls LDecls

@@ -11,7 +11,7 @@ typedef union {
 	
 	std::vector<Parameter> *PParamList;
 	Parameter *PParam;
-	std::vector<Variable> *VarList;
+	std::vector<Variable> *PVarList;
 	Variable *PVar;
 	
 	std::vector<Type*> *PTypeList;
