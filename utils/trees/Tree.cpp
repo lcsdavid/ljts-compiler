@@ -206,8 +206,8 @@ std::string Tree::getType(Environment& env){
 			}
 			break;
 		case assignment:
-			std::string lhs = getType(env, std::get<Tree*>(children.at(0))); /* Type à gauche. */
-			std::string rhs = getType(env, std::get<Tree*>(children.at(0))); /* Type à droite. */
+			std::string lhs = std::get<Tree*>(children.at(0)).getType(env); /* Type à gauche. */
+			std::string rhs = std::get<Tree*>(children.at(1)).getType(env); /* Type à droite. */
 			if (lhs != rhs)
 				std::cout << "error: tu essaye de mettre " << rhs << " dans " << lhs << std::endl;
 			return lhs;
