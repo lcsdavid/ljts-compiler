@@ -18,24 +18,14 @@ bool Type::isCorrect(Environment &env) const {
 	/* Vérifie la validité des méthodes. */
 	for (const Method &method : methods)
 		if (!method.isCorrect(*this, env))
-			return false;	
-	/* ??? */
-	/* On ajoute les variables au scope si elles existent, sinon on retourne une erreur. */
-	/*for(std::size_t i = 0; i < parameters.size; i++){
-		if(env.env.find(parameters.at(i).identifier) == env.env.end)
 			return false;
-		env.fields.push_back(parameters.at(i));
-	}
-	//en sortie de la classe on supprimer les variables locales
-	for(size_t i; i<parameters.size(); i++){
-		env.fields.pop_back();
-	}*/
+	return true;
 }
 
 bool Type::correctDecl(const Environment &env) const {
     /* Cas où le nom de la classe est déjà pris. */
 	if (env.env.count(identifier)) {
-		std::cout << "\033[91merror:\033[0m redéfinition de '" << identifier << '\'' << std::endl;
+		std::cout << "\033[91merror:\033[0m '" << identifier << "' redefinition" << std::endl;
         return false;
 	}
 	/* Vérifie la déclaration des champs. */

@@ -8,8 +8,15 @@ ClassConstructor::ClassConstructor(const std::string &identifier, const std::vec
 	const std::string &superIdentifier, const std::vector<Tree*> &superVariables, Block *body) : 
 	Constructor(identifier, parameters, body), superIdentifier(superIdentifier), superVariables(superVariables) {}
 
+bool ClassConstructor::isCorrectDecl(const Class &parent, Environment &env) const {
+	if (!correctDecl(parent, env))
+		return false;
+	return std::get<Block*>(body)->isCorrect(env);
+}
+	
 bool ClassConstructor::correctDecl(const Type &parent, const Environment &env) const {
-	return Constructor::correctDecl(parent, env);
+	if (Constructor::correctDecl(parent, env))
+		return false;
 	/* Check si superIdentifier || superVariables ? bug track */
 	/* Check correct super constructor call ? */
 	/*

@@ -11,20 +11,16 @@ struct Object : Type {
 	Object(Object &&other) = default;
 	~Object() override = default;
 	
-	virtual bool isStatic() const {
+	bool isStatic() const override {
 		return true;
 	}
-	
-	virtual bool hasSuper() const {
+	bool hasSuper() const override {
 		throw std::logic_error(identifier + " est un object (static class) donc elle ne peut être dérivée d'une autre classe.");
 	}
-	
-	virtual std::string super() const {
+	std::string super() const override {
 		throw std::logic_error(identifier + " est un object (static class) donc elle ne peut être dérivée d'une autre classe.");
 	}
 		
-	bool correctDecl(const Environment &env) const override;
-	
 	std::ostream &print(std::ostream &os) const override;
 };
 

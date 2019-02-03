@@ -34,9 +34,6 @@ struct Method {
 	virtual std::ostream &print(std::ostream &os) const;
 };
 
-/**
- * Surchage de l'opérateur de flux de sortie.
- */
 std::ostream &operator<<(std::ostream &os, const Method &m);
 
 bool operator==(const Method &lhs, const Method &rhs) ;

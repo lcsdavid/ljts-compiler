@@ -3,10 +3,6 @@
 Object::Object(const std::string &identifier, const std::vector<Variable> &fields, ObjectConstructor &constructor, 
 	const std::vector<Method> &methods) : Type(identifier, fields, constructor, methods) {}							 
 
-bool Object::correctDecl(const Environment &env) const {
-	return Type::correctDecl(env);
-}
-
 std::ostream &Object::print(std::ostream &os) const {
 	os << "object " << identifier << std::endl;
 	for (auto it = fields.cbegin(); it != fields.cend(); it++)
