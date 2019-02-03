@@ -3,7 +3,7 @@
 #include "../../optype.hpp"
 
 #include "Block.hpp"
-#include "Type.hpp"
+#include "../types/Type.hpp"
 
 /* return_call */
 Tree::Tree(int lineno, int operation) : lineno(lineno), operation(operation) {}
