@@ -153,10 +153,22 @@ std::ostream &operator<<(std::ostream &os, const Tree &t) {
 			os << '(' << std::get<std::string>(t.children.at(0)) << " " << std::get<Tree*>(t.children.at(1));
 			break;
 		case member_access:
-			os << "TODO";
+			os << std::get<Tree*>(t.children.at(0)) << '.' << std::get<std::string>(t.children.at(1));
+			break;
+		case static_member_access:
+			os << std::get<std::string>(t.children.at(0)) << '.' << std::get<std::string>(t.children.at(1));
 			break;
 		case method_call:
-			os << "TODO";
+			os << *std::get<Tree*>(t.children.at(0)) << '.' << std::get<std::string>(t.children.at(1)) << '(';
+			for (auto it = t.children.begin() + 2; it != t.children.end(); it++) {
+				os << std::get<Tree*>(*it);
+				if (it != t.children.end() - 1)
+					os << ", ";
+			}
+			os << ')';
+			break;
+		case static_method_call:
+			os << std::get<std::string>(t.children.at(0)) << '.' << std::get<std::string>(t.children.at(1));
 			break;
 		case assignment:
 			os << std::get<Tree*>(t.children.at(0)) << " := " << std::get<Tree*>(t.children.at(1));

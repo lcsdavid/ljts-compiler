@@ -21,6 +21,6 @@ std::ostream &operator<<(std::ostream &os, const Block &b) {
 		os << "  " << *it << std::endl;
 	std::cout << "---" << std::endl;
 	for (auto it = b.insts.begin(); it != b.insts.end(); it++)
-		os << "  " << **it << std::endl;
+		os << "  " << **it << ';' << std::endl;
 	return os;
 }

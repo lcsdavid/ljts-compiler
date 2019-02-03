@@ -208,7 +208,7 @@ MemberAccess : Expr '.' IDENTIFIER	{ $$ = new Tree(yylineno, member_access, $1, 
 ;
 
 MethodCall : Expr '.' IDENTIFIER '(' LOptExpr ')'	{ $$ = new Tree(yylineno, method_call, $1, *$3, *$5); }
- | TYPENAME '.' IDENTIFIER '(' LOptExpr ')' 		{ $$ = new Tree(yylineno, static_member_access, *$1, *$3, *$5); }
+ | TYPENAME '.' IDENTIFIER '(' LOptExpr ')' 		{ $$ = new Tree(yylineno, static_method_call, *$1, *$3, *$5); }
 ;
 
 %%
