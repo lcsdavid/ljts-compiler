@@ -1,9 +1,10 @@
 #include "Tree.hpp"
 
-#include "../../optype.hpp"
+#include <algorithm>
 
-#include "Block.hpp"
+#include "../../optype.hpp"
 #include "../types/Type.hpp"
+#include "Block.hpp"
 
 /* return_call */
 Tree::Tree(int lineno, int operation) : lineno(lineno), operation(operation) {}
@@ -153,7 +154,8 @@ int Tree::isCorrect(Environment& env){
 		case string:
 			return -1;
 		case identifier:
-			if(env.fields.find(std::get<std::string>(children.at(0))) != anv.fields.end())
+			if (std::find_if(env.fields.begin(), env.fields.end(), [&](const Variable &var) { 
+				return var.identifier == std::get<std::string>(children.at(0)); }) != env.fields.end())
 				return -1;
 			else 
 				return this->lineno;
