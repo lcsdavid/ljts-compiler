@@ -5,11 +5,11 @@
 
 #include "Type.hpp"
 
-Method::Method(bool override, const std::string &identifier, const std::vector<Variable> &parameters, 
+Method::Method(bool override, const std::string &identifier, const std::vector<Parameter> &parameters, 
 	const std::string &returnTypeIdentifier, Tree *body) : override(override), identifier(identifier), 
 	parameters(parameters), returnTypeIdentifier(returnTypeIdentifier), body(body) {}
 
-Method::Method(bool override, const std::string &identifier, const std::vector<Variable> &parameters, 
+Method::Method(bool override, const std::string &identifier, const std::vector<Parameter> &parameters, 
 	const std::string &returnTypeIdentifier, Block *body) : override(override), identifier(identifier), 
 	parameters(parameters), returnTypeIdentifier(returnTypeIdentifier), body(body) {}
 
@@ -30,7 +30,7 @@ std::ostream &operator<<(std::ostream &os, const Method &m) {
 	}
 	return os << ')' <<(m.returnTypeIdentifier.empty() ? "" : " : ") << m.returnTypeIdentifier;
 }
-
+/*
 Method &operator+=(Method &lhs, const Variable &rhs) {
 	lhs.parameters.push_back(rhs);
 	return lhs;
@@ -52,3 +52,4 @@ bool operator==(const Method &lhs, const Method &rhs) {
             return false;
     return true;
 }
+*/

@@ -1,10 +1,12 @@
 #include "Variable.hpp"
 
-Variable::Variable(const std::string &identifier, const std::string &typeIdentifier, bool var) : identifier(identifier),
-	typeIdentifier(typeIdentifier), var(var) {}
+Variable::Variable(const std::string &identifier, const std::string &typeIdentifier, Tree *initialization) : identifier(identifier),
+	typeIdentifier(typeIdentifier), initialization(initialization) {}
 
-std::ostream &operator<<(std::ostream &os, const Variable &parameter) {
-	return os << "var " << parameter.identifier << " : " << parameter.typeIdentifier;
+std::ostream &operator<<(std::ostream &os, const Variable &v) {
+	return os << "var " << v.identifier << " : " << v.typeIdentifier;
+	if (v.initialization)
+		os << " := " << *v.initialization;
 }
 	
 bool operator==(Variable const &lhs, Variable const &rhs) {

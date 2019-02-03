@@ -9,6 +9,8 @@ typedef union {
 	int Integer;			/* Valeur entière. */
 	std::string *String;	/* Chaîne de caractère. */
 	
+	std::vector<Parameter> *PParamList;
+	Parameter *PParam;
 	std::vector<Variable> *VarList;
 	Variable *PVar;
 	

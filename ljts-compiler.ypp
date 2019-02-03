@@ -68,14 +68,14 @@ Decl : ClassDecl		{ $$ = $1; }
 /* Variable declaration */
 
 LOptParamDecl : LParamDecl					{ $$ = $1; }
- |											{ $$ = new std::vector<Variable>(); }
+ |											{ $$ = new std::vector<Parameter>(); }
 ;
 
 LParamDecl : ParamDecl ',' LParamDecl		{ $$ = $3; $$->insert($$->begin(), *$1); }
- | ParamDecl								{ $$ = new std::vector<Variable>({*$1}); }
+ | ParamDecl								{ $$ = new std::vector<Parameter>({*$1}); }
 ;
 
-ParamDecl : OptVar IDENTIFIER ':' TYPENAME	{ $$ = new Variable(*$2, *$4, $1); }
+ParamDecl : OptVar IDENTIFIER ':' TYPENAME	{ $$ = new Parameter($1, *$2, *$4); }
 ;
 
 OptVar : VAR	{ $$ = true; }

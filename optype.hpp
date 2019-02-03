@@ -3,8 +3,6 @@
 
 /* Op type. */
 enum optype {
-	/* DECLS */
-	class_decl, object_decl,
 	/* CLASSES & OBJECTS */
 	instanciation, cast, member_access, static_member_access, method_call, static_method_call,
 	/* ASSIGNMENT */
