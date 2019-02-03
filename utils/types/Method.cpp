@@ -22,13 +22,13 @@ bool Method::correctDef(const Type &parent, const Environment &env) const {
 }
 
 std::ostream &operator<<(std::ostream &os, const Method &m) {
-	os << m.returnTypeIdentifier << " " << m.identifier << '(';
+	os << m.identifier << '(';
 	for (auto it = m.parameters.begin(); it != m.parameters.end(); it++) {
 		os << *it;
 		if (it != m.parameters.end() - 1)
 			os << ", ";
 	}
-	return os << ')' << std::endl;
+	return os << ')' <<(m.returnTypeIdentifier.empty() ? "" : " : ") << m.returnTypeIdentifier;
 }
 
 Method &operator+=(Method &lhs, const Variable &rhs) {

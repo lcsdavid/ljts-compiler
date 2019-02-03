@@ -4,7 +4,7 @@ Variable::Variable(const std::string &identifier, const std::string &typeIdentif
 	typeIdentifier(typeIdentifier), var(var) {}
 
 std::ostream &operator<<(std::ostream &os, const Variable &parameter) {
-	return os << "var" << parameter.typeIdentifier << " " << parameter.identifier;
+	return os << "var " << parameter.identifier << " : " << parameter.typeIdentifier;
 }
 	
 bool operator==(Variable const &lhs, Variable const &rhs) {

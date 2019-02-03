@@ -5,20 +5,12 @@ CC=g++
 CXXFLAGS=-Wall -g -std=c++17
 LDFLAGS=-lfl
 EXEC=ljts-compiler
-SRCs=$(call find_sources, *) $(EXEC).yy.cpp $(EXEC).tab.cpp
-OBJs=$(SRCs:.cpp=.o)
+SRCs=$(call find_sources, *) 
+OBJs=$(SRCs:.cpp=.o) $(EXEC).yy.o $(EXEC).tab.o
 
 $(EXEC): $(OBJs)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
-lex_only: $(EXEC).o
-	$(CC) -DLEX_MAIN -o $(EXEC).yy.o -c $(EXEC).yy.cpp $(CXXFLAGS)
-	$(CC) -o $@ $(EXEC).o $(EXEC).yy.o $(LDFLAGS)
-
-bison_only: $(EXEC).o $(EXEC).yy.o $(wildcard utils/*.cpp)
-	$(CC) -DBISON_MAIN -o $(EXEC).tab.o -c $(EXEC).tab.cpp $(CXXFLAGS)
-	$(CC) -o $@ $(EXEC).o $(EXEC).yy.o $(EXEC).tab.o $(LDFLAGS)
-	
 %.o: %.cpp
 	$(CC) -o $@ -c $< $(CXXFLAGS)
 
@@ -28,8 +20,6 @@ bison_only: $(EXEC).o $(EXEC).yy.o $(wildcard utils/*.cpp)
 %.tab.cpp: %.ypp
 	bison --verbose -d -o $@ $<
 
-.PRECIOUS: %.o %.yy.cpp %.tab.cpp
-	
 .Phony: clean
 
 clean:

@@ -15,14 +15,10 @@ double		{integer}\.{digit}*
 string		\"[^\"]*\"
 
 %{
-
-#include <algorithm>
 #include <cstdlib>
 #include <iostream>
 #include <string>
-
 #include "ljts-compiler.hpp"
-
 %}
 
 %%
@@ -50,9 +46,9 @@ this			return THIS;
 =				{ yylval.Integer = equal; return RELATIONAL_OPERATOR; }
 (<>)			{ yylval.Integer = not_equal; return RELATIONAL_OPERATOR; }
 {integer}		{ yylval.Integer = std::atoi(yytext); return INTEGER; }
-{string}		{ yylval.String = yytext; return STRING; }
-{identifier}	{ yylval.String = yytext; return IDENTIFIER; }
-{typename}		{ yylval.String = yytext; return TYPENAME; }
+{string}		{ yylval.String = new std::string(yytext); return STRING; }
+{identifier}	{ yylval.String = new std::string(yytext); return IDENTIFIER; }
+{typename}		{ yylval.String = new std::string(yytext); return TYPENAME; }
 .				return yytext[0];
 %%
 
@@ -129,9 +125,9 @@ int main(int argc, char **argv) {
 	}
 	std::cout << "Fichier " << argv[1] << " chargé: " << std::endl;
 	close(0); dup(fi); close(fi);
-	Token t;
+	int t;
 	while ((t = yylex()) != 0)
-		std::cout << (Token)t;
+		std::cout << (yytokentype)t;
 	return 0;
 }
 
