@@ -14,6 +14,18 @@ Method::Method(bool override, const std::string &identifier, const std::vector<P
 	parameters(parameters), returnTypeIdentifier(returnTypeIdentifier), body(body) {}
 
 bool Method::correctDecl(const Type &parent, const Environment &env) const {
+	if (override) {
+		if (!parent.hasSuper()) {
+			std::cout << "\033[91merreur:\033[0m method " << parent.identifier << "::" << identifier 
+				<< " cannot have \033[34moverride\033[0m-qualifier" << std::endl;
+			return false;
+		}
+		if (
+		auto superIt = env.env[parent.super()].find_if(env.env.begin(), env.env.end())
+		auto it = 
+		
+	}
+	
 	return true;
 }
 

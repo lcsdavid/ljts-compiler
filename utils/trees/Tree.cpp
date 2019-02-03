@@ -1,7 +1,9 @@
 #include "Tree.hpp"
 
-#include "Block.hpp"
 #include "../../optype.hpp"
+
+#include "Block.hpp"
+#include "Type.hpp"
 
 /* return_call */
 Tree::Tree(int lineno, int operation) : lineno(lineno), operation(operation) {}
@@ -39,7 +41,6 @@ Tree::Tree(int lineno, int operation, const std::string &identifier, const std::
 		children.push_back(param);
 }
 
-	
 /* member_access */
 Tree::Tree(int lineno, int operation, Tree *expr, const std::string &field) : lineno(lineno),
 	operation(operation), children() {

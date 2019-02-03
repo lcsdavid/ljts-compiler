@@ -1,0 +1,2051 @@
+Grammar
+
+    0 $accept: Program $end
+
+    1 Program: LOptDecls Block
+
+    2 LOptDecls: LDecls
+    3          | %empty
+
+    4 LDecls: Decl LDecls
+    5       | Decl
+
+    6 Decl: ClassDecl
+    7     | ObjectDecl
+
+    8 LOptParamDecl: LParamDecl
+    9              | %empty
+
+   10 LParamDecl: ParamDecl ',' LParamDecl
+   11           | ParamDecl
+
+   12 ParamDecl: OptVar IDENTIFIER ':' TYPENAME
+
+   13 OptVar: VAR
+   14       | %empty
+
+   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'
+
+   16 OptExtends: EXTENDS TYPENAME
+   17           | %empty
+
+   18 ClassConstructor: DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block
+   19                 | DEF TYPENAME '(' LOptParamDecl ')' IS Block
+
+   20 ObjectDecl: OBJECT TYPENAME IS '{' LOptField ObjectConstructor LOptMethod '}'
+
+   21 ObjectConstructor: DEF TYPENAME IS Block
+
+   22 LOptField: LField
+   23          | %empty
+
+   24 LField: Field LField
+   25       | Field
+
+   26 Field: VAR IDENTIFIER ':' TYPENAME ';'
+
+   27 LOptMethod: LMethod
+   28           | %empty
+
+   29 LMethod: Method LMethod
+   30        | Method
+
+   31 Method: OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr
+   32       | OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' OptReturn IS Block
+
+   33 OptOverride: OVERRIDE
+   34            | %empty
+
+   35 OptReturn: ':' TYPENAME
+   36          | %empty
+
+   37 LOptInst: LInst
+   38         | %empty
+
+   39 LInst: Inst LInst
+   40      | Inst
+
+   41 Inst: Expr ';'
+   42     | Block
+   43     | RETURN ';'
+   44     | Expr ASSIGNMENT Expr ';'
+   45     | IF Expr THEN Inst ELSE Inst
+
+   46 Block: '{' LOptInst '}'
+   47      | '{' LOptVar IS LInst '}'
+
+   48 LOptVar: LVar
+   49        | %empty
+
+   50 LVar: Var LVar
+   51     | Var
+
+   52 Var: IDENTIFIER ':' TYPENAME ASSIGNMENT Expr ';'
+   53    | IDENTIFIER ':' TYPENAME ';'
+
+   54 LOptExpr: LExpr
+   55         | %empty
+
+   56 LExpr: Expr ',' LExpr
+   57      | Expr
+
+   58 Expr: Expr RELATIONAL_OPERATOR Expr
+   59     | Expr '+' Expr
+   60     | Expr '-' Expr
+   61     | Expr '*' Expr
+   62     | Expr '/' Expr
+   63     | '+' Expr
+   64     | '-' Expr
+   65     | '(' TYPENAME Expr ')'
+   66     | NEW TYPENAME '(' LOptExpr ')'
+   67     | MemberAccess
+   68     | MethodCall
+   69     | '(' Expr ')'
+   70     | INTEGER
+   71     | STRING
+   72     | IDENTIFIER
+   73     | THIS
+
+   74 MemberAccess: Expr '.' IDENTIFIER
+   75             | TYPENAME '.' IDENTIFIER
+
+   76 MethodCall: Expr '.' IDENTIFIER '(' LOptExpr ')'
+   77           | TYPENAME '.' IDENTIFIER '(' LOptExpr ')'
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 15 18 19 31 32 65 66 69 76 77
+')' (41) 15 18 19 31 32 65 66 69 76 77
+'*' (42) 61
+'+' (43) 59 63
+',' (44) 10 56
+'-' (45) 60 64
+'.' (46) 74 75 76 77
+'/' (47) 62
+':' (58) 12 18 26 31 35 52 53
+';' (59) 26 41 43 44 52 53
+'{' (123) 15 20 46 47
+'}' (125) 15 20 46 47
+error (256)
+ASSIGNMENT (258) 31 44 52
+CLASS (259) 15
+DEF (260) 18 19 21 31 32
+ELSE (261) 45
+EXTENDS (262) 16
+IDENTIFIER (263) 12 26 31 32 52 53 72 74 75 76 77
+IF (264) 45
+INTEGER (265) 70
+IS (266) 15 18 19 20 21 32 47
+NEW (267) 66
+OBJECT (268) 20
+OVERRIDE (269) 33
+RELATIONAL_OPERATOR (270) 58
+RETURN (271) 43
+STRING (272) 71
+THEN (273) 45
+THIS (274) 73
+TYPENAME (275) 12 15 16 18 19 20 21 26 31 35 52 53 65 66 75 77
+VAR (276) 13 26
+unary (277)
+
+
+Nonterminals, with rules where they appear
+
+$accept (35)
+    on left: 0
+Program (36)
+    on left: 1, on right: 0
+LOptDecls (37)
+    on left: 2 3, on right: 1
+LDecls (38)
+    on left: 4 5, on right: 2 4
+Decl (39)
+    on left: 6 7, on right: 4 5
+LOptParamDecl (40)
+    on left: 8 9, on right: 15 18 19 31 32
+LParamDecl (41)
+    on left: 10 11, on right: 8 10
+ParamDecl (42)
+    on left: 12, on right: 10 11
+OptVar (43)
+    on left: 13 14, on right: 12
+ClassDecl (44)
+    on left: 15, on right: 6
+OptExtends (45)
+    on left: 16 17, on right: 15
+ClassConstructor (46)
+    on left: 18 19, on right: 15
+ObjectDecl (47)
+    on left: 20, on right: 7
+ObjectConstructor (48)
+    on left: 21, on right: 20
+LOptField (49)
+    on left: 22 23, on right: 15 20
+LField (50)
+    on left: 24 25, on right: 22 24
+Field (51)
+    on left: 26, on right: 24 25
+LOptMethod (52)
+    on left: 27 28, on right: 15 20
+LMethod (53)
+    on left: 29 30, on right: 27 29
+Method (54)
+    on left: 31 32, on right: 29 30
+OptOverride (55)
+    on left: 33 34, on right: 31 32
+OptReturn (56)
+    on left: 35 36, on right: 32
+LOptInst (57)
+    on left: 37 38, on right: 46
+LInst (58)
+    on left: 39 40, on right: 37 39 47
+Inst (59)
+    on left: 41 42 43 44 45, on right: 39 40 45
+Block (60)
+    on left: 46 47, on right: 1 18 19 21 32 42
+LOptVar (61)
+    on left: 48 49, on right: 47
+LVar (62)
+    on left: 50 51, on right: 48 50
+Var (63)
+    on left: 52 53, on right: 50 51
+LOptExpr (64)
+    on left: 54 55, on right: 18 66 76 77
+LExpr (65)
+    on left: 56 57, on right: 54 56
+Expr (66)
+    on left: 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73, on right:
+    31 41 44 45 52 56 57 58 59 60 61 62 63 64 65 69 74 76
+MemberAccess (67)
+    on left: 74 75, on right: 67
+MethodCall (68)
+    on left: 76 77, on right: 68
+
+
+State 0
+
+    0 $accept: . Program $end
+
+    CLASS   shift, and go to state 1
+    OBJECT  shift, and go to state 2
+
+    $default  reduce using rule 3 (LOptDecls)
+
+    Program     go to state 3
+    LOptDecls   go to state 4
+    LDecls      go to state 5
+    Decl        go to state 6
+    ClassDecl   go to state 7
+    ObjectDecl  go to state 8
+
+
+State 1
+
+   15 ClassDecl: CLASS . TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'
+
+    TYPENAME  shift, and go to state 9
+
+
+State 2
+
+   20 ObjectDecl: OBJECT . TYPENAME IS '{' LOptField ObjectConstructor LOptMethod '}'
+
+    TYPENAME  shift, and go to state 10
+
+
+State 3
+
+    0 $accept: Program . $end
+
+    $end  shift, and go to state 11
+
+
+State 4
+
+    1 Program: LOptDecls . Block
+
+    '{'  shift, and go to state 12
+
+    Block  go to state 13
+
+
+State 5
+
+    2 LOptDecls: LDecls .
+
+    $default  reduce using rule 2 (LOptDecls)
+
+
+State 6
+
+    4 LDecls: Decl . LDecls
+    5       | Decl .
+
+    CLASS   shift, and go to state 1
+    OBJECT  shift, and go to state 2
+
+    $default  reduce using rule 5 (LDecls)
+
+    LDecls      go to state 14
+    Decl        go to state 6
+    ClassDecl   go to state 7
+    ObjectDecl  go to state 8
+
+
+State 7
+
+    6 Decl: ClassDecl .
+
+    $default  reduce using rule 6 (Decl)
+
+
+State 8
+
+    7 Decl: ObjectDecl .
+
+    $default  reduce using rule 7 (Decl)
+
+
+State 9
+
+   15 ClassDecl: CLASS TYPENAME . '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'
+
+    '('  shift, and go to state 15
+
+
+State 10
+
+   20 ObjectDecl: OBJECT TYPENAME . IS '{' LOptField ObjectConstructor LOptMethod '}'
+
+    IS  shift, and go to state 16
+
+
+State 11
+
+    0 $accept: Program $end .
+
+    $default  accept
+
+
+State 12
+
+   46 Block: '{' . LOptInst '}'
+   47      | '{' . LOptVar IS LInst '}'
+
+    IDENTIFIER  shift, and go to state 17
+    IF          shift, and go to state 18
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    RETURN      shift, and go to state 21
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+    '{'         shift, and go to state 12
+
+    IS        reduce using rule 49 (LOptVar)
+    $default  reduce using rule 38 (LOptInst)
+
+    LOptInst      go to state 28
+    LInst         go to state 29
+    Inst          go to state 30
+    Block         go to state 31
+    LOptVar       go to state 32
+    LVar          go to state 33
+    Var           go to state 34
+    Expr          go to state 35
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 13
+
+    1 Program: LOptDecls Block .
+
+    $default  reduce using rule 1 (Program)
+
+
+State 14
+
+    4 LDecls: Decl LDecls .
+
+    $default  reduce using rule 4 (LDecls)
+
+
+State 15
+
+   15 ClassDecl: CLASS TYPENAME '(' . LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'
+
+    VAR  shift, and go to state 38
+
+    IDENTIFIER  reduce using rule 14 (OptVar)
+    $default    reduce using rule 9 (LOptParamDecl)
+
+    LOptParamDecl  go to state 39
+    LParamDecl     go to state 40
+    ParamDecl      go to state 41
+    OptVar         go to state 42
+
+
+State 16
+
+   20 ObjectDecl: OBJECT TYPENAME IS . '{' LOptField ObjectConstructor LOptMethod '}'
+
+    '{'  shift, and go to state 43
+
+
+State 17
+
+   52 Var: IDENTIFIER . ':' TYPENAME ASSIGNMENT Expr ';'
+   53    | IDENTIFIER . ':' TYPENAME ';'
+   72 Expr: IDENTIFIER .
+
+    ':'  shift, and go to state 44
+
+    $default  reduce using rule 72 (Expr)
+
+
+State 18
+
+   45 Inst: IF . Expr THEN Inst ELSE Inst
+
+    IDENTIFIER  shift, and go to state 45
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    Expr          go to state 46
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 19
+
+   70 Expr: INTEGER .
+
+    $default  reduce using rule 70 (Expr)
+
+
+State 20
+
+   66 Expr: NEW . TYPENAME '(' LOptExpr ')'
+
+    TYPENAME  shift, and go to state 47
+
+
+State 21
+
+   43 Inst: RETURN . ';'
+
+    ';'  shift, and go to state 48
+
+
+State 22
+
+   71 Expr: STRING .
+
+    $default  reduce using rule 71 (Expr)
+
+
+State 23
+
+   73 Expr: THIS .
+
+    $default  reduce using rule 73 (Expr)
+
+
+State 24
+
+   75 MemberAccess: TYPENAME . '.' IDENTIFIER
+   77 MethodCall: TYPENAME . '.' IDENTIFIER '(' LOptExpr ')'
+
+    '.'  shift, and go to state 49
+
+
+State 25
+
+   63 Expr: '+' . Expr
+
+    IDENTIFIER  shift, and go to state 45
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    Expr          go to state 50
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 26
+
+   64 Expr: '-' . Expr
+
+    IDENTIFIER  shift, and go to state 45
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    Expr          go to state 51
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 27
+
+   65 Expr: '(' . TYPENAME Expr ')'
+   69     | '(' . Expr ')'
+
+    IDENTIFIER  shift, and go to state 45
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 52
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    Expr          go to state 53
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 28
+
+   46 Block: '{' LOptInst . '}'
+
+    '}'  shift, and go to state 54
+
+
+State 29
+
+   37 LOptInst: LInst .
+
+    $default  reduce using rule 37 (LOptInst)
+
+
+State 30
+
+   39 LInst: Inst . LInst
+   40      | Inst .
+
+    IDENTIFIER  shift, and go to state 45
+    IF          shift, and go to state 18
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    RETURN      shift, and go to state 21
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+    '{'         shift, and go to state 12
+
+    $default  reduce using rule 40 (LInst)
+
+    LInst         go to state 55
+    Inst          go to state 30
+    Block         go to state 31
+    Expr          go to state 35
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 31
+
+   42 Inst: Block .
+
+    $default  reduce using rule 42 (Inst)
+
+
+State 32
+
+   47 Block: '{' LOptVar . IS LInst '}'
+
+    IS  shift, and go to state 56
+
+
+State 33
+
+   48 LOptVar: LVar .
+
+    $default  reduce using rule 48 (LOptVar)
+
+
+State 34
+
+   50 LVar: Var . LVar
+   51     | Var .
+
+    IDENTIFIER  shift, and go to state 57
+
+    $default  reduce using rule 51 (LVar)
+
+    LVar  go to state 58
+    Var   go to state 34
+
+
+State 35
+
+   41 Inst: Expr . ';'
+   44     | Expr . ASSIGNMENT Expr ';'
+   58 Expr: Expr . RELATIONAL_OPERATOR Expr
+   59     | Expr . '+' Expr
+   60     | Expr . '-' Expr
+   61     | Expr . '*' Expr
+   62     | Expr . '/' Expr
+   74 MemberAccess: Expr . '.' IDENTIFIER
+   76 MethodCall: Expr . '.' IDENTIFIER '(' LOptExpr ')'
+
+    ASSIGNMENT           shift, and go to state 59
+    RELATIONAL_OPERATOR  shift, and go to state 60
+    '+'                  shift, and go to state 61
+    '-'                  shift, and go to state 62
+    '*'                  shift, and go to state 63
+    '/'                  shift, and go to state 64
+    '.'                  shift, and go to state 65
+    ';'                  shift, and go to state 66
+
+
+State 36
+
+   67 Expr: MemberAccess .
+
+    $default  reduce using rule 67 (Expr)
+
+
+State 37
+
+   68 Expr: MethodCall .
+
+    $default  reduce using rule 68 (Expr)
+
+
+State 38
+
+   13 OptVar: VAR .
+
+    $default  reduce using rule 13 (OptVar)
+
+
+State 39
+
+   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl . ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'
+
+    ')'  shift, and go to state 67
+
+
+State 40
+
+    8 LOptParamDecl: LParamDecl .
+
+    $default  reduce using rule 8 (LOptParamDecl)
+
+
+State 41
+
+   10 LParamDecl: ParamDecl . ',' LParamDecl
+   11           | ParamDecl .
+
+    ','  shift, and go to state 68
+
+    $default  reduce using rule 11 (LParamDecl)
+
+
+State 42
+
+   12 ParamDecl: OptVar . IDENTIFIER ':' TYPENAME
+
+    IDENTIFIER  shift, and go to state 69
+
+
+State 43
+
+   20 ObjectDecl: OBJECT TYPENAME IS '{' . LOptField ObjectConstructor LOptMethod '}'
+
+    VAR  shift, and go to state 70
+
+    $default  reduce using rule 23 (LOptField)
+
+    LOptField  go to state 71
+    LField     go to state 72
+    Field      go to state 73
+
+
+State 44
+
+   52 Var: IDENTIFIER ':' . TYPENAME ASSIGNMENT Expr ';'
+   53    | IDENTIFIER ':' . TYPENAME ';'
+
+    TYPENAME  shift, and go to state 74
+
+
+State 45
+
+   72 Expr: IDENTIFIER .
+
+    $default  reduce using rule 72 (Expr)
+
+
+State 46
+
+   45 Inst: IF Expr . THEN Inst ELSE Inst
+   58 Expr: Expr . RELATIONAL_OPERATOR Expr
+   59     | Expr . '+' Expr
+   60     | Expr . '-' Expr
+   61     | Expr . '*' Expr
+   62     | Expr . '/' Expr
+   74 MemberAccess: Expr . '.' IDENTIFIER
+   76 MethodCall: Expr . '.' IDENTIFIER '(' LOptExpr ')'
+
+    RELATIONAL_OPERATOR  shift, and go to state 60
+    THEN                 shift, and go to state 75
+    '+'                  shift, and go to state 61
+    '-'                  shift, and go to state 62
+    '*'                  shift, and go to state 63
+    '/'                  shift, and go to state 64
+    '.'                  shift, and go to state 65
+
+
+State 47
+
+   66 Expr: NEW TYPENAME . '(' LOptExpr ')'
+
+    '('  shift, and go to state 76
+
+
+State 48
+
+   43 Inst: RETURN ';' .
+
+    $default  reduce using rule 43 (Inst)
+
+
+State 49
+
+   75 MemberAccess: TYPENAME '.' . IDENTIFIER
+   77 MethodCall: TYPENAME '.' . IDENTIFIER '(' LOptExpr ')'
+
+    IDENTIFIER  shift, and go to state 77
+
+
+State 50
+
+   58 Expr: Expr . RELATIONAL_OPERATOR Expr
+   59     | Expr . '+' Expr
+   60     | Expr . '-' Expr
+   61     | Expr . '*' Expr
+   62     | Expr . '/' Expr
+   63     | '+' Expr .
+   74 MemberAccess: Expr . '.' IDENTIFIER
+   76 MethodCall: Expr . '.' IDENTIFIER '(' LOptExpr ')'
+
+    '.'  shift, and go to state 65
+
+    $default  reduce using rule 63 (Expr)
+
+
+State 51
+
+   58 Expr: Expr . RELATIONAL_OPERATOR Expr
+   59     | Expr . '+' Expr
+   60     | Expr . '-' Expr
+   61     | Expr . '*' Expr
+   62     | Expr . '/' Expr
+   64     | '-' Expr .
+   74 MemberAccess: Expr . '.' IDENTIFIER
+   76 MethodCall: Expr . '.' IDENTIFIER '(' LOptExpr ')'
+
+    '.'  shift, and go to state 65
+
+    $default  reduce using rule 64 (Expr)
+
+
+State 52
+
+   65 Expr: '(' TYPENAME . Expr ')'
+   75 MemberAccess: TYPENAME . '.' IDENTIFIER
+   77 MethodCall: TYPENAME . '.' IDENTIFIER '(' LOptExpr ')'
+
+    IDENTIFIER  shift, and go to state 45
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '.'         shift, and go to state 49
+    '('         shift, and go to state 27
+
+    Expr          go to state 78
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 53
+
+   58 Expr: Expr . RELATIONAL_OPERATOR Expr
+   59     | Expr . '+' Expr
+   60     | Expr . '-' Expr
+   61     | Expr . '*' Expr
+   62     | Expr . '/' Expr
+   69     | '(' Expr . ')'
+   74 MemberAccess: Expr . '.' IDENTIFIER
+   76 MethodCall: Expr . '.' IDENTIFIER '(' LOptExpr ')'
+
+    RELATIONAL_OPERATOR  shift, and go to state 60
+    '+'                  shift, and go to state 61
+    '-'                  shift, and go to state 62
+    '*'                  shift, and go to state 63
+    '/'                  shift, and go to state 64
+    '.'                  shift, and go to state 65
+    ')'                  shift, and go to state 79
+
+
+State 54
+
+   46 Block: '{' LOptInst '}' .
+
+    $default  reduce using rule 46 (Block)
+
+
+State 55
+
+   39 LInst: Inst LInst .
+
+    $default  reduce using rule 39 (LInst)
+
+
+State 56
+
+   47 Block: '{' LOptVar IS . LInst '}'
+
+    IDENTIFIER  shift, and go to state 45
+    IF          shift, and go to state 18
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    RETURN      shift, and go to state 21
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+    '{'         shift, and go to state 12
+
+    LInst         go to state 80
+    Inst          go to state 30
+    Block         go to state 31
+    Expr          go to state 35
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 57
+
+   52 Var: IDENTIFIER . ':' TYPENAME ASSIGNMENT Expr ';'
+   53    | IDENTIFIER . ':' TYPENAME ';'
+
+    ':'  shift, and go to state 44
+
+
+State 58
+
+   50 LVar: Var LVar .
+
+    $default  reduce using rule 50 (LVar)
+
+
+State 59
+
+   44 Inst: Expr ASSIGNMENT . Expr ';'
+
+    IDENTIFIER  shift, and go to state 45
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    Expr          go to state 81
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 60
+
+   58 Expr: Expr RELATIONAL_OPERATOR . Expr
+
+    IDENTIFIER  shift, and go to state 45
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    Expr          go to state 82
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 61
+
+   59 Expr: Expr '+' . Expr
+
+    IDENTIFIER  shift, and go to state 45
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    Expr          go to state 83
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 62
+
+   60 Expr: Expr '-' . Expr
+
+    IDENTIFIER  shift, and go to state 45
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    Expr          go to state 84
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 63
+
+   61 Expr: Expr '*' . Expr
+
+    IDENTIFIER  shift, and go to state 45
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    Expr          go to state 85
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 64
+
+   62 Expr: Expr '/' . Expr
+
+    IDENTIFIER  shift, and go to state 45
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    Expr          go to state 86
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 65
+
+   74 MemberAccess: Expr '.' . IDENTIFIER
+   76 MethodCall: Expr '.' . IDENTIFIER '(' LOptExpr ')'
+
+    IDENTIFIER  shift, and go to state 87
+
+
+State 66
+
+   41 Inst: Expr ';' .
+
+    $default  reduce using rule 41 (Inst)
+
+
+State 67
+
+   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl ')' . OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'
+
+    EXTENDS  shift, and go to state 88
+
+    $default  reduce using rule 17 (OptExtends)
+
+    OptExtends  go to state 89
+
+
+State 68
+
+   10 LParamDecl: ParamDecl ',' . LParamDecl
+
+    VAR  shift, and go to state 38
+
+    $default  reduce using rule 14 (OptVar)
+
+    LParamDecl  go to state 90
+    ParamDecl   go to state 41
+    OptVar      go to state 42
+
+
+State 69
+
+   12 ParamDecl: OptVar IDENTIFIER . ':' TYPENAME
+
+    ':'  shift, and go to state 91
+
+
+State 70
+
+   26 Field: VAR . IDENTIFIER ':' TYPENAME ';'
+
+    IDENTIFIER  shift, and go to state 92
+
+
+State 71
+
+   20 ObjectDecl: OBJECT TYPENAME IS '{' LOptField . ObjectConstructor LOptMethod '}'
+
+    DEF  shift, and go to state 93
+
+    ObjectConstructor  go to state 94
+
+
+State 72
+
+   22 LOptField: LField .
+
+    $default  reduce using rule 22 (LOptField)
+
+
+State 73
+
+   24 LField: Field . LField
+   25       | Field .
+
+    VAR  shift, and go to state 70
+
+    $default  reduce using rule 25 (LField)
+
+    LField  go to state 95
+    Field   go to state 73
+
+
+State 74
+
+   52 Var: IDENTIFIER ':' TYPENAME . ASSIGNMENT Expr ';'
+   53    | IDENTIFIER ':' TYPENAME . ';'
+
+    ASSIGNMENT  shift, and go to state 96
+    ';'         shift, and go to state 97
+
+
+State 75
+
+   45 Inst: IF Expr THEN . Inst ELSE Inst
+
+    IDENTIFIER  shift, and go to state 45
+    IF          shift, and go to state 18
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    RETURN      shift, and go to state 21
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+    '{'         shift, and go to state 12
+
+    Inst          go to state 98
+    Block         go to state 31
+    Expr          go to state 35
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 76
+
+   66 Expr: NEW TYPENAME '(' . LOptExpr ')'
+
+    IDENTIFIER  shift, and go to state 45
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    $default  reduce using rule 55 (LOptExpr)
+
+    LOptExpr      go to state 99
+    LExpr         go to state 100
+    Expr          go to state 101
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 77
+
+   75 MemberAccess: TYPENAME '.' IDENTIFIER .
+   77 MethodCall: TYPENAME '.' IDENTIFIER . '(' LOptExpr ')'
+
+    '('  shift, and go to state 102
+
+    $default  reduce using rule 75 (MemberAccess)
+
+
+State 78
+
+   58 Expr: Expr . RELATIONAL_OPERATOR Expr
+   59     | Expr . '+' Expr
+   60     | Expr . '-' Expr
+   61     | Expr . '*' Expr
+   62     | Expr . '/' Expr
+   65     | '(' TYPENAME Expr . ')'
+   74 MemberAccess: Expr . '.' IDENTIFIER
+   76 MethodCall: Expr . '.' IDENTIFIER '(' LOptExpr ')'
+
+    RELATIONAL_OPERATOR  shift, and go to state 60
+    '+'                  shift, and go to state 61
+    '-'                  shift, and go to state 62
+    '*'                  shift, and go to state 63
+    '/'                  shift, and go to state 64
+    '.'                  shift, and go to state 65
+    ')'                  shift, and go to state 103
+
+
+State 79
+
+   69 Expr: '(' Expr ')' .
+
+    $default  reduce using rule 69 (Expr)
+
+
+State 80
+
+   47 Block: '{' LOptVar IS LInst . '}'
+
+    '}'  shift, and go to state 104
+
+
+State 81
+
+   44 Inst: Expr ASSIGNMENT Expr . ';'
+   58 Expr: Expr . RELATIONAL_OPERATOR Expr
+   59     | Expr . '+' Expr
+   60     | Expr . '-' Expr
+   61     | Expr . '*' Expr
+   62     | Expr . '/' Expr
+   74 MemberAccess: Expr . '.' IDENTIFIER
+   76 MethodCall: Expr . '.' IDENTIFIER '(' LOptExpr ')'
+
+    RELATIONAL_OPERATOR  shift, and go to state 60
+    '+'                  shift, and go to state 61
+    '-'                  shift, and go to state 62
+    '*'                  shift, and go to state 63
+    '/'                  shift, and go to state 64
+    '.'                  shift, and go to state 65
+    ';'                  shift, and go to state 105
+
+
+State 82
+
+   58 Expr: Expr . RELATIONAL_OPERATOR Expr
+   58     | Expr RELATIONAL_OPERATOR Expr .
+   59     | Expr . '+' Expr
+   60     | Expr . '-' Expr
+   61     | Expr . '*' Expr
+   62     | Expr . '/' Expr
+   74 MemberAccess: Expr . '.' IDENTIFIER
+   76 MethodCall: Expr . '.' IDENTIFIER '(' LOptExpr ')'
+
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '.'  shift, and go to state 65
+
+    $default  reduce using rule 58 (Expr)
+
+
+State 83
+
+   58 Expr: Expr . RELATIONAL_OPERATOR Expr
+   59     | Expr . '+' Expr
+   59     | Expr '+' Expr .
+   60     | Expr . '-' Expr
+   61     | Expr . '*' Expr
+   62     | Expr . '/' Expr
+   74 MemberAccess: Expr . '.' IDENTIFIER
+   76 MethodCall: Expr . '.' IDENTIFIER '(' LOptExpr ')'
+
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '.'  shift, and go to state 65
+
+    $default  reduce using rule 59 (Expr)
+
+
+State 84
+
+   58 Expr: Expr . RELATIONAL_OPERATOR Expr
+   59     | Expr . '+' Expr
+   60     | Expr . '-' Expr
+   60     | Expr '-' Expr .
+   61     | Expr . '*' Expr
+   62     | Expr . '/' Expr
+   74 MemberAccess: Expr . '.' IDENTIFIER
+   76 MethodCall: Expr . '.' IDENTIFIER '(' LOptExpr ')'
+
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '.'  shift, and go to state 65
+
+    $default  reduce using rule 60 (Expr)
+
+
+State 85
+
+   58 Expr: Expr . RELATIONAL_OPERATOR Expr
+   59     | Expr . '+' Expr
+   60     | Expr . '-' Expr
+   61     | Expr . '*' Expr
+   61     | Expr '*' Expr .
+   62     | Expr . '/' Expr
+   74 MemberAccess: Expr . '.' IDENTIFIER
+   76 MethodCall: Expr . '.' IDENTIFIER '(' LOptExpr ')'
+
+    '.'  shift, and go to state 65
+
+    $default  reduce using rule 61 (Expr)
+
+
+State 86
+
+   58 Expr: Expr . RELATIONAL_OPERATOR Expr
+   59     | Expr . '+' Expr
+   60     | Expr . '-' Expr
+   61     | Expr . '*' Expr
+   62     | Expr . '/' Expr
+   62     | Expr '/' Expr .
+   74 MemberAccess: Expr . '.' IDENTIFIER
+   76 MethodCall: Expr . '.' IDENTIFIER '(' LOptExpr ')'
+
+    '.'  shift, and go to state 65
+
+    $default  reduce using rule 62 (Expr)
+
+
+State 87
+
+   74 MemberAccess: Expr '.' IDENTIFIER .
+   76 MethodCall: Expr '.' IDENTIFIER . '(' LOptExpr ')'
+
+    '('  shift, and go to state 106
+
+    $default  reduce using rule 74 (MemberAccess)
+
+
+State 88
+
+   16 OptExtends: EXTENDS . TYPENAME
+
+    TYPENAME  shift, and go to state 107
+
+
+State 89
+
+   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends . IS '{' LOptField ClassConstructor LOptMethod '}'
+
+    IS  shift, and go to state 108
+
+
+State 90
+
+   10 LParamDecl: ParamDecl ',' LParamDecl .
+
+    $default  reduce using rule 10 (LParamDecl)
+
+
+State 91
+
+   12 ParamDecl: OptVar IDENTIFIER ':' . TYPENAME
+
+    TYPENAME  shift, and go to state 109
+
+
+State 92
+
+   26 Field: VAR IDENTIFIER . ':' TYPENAME ';'
+
+    ':'  shift, and go to state 110
+
+
+State 93
+
+   21 ObjectConstructor: DEF . TYPENAME IS Block
+
+    TYPENAME  shift, and go to state 111
+
+
+State 94
+
+   20 ObjectDecl: OBJECT TYPENAME IS '{' LOptField ObjectConstructor . LOptMethod '}'
+
+    OVERRIDE  shift, and go to state 112
+
+    DEF       reduce using rule 34 (OptOverride)
+    $default  reduce using rule 28 (LOptMethod)
+
+    LOptMethod   go to state 113
+    LMethod      go to state 114
+    Method       go to state 115
+    OptOverride  go to state 116
+
+
+State 95
+
+   24 LField: Field LField .
+
+    $default  reduce using rule 24 (LField)
+
+
+State 96
+
+   52 Var: IDENTIFIER ':' TYPENAME ASSIGNMENT . Expr ';'
+
+    IDENTIFIER  shift, and go to state 45
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    Expr          go to state 117
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 97
+
+   53 Var: IDENTIFIER ':' TYPENAME ';' .
+
+    $default  reduce using rule 53 (Var)
+
+
+State 98
+
+   45 Inst: IF Expr THEN Inst . ELSE Inst
+
+    ELSE  shift, and go to state 118
+
+
+State 99
+
+   66 Expr: NEW TYPENAME '(' LOptExpr . ')'
+
+    ')'  shift, and go to state 119
+
+
+State 100
+
+   54 LOptExpr: LExpr .
+
+    $default  reduce using rule 54 (LOptExpr)
+
+
+State 101
+
+   56 LExpr: Expr . ',' LExpr
+   57      | Expr .
+   58 Expr: Expr . RELATIONAL_OPERATOR Expr
+   59     | Expr . '+' Expr
+   60     | Expr . '-' Expr
+   61     | Expr . '*' Expr
+   62     | Expr . '/' Expr
+   74 MemberAccess: Expr . '.' IDENTIFIER
+   76 MethodCall: Expr . '.' IDENTIFIER '(' LOptExpr ')'
+
+    RELATIONAL_OPERATOR  shift, and go to state 60
+    '+'                  shift, and go to state 61
+    '-'                  shift, and go to state 62
+    '*'                  shift, and go to state 63
+    '/'                  shift, and go to state 64
+    '.'                  shift, and go to state 65
+    ','                  shift, and go to state 120
+
+    $default  reduce using rule 57 (LExpr)
+
+
+State 102
+
+   77 MethodCall: TYPENAME '.' IDENTIFIER '(' . LOptExpr ')'
+
+    IDENTIFIER  shift, and go to state 45
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    $default  reduce using rule 55 (LOptExpr)
+
+    LOptExpr      go to state 121
+    LExpr         go to state 100
+    Expr          go to state 101
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 103
+
+   65 Expr: '(' TYPENAME Expr ')' .
+
+    $default  reduce using rule 65 (Expr)
+
+
+State 104
+
+   47 Block: '{' LOptVar IS LInst '}' .
+
+    $default  reduce using rule 47 (Block)
+
+
+State 105
+
+   44 Inst: Expr ASSIGNMENT Expr ';' .
+
+    $default  reduce using rule 44 (Inst)
+
+
+State 106
+
+   76 MethodCall: Expr '.' IDENTIFIER '(' . LOptExpr ')'
+
+    IDENTIFIER  shift, and go to state 45
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    $default  reduce using rule 55 (LOptExpr)
+
+    LOptExpr      go to state 122
+    LExpr         go to state 100
+    Expr          go to state 101
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 107
+
+   16 OptExtends: EXTENDS TYPENAME .
+
+    $default  reduce using rule 16 (OptExtends)
+
+
+State 108
+
+   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS . '{' LOptField ClassConstructor LOptMethod '}'
+
+    '{'  shift, and go to state 123
+
+
+State 109
+
+   12 ParamDecl: OptVar IDENTIFIER ':' TYPENAME .
+
+    $default  reduce using rule 12 (ParamDecl)
+
+
+State 110
+
+   26 Field: VAR IDENTIFIER ':' . TYPENAME ';'
+
+    TYPENAME  shift, and go to state 124
+
+
+State 111
+
+   21 ObjectConstructor: DEF TYPENAME . IS Block
+
+    IS  shift, and go to state 125
+
+
+State 112
+
+   33 OptOverride: OVERRIDE .
+
+    $default  reduce using rule 33 (OptOverride)
+
+
+State 113
+
+   20 ObjectDecl: OBJECT TYPENAME IS '{' LOptField ObjectConstructor LOptMethod . '}'
+
+    '}'  shift, and go to state 126
+
+
+State 114
+
+   27 LOptMethod: LMethod .
+
+    $default  reduce using rule 27 (LOptMethod)
+
+
+State 115
+
+   29 LMethod: Method . LMethod
+   30        | Method .
+
+    OVERRIDE  shift, and go to state 112
+
+    DEF       reduce using rule 34 (OptOverride)
+    $default  reduce using rule 30 (LMethod)
+
+    LMethod      go to state 127
+    Method       go to state 115
+    OptOverride  go to state 116
+
+
+State 116
+
+   31 Method: OptOverride . DEF IDENTIFIER '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr
+   32       | OptOverride . DEF IDENTIFIER '(' LOptParamDecl ')' OptReturn IS Block
+
+    DEF  shift, and go to state 128
+
+
+State 117
+
+   52 Var: IDENTIFIER ':' TYPENAME ASSIGNMENT Expr . ';'
+   58 Expr: Expr . RELATIONAL_OPERATOR Expr
+   59     | Expr . '+' Expr
+   60     | Expr . '-' Expr
+   61     | Expr . '*' Expr
+   62     | Expr . '/' Expr
+   74 MemberAccess: Expr . '.' IDENTIFIER
+   76 MethodCall: Expr . '.' IDENTIFIER '(' LOptExpr ')'
+
+    RELATIONAL_OPERATOR  shift, and go to state 60
+    '+'                  shift, and go to state 61
+    '-'                  shift, and go to state 62
+    '*'                  shift, and go to state 63
+    '/'                  shift, and go to state 64
+    '.'                  shift, and go to state 65
+    ';'                  shift, and go to state 129
+
+
+State 118
+
+   45 Inst: IF Expr THEN Inst ELSE . Inst
+
+    IDENTIFIER  shift, and go to state 45
+    IF          shift, and go to state 18
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    RETURN      shift, and go to state 21
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+    '{'         shift, and go to state 12
+
+    Inst          go to state 130
+    Block         go to state 31
+    Expr          go to state 35
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 119
+
+   66 Expr: NEW TYPENAME '(' LOptExpr ')' .
+
+    $default  reduce using rule 66 (Expr)
+
+
+State 120
+
+   56 LExpr: Expr ',' . LExpr
+
+    IDENTIFIER  shift, and go to state 45
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    LExpr         go to state 131
+    Expr          go to state 101
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 121
+
+   77 MethodCall: TYPENAME '.' IDENTIFIER '(' LOptExpr . ')'
+
+    ')'  shift, and go to state 132
+
+
+State 122
+
+   76 MethodCall: Expr '.' IDENTIFIER '(' LOptExpr . ')'
+
+    ')'  shift, and go to state 133
+
+
+State 123
+
+   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' . LOptField ClassConstructor LOptMethod '}'
+
+    VAR  shift, and go to state 70
+
+    $default  reduce using rule 23 (LOptField)
+
+    LOptField  go to state 134
+    LField     go to state 72
+    Field      go to state 73
+
+
+State 124
+
+   26 Field: VAR IDENTIFIER ':' TYPENAME . ';'
+
+    ';'  shift, and go to state 135
+
+
+State 125
+
+   21 ObjectConstructor: DEF TYPENAME IS . Block
+
+    '{'  shift, and go to state 12
+
+    Block  go to state 136
+
+
+State 126
+
+   20 ObjectDecl: OBJECT TYPENAME IS '{' LOptField ObjectConstructor LOptMethod '}' .
+
+    $default  reduce using rule 20 (ObjectDecl)
+
+
+State 127
+
+   29 LMethod: Method LMethod .
+
+    $default  reduce using rule 29 (LMethod)
+
+
+State 128
+
+   31 Method: OptOverride DEF . IDENTIFIER '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr
+   32       | OptOverride DEF . IDENTIFIER '(' LOptParamDecl ')' OptReturn IS Block
+
+    IDENTIFIER  shift, and go to state 137
+
+
+State 129
+
+   52 Var: IDENTIFIER ':' TYPENAME ASSIGNMENT Expr ';' .
+
+    $default  reduce using rule 52 (Var)
+
+
+State 130
+
+   45 Inst: IF Expr THEN Inst ELSE Inst .
+
+    $default  reduce using rule 45 (Inst)
+
+
+State 131
+
+   56 LExpr: Expr ',' LExpr .
+
+    $default  reduce using rule 56 (LExpr)
+
+
+State 132
+
+   77 MethodCall: TYPENAME '.' IDENTIFIER '(' LOptExpr ')' .
+
+    $default  reduce using rule 77 (MethodCall)
+
+
+State 133
+
+   76 MethodCall: Expr '.' IDENTIFIER '(' LOptExpr ')' .
+
+    $default  reduce using rule 76 (MethodCall)
+
+
+State 134
+
+   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField . ClassConstructor LOptMethod '}'
+
+    DEF  shift, and go to state 138
+
+    ClassConstructor  go to state 139
+
+
+State 135
+
+   26 Field: VAR IDENTIFIER ':' TYPENAME ';' .
+
+    $default  reduce using rule 26 (Field)
+
+
+State 136
+
+   21 ObjectConstructor: DEF TYPENAME IS Block .
+
+    $default  reduce using rule 21 (ObjectConstructor)
+
+
+State 137
+
+   31 Method: OptOverride DEF IDENTIFIER . '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr
+   32       | OptOverride DEF IDENTIFIER . '(' LOptParamDecl ')' OptReturn IS Block
+
+    '('  shift, and go to state 140
+
+
+State 138
+
+   18 ClassConstructor: DEF . TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block
+   19                 | DEF . TYPENAME '(' LOptParamDecl ')' IS Block
+
+    TYPENAME  shift, and go to state 141
+
+
+State 139
+
+   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor . LOptMethod '}'
+
+    OVERRIDE  shift, and go to state 112
+
+    DEF       reduce using rule 34 (OptOverride)
+    $default  reduce using rule 28 (LOptMethod)
+
+    LOptMethod   go to state 142
+    LMethod      go to state 114
+    Method       go to state 115
+    OptOverride  go to state 116
+
+
+State 140
+
+   31 Method: OptOverride DEF IDENTIFIER '(' . LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr
+   32       | OptOverride DEF IDENTIFIER '(' . LOptParamDecl ')' OptReturn IS Block
+
+    VAR  shift, and go to state 38
+
+    IDENTIFIER  reduce using rule 14 (OptVar)
+    $default    reduce using rule 9 (LOptParamDecl)
+
+    LOptParamDecl  go to state 143
+    LParamDecl     go to state 40
+    ParamDecl      go to state 41
+    OptVar         go to state 42
+
+
+State 141
+
+   18 ClassConstructor: DEF TYPENAME . '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block
+   19                 | DEF TYPENAME . '(' LOptParamDecl ')' IS Block
+
+    '('  shift, and go to state 144
+
+
+State 142
+
+   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod . '}'
+
+    '}'  shift, and go to state 145
+
+
+State 143
+
+   31 Method: OptOverride DEF IDENTIFIER '(' LOptParamDecl . ')' ':' TYPENAME ASSIGNMENT Expr
+   32       | OptOverride DEF IDENTIFIER '(' LOptParamDecl . ')' OptReturn IS Block
+
+    ')'  shift, and go to state 146
+
+
+State 144
+
+   18 ClassConstructor: DEF TYPENAME '(' . LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block
+   19                 | DEF TYPENAME '(' . LOptParamDecl ')' IS Block
+
+    VAR  shift, and go to state 38
+
+    IDENTIFIER  reduce using rule 14 (OptVar)
+    $default    reduce using rule 9 (LOptParamDecl)
+
+    LOptParamDecl  go to state 147
+    LParamDecl     go to state 40
+    ParamDecl      go to state 41
+    OptVar         go to state 42
+
+
+State 145
+
+   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}' .
+
+    $default  reduce using rule 15 (ClassDecl)
+
+
+State 146
+
+   31 Method: OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' . ':' TYPENAME ASSIGNMENT Expr
+   32       | OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' . OptReturn IS Block
+
+    ':'  shift, and go to state 148
+
+    $default  reduce using rule 36 (OptReturn)
+
+    OptReturn  go to state 149
+
+
+State 147
+
+   18 ClassConstructor: DEF TYPENAME '(' LOptParamDecl . ')' ':' TYPENAME '(' LOptExpr ')' IS Block
+   19                 | DEF TYPENAME '(' LOptParamDecl . ')' IS Block
+
+    ')'  shift, and go to state 150
+
+
+State 148
+
+   31 Method: OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' ':' . TYPENAME ASSIGNMENT Expr
+   35 OptReturn: ':' . TYPENAME
+
+    TYPENAME  shift, and go to state 151
+
+
+State 149
+
+   32 Method: OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' OptReturn . IS Block
+
+    IS  shift, and go to state 152
+
+
+State 150
+
+   18 ClassConstructor: DEF TYPENAME '(' LOptParamDecl ')' . ':' TYPENAME '(' LOptExpr ')' IS Block
+   19                 | DEF TYPENAME '(' LOptParamDecl ')' . IS Block
+
+    IS   shift, and go to state 153
+    ':'  shift, and go to state 154
+
+
+State 151
+
+   31 Method: OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' ':' TYPENAME . ASSIGNMENT Expr
+   35 OptReturn: ':' TYPENAME .
+
+    ASSIGNMENT  shift, and go to state 155
+
+    $default  reduce using rule 35 (OptReturn)
+
+
+State 152
+
+   32 Method: OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' OptReturn IS . Block
+
+    '{'  shift, and go to state 12
+
+    Block  go to state 156
+
+
+State 153
+
+   19 ClassConstructor: DEF TYPENAME '(' LOptParamDecl ')' IS . Block
+
+    '{'  shift, and go to state 12
+
+    Block  go to state 157
+
+
+State 154
+
+   18 ClassConstructor: DEF TYPENAME '(' LOptParamDecl ')' ':' . TYPENAME '(' LOptExpr ')' IS Block
+
+    TYPENAME  shift, and go to state 158
+
+
+State 155
+
+   31 Method: OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT . Expr
+
+    IDENTIFIER  shift, and go to state 45
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    Expr          go to state 159
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 156
+
+   32 Method: OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' OptReturn IS Block .
+
+    $default  reduce using rule 32 (Method)
+
+
+State 157
+
+   19 ClassConstructor: DEF TYPENAME '(' LOptParamDecl ')' IS Block .
+
+    $default  reduce using rule 19 (ClassConstructor)
+
+
+State 158
+
+   18 ClassConstructor: DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME . '(' LOptExpr ')' IS Block
+
+    '('  shift, and go to state 160
+
+
+State 159
+
+   31 Method: OptOverride DEF IDENTIFIER '(' LOptParamDecl ')' ':' TYPENAME ASSIGNMENT Expr .
+   58 Expr: Expr . RELATIONAL_OPERATOR Expr
+   59     | Expr . '+' Expr
+   60     | Expr . '-' Expr
+   61     | Expr . '*' Expr
+   62     | Expr . '/' Expr
+   74 MemberAccess: Expr . '.' IDENTIFIER
+   76 MethodCall: Expr . '.' IDENTIFIER '(' LOptExpr ')'
+
+    RELATIONAL_OPERATOR  shift, and go to state 60
+    '+'                  shift, and go to state 61
+    '-'                  shift, and go to state 62
+    '*'                  shift, and go to state 63
+    '/'                  shift, and go to state 64
+    '.'                  shift, and go to state 65
+
+    $default  reduce using rule 31 (Method)
+
+
+State 160
+
+   18 ClassConstructor: DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' . LOptExpr ')' IS Block
+
+    IDENTIFIER  shift, and go to state 45
+    INTEGER     shift, and go to state 19
+    NEW         shift, and go to state 20
+    STRING      shift, and go to state 22
+    THIS        shift, and go to state 23
+    TYPENAME    shift, and go to state 24
+    '+'         shift, and go to state 25
+    '-'         shift, and go to state 26
+    '('         shift, and go to state 27
+
+    $default  reduce using rule 55 (LOptExpr)
+
+    LOptExpr      go to state 161
+    LExpr         go to state 100
+    Expr          go to state 101
+    MemberAccess  go to state 36
+    MethodCall    go to state 37
+
+
+State 161
+
+   18 ClassConstructor: DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr . ')' IS Block
+
+    ')'  shift, and go to state 162
+
+
+State 162
+
+   18 ClassConstructor: DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' . IS Block
+
+    IS  shift, and go to state 163
+
+
+State 163
+
+   18 ClassConstructor: DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS . Block
+
+    '{'  shift, and go to state 12
+
+    Block  go to state 164
+
+
+State 164
+
+   18 ClassConstructor: DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block .
+
+    $default  reduce using rule 18 (ClassConstructor)
