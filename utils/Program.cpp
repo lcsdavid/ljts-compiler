@@ -18,11 +18,12 @@ Program::~Program() {
 
 void Program::contextualCheck() const {
 	Environment env;
+	/* Vérifications des déclarations */
 	for (auto it = typesDecls.begin(); it != typesDecls.end(); it++)
-		if ((*it)->correctDecl(env))
+		if ((*it)->isCorrect(env))
 			env.env[(*it)->identifier] = *it;
-
-	/* Vérife de main */
+	/* Vérifications du main. */
+	main->isCorrect(env);
 }
 
 std::ostream &operator<<(std::ostream &os, const Program &p) {

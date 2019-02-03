@@ -18,7 +18,7 @@ struct Block {
 	Block(const std::vector<Variable> &varDecls, const std::vector<Tree*> &insts);
 	~Block() = default;
 
-	bool correctDecl(Environment env) const;
+	bool isCorrect(Environment &env) const;
 };
 
 std::ostream &operator<<(std::ostream &os, const Block &b);

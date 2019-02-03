@@ -5,13 +5,13 @@
 
 Block::Block(std::vector<Variable> const &varDecls, std::vector<Tree*> const &insts): varDecls(varDecls), insts(insts) {}
 
-bool Block::correctDecl(Environment env) const {/* Dans le cas d'un bloc */
-    if(varDecls.empty())
-        return true;
+bool Block::isCorrect(Environment &env) const {/* Dans le cas d'un bloc */
+    if(!varDecls.empty()) {
     /*for (Variable const &varDecl : varDecls) {
         if(env.find(varDecl.identifier) == env.end())
             return false;
     }*/
+	}
     return true;
 }
 

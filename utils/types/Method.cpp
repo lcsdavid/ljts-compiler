@@ -15,6 +15,14 @@ Method::Method(bool override, const std::string &identifier, const std::vector<P
 	const std::string &returnTypeIdentifier, Block *body) : override(override), identifier(identifier), 
 	parameters(parameters), returnTypeIdentifier(returnTypeIdentifier), body(body) {}
 
+bool Method::isCorrect(const Type &parent, const Environment &env) const {
+	if (!correctDecl())
+		return false;
+	if (std::holds_alternative<Block*>(body))
+		return std::get<Block*>(body)->isCorrect(env);
+	return std::get<Tree*>(body)->isCorrect(env);
+}
+	
 bool Method::correctDecl(const Type &parent, const Environment &env) const {
 	if (override) {
 		if (!parent.hasSuper()) {
@@ -31,10 +39,6 @@ bool Method::correctDecl(const Type &parent, const Environment &env) const {
 		}
 	}
 	return true;
-}
-
-bool Method::correctDef(const Type &parent, const Environment &env) const {
-	return isCorrect
 }
 
 std::ostream &Method::print(std::ostream &os) const {

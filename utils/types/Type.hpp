@@ -27,6 +27,7 @@ struct Type {
 	virtual bool hasSuper() const = 0;
 	virtual std::string super() const = 0;
 	
+	virtual bool isCorrect(Environment &env) const;
 	virtual bool correctDecl(const Environment &env) const;
 	
 	virtual std::ostream &print(std::ostream &os) const = 0;

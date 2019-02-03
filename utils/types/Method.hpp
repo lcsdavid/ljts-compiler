@@ -28,8 +28,8 @@ struct Method {
 		const std::string &returnTypeIdentifier, Block *body);
 	virtual ~Method() = default;
 	
+	virtual bool isCorrect(const Type &parent, Environment &env) const;
 	virtual bool correctDecl(const Type &parent, const Environment &env) const;
-	virtual bool correctDef(const Type &parent, const Environment &env) const;
 	
 	virtual std::ostream &print(std::ostream &os) const;
 };
