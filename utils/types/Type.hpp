@@ -34,8 +34,6 @@ struct Type {
 	virtual bool correctDecl(const Environment &env) const;
 	
 	virtual std::ostream &print(std::ostream &os) const = 0;
-	
-
 };
 
 std::ostream &operator<<(std::ostream &os, const Type &type);

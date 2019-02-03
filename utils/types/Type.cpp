@@ -49,7 +49,7 @@ bool Type::correctDecl(const Environment &env) const {
 }
 
 Method &Type::know(const std::string &methodIdentifier) {
-	for(auto it = methods.begin(); it != methods.end(); it++){
+	for(auto it = methods.begin(); it != methods.end(); it++)
 		if((*it).identifier == methodIdentifier)
 			return *it;
 	throw std::logic_error(identifier + "::" + methodIdentifier + " was not declared in this scope");
