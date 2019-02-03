@@ -206,8 +206,11 @@ std::string Tree::getType(Environment& env){
 			}
 			break;
 		case assignment:
-			return getType(env, std::get<Tree*>(this->children.at(0)));
-			break;
+			std::string lhs = getType(env, std::get<Tree*>(children.at(0)), /* Type à gauche. */
+				rhs = getType(env, std::get<Tree*>(children.at(0)); /* Type à droite. */
+			if (lhs != rhs)
+				std::cout << "error: tu essaye de mettre " << rhs << " dans " << lhs << std::enl;
+			return lhs;
 		case unary_plus:
 			return "int";
 			break;
@@ -257,7 +260,7 @@ std::string Tree::getType(Environment& env){
 			return "string";
 			break;
 		case identifier:
-			return (std::string)this->children.at(0));
+			return std::get<std::string>(children.at(0));
 			break;
 		default:
 			return "";
