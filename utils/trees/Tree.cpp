@@ -121,7 +121,7 @@ int Tree::isCorrect(Environment& env){
 		
 		break;
 		case 272:
-		
+			return -1;
 		break;
 		case 273 :
 		
@@ -142,6 +142,75 @@ int Tree::isCorrect(Environment& env){
 	}
 
 	return -1;
+}
+
+std::string Tree::getType(Environment& env){
+	switch(operation){
+		case 258:
+		
+		break;
+		case 259 :
+		
+		break;
+		case 260:
+		
+		break;
+		case 261 :
+			return "";
+		break;
+		case 262:
+		
+		break;
+		case 263:
+			return 
+		
+		break;
+		case 264:
+		
+		break;
+		case 265 :
+			return "integer";
+		break;
+		case 266:
+		
+		break;
+		case 267 :
+		
+		break;
+		case 268:
+		
+		break;
+		case 269 :
+		
+		break;
+		case 270:
+			return "bool";
+		break;
+		case 271 :
+		
+		break;
+		case 272:
+			return "string";
+		break;
+		case 273 :
+			return "";
+		break;
+		case 274:
+		
+		break;
+		case 275 :
+			return "string"
+		break;
+		case 276:
+		
+		break;
+		case 277 :
+		
+		break;
+
+	}
+
+	return "";
 }
 
 std::ostream &operator<<(std::ostream &os, const Tree &t) {
