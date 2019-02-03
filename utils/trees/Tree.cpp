@@ -146,7 +146,7 @@ int Tree::isCorrect(Environment& env){
 
 
 std::string Tree::getType(Environment& env){
-	switch (this->operation) {
+	switch (operation) {
 		case instanciation:
 			return std::get<std::string>(this->children.at(0));
 			break;
@@ -164,7 +164,7 @@ std::string Tree::getType(Environment& env){
 			}
 				
 			for(size_t i = 0; i < env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->fields.size(); i++){
-					if(env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->fields.at(i) == std::get<std::string>(this->children.at(1)))
+					if(env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->fields.at(i).identifier == std::get<std::string>(this->children.at(1)))
 						return env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->fields.at(i).typeIdentifier;
 				
 			}
@@ -176,7 +176,7 @@ std::string Tree::getType(Environment& env){
 			}
 				
 			for(size_t i = 0; i < env.env[std::get<std::string>(this->children.at(0))]->fields.size(); i++){
-					if(env.env[std::get<std::string>(this->children.at(0))]->fields.at(i) == std::get<std::string>(this->children.at(1)))
+					if(env.env[std::get<std::string>(this->children.at(0))]->fields.at(i).identifier == std::get<std::string>(this->children.at(1)))
 						return env.env[std::get<std::string>(this->children.at(0))]->fields.at(i).typeIdentifier;
 				
 			}
@@ -188,7 +188,7 @@ std::string Tree::getType(Environment& env){
 			}
 				
 			for(size_t i = 0; i < env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->methods.size(); i++){
-					if(env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->methods.at(i) == std::get<std::string>(this->children.at(1)))
+					if(env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->methods.at(i).identifier == std::get<std::string>(this->children.at(1)))
 						return env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->methods.at(i).returnTypeIdentifier;
 				
 			}
@@ -200,72 +200,49 @@ std::string Tree::getType(Environment& env){
 			}
 				
 			for(size_t i = 0; i < env.env[std::get<std::string>(this->children.at(0))]->methods.size(); i++){
-					if(env.env[std::get<std::string>(this->children.at(0))]->methods.at(i) == std::get<std::string>(this->children.at(1)))
+					if(env.env[std::get<std::string>(this->children.at(0))]->methods.at(i).identifier == std::get<std::string>(this->children.at(1)))
 						return env.env[std::get<std::string>(this->children.at(0))]->methods.at(i).returnTypeIdentifier;
 				
 			}
 			break;
 		case assignment:
-			std::string lhs = getType(env, std::get<Tree*>(children.at(0)), /* Type à gauche. */
-				rhs = getType(env, std::get<Tree*>(children.at(0)); /* Type à droite. */
+			std::string lhs = getType(env, std::get<Tree*>(children.at(0))), rhs = getType(env, std::get<Tree*>(children.at(1)));
 			if (lhs != rhs)
-				std::cout << "error: tu essaye de mettre " << rhs << " dans " << lhs << std::enl;
+				std::cout << "error: tu essaye de mettre " << rhs << " dans " << lhs << std::endl;
 			return lhs;
 		case unary_plus:
-			return "int";
-			break;
+			return "Integer";
 		case unary_minus:
-			return "int";
-			break;
+			return "Integer";
 		case multiplication:
-			return "int";
-			break;
+			return "Integer";
 		case division:
-			return "int";
-			break;
+			return "Integer";
 		case addition:
-			return "int";
-			break;
+			return "Integer";
 		case substraction:
-			return "int";
-			break;
+			return "Integer";
 		case less_strict:
-			return "bool";
-			break;
+			return "Integer";
 		case less_equal:
-			return "bool";
-			break;
+			return "Integer";
 		case greater_strict:
-			return "bool";
-			break;
+			return "Integer";
 		case greater_equal:
-			return "bool";
-			break;
+			return "Integer";
 		case equal:
-			return "bool";
-			break;
+			return "Integer";
 		case not_equal:
-			return "bool";
-			break;
-		case if_then_else:
-			return "";
-			break;
-		case return_call:
-			return "";
-			break;
+			return "Integer";
 		case integer:
-			return "integer";
-			break;
+			return "Integer";
 		case string:
-			return "string";
-			break;
+			return "String";
 		case identifier:
 			return std::get<std::string>(children.at(0));
-			break;
 		default:
-			return "";
+			return "\033[91mundefined\033[0m";
 	}
-
 	return "";
 }
 
