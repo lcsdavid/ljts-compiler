@@ -43,3 +43,10 @@ bool Type::correctDecl(const Environment &env) const {
 std::ostream &operator<<(std::ostream &os, const Type &t) {
 	return t.print(os);
 }
+
+Method* Type::know(std::string str){
+	for(size_t i =0; i < methods.size(); i++){
+		if(methods.at(i).identifier == str)
+			return &methods.at(i);
+	return nullptr;
+}
