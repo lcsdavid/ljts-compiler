@@ -205,11 +205,13 @@ std::string Tree::getType(Environment& env){
 				
 			}
 			break;
-		case assignment:
-			std::string lhs = getType(env, std::get<Tree*>(children.at(0))), rhs = getType(env, std::get<Tree*>(children.at(1)));
+		case assignment: {
+			std::string lhs = std::get<Tree*>(children.at(0))->getType(env),
+				rhs = std::get<Tree*>(children.at(1))->getType(env);
 			if (lhs != rhs)
 				std::cout << "error: tu essaye de mettre " << rhs << " dans " << lhs << std::endl;
 			return lhs;
+		}
 		case unary_plus:
 			return "Integer";
 		case unary_minus:
@@ -337,7 +339,7 @@ std::ostream &operator<<(std::ostream &os, const Tree &t) {
 		default:
 			os << "\033[91mundefined\033[0m";
 	}
-	
+	return os;
 }
 	
 
