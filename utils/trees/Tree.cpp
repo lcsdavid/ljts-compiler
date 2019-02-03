@@ -75,56 +75,25 @@ Tree::Tree(int lineno, int operation, const std::string &var, const std::string 
 int Tree::isCorrect(Environment& env){
 	switch (operation) {
 		case instanciation:
-			return std::get<std::string>(this->children.at(0));
+			//TODO
 			break;
 		case cast:
-		if(this->isCorrect(env) != -1){
-				//TODO
-				return "";
-			}
-			return std::get<std::string>(this->children.at(0));
+			//TODO
 			break;
 		case member_access:
-			if(this->isCorrect(env) != -1){
-				//TODO
-				return "";
-			}
-				
-			for(size_t i = 0; i < env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->fields.size(); i++){
-					if(env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->fields.at(i).identifier == std::get<std::string>(this->children.at(1)))
-						return env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->fields.at(i).typeIdentifier;
-				
-			}
+			//TODO
 			break;
 		case static_member_access:
-			if(this->isCorrect(env) != -1){
-				//TODO
-				return "";
-			}
-				
-			for(size_t i = 0; i < env.env[std::get<std::string>(this->children.at(0))]->fields.size(); i++){
-					if(env.env[std::get<std::string>(this->children.at(0))]->fields.at(i).identifier == std::get<std::string>(this->children.at(1)))
-						return env.env[std::get<std::string>(this->children.at(0))]->fields.at(i).typeIdentifier;
-				
-			}
+			//TODO
 			break;
 		case method_call:
-			if(this->isCorrect(env) != -1){
-				//TODO
-				return "";
-			}
-				
-			for(size_t i = 0; i < env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->methods.size(); i++){
-					if(env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->methods.at(i).identifier == std::get<std::string>(this->children.at(1)))
-						return env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->methods.at(i).returnTypeIdentifier;
-				
-			}
+			//TODO
 			break;
 		case static_method_call:
 			if(env.env.find(std::get<std::string>(this->children.at(0))) == env.env.end())
 				return this->lineno;
 			
-				
+			//TODO
 			
 			break;
 		case assignment: {
