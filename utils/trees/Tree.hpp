@@ -46,6 +46,8 @@ struct Tree {
 	
 	//renvoie -1 si tout va bien, sinon renvoie la ligne a laquelle on a le problème
 	int isCorrect(Environment& env);
+	
+	std::string getType(Environment& env);
 };
 
 std::ostream &operator<<(std::ostream &os, const Tree &t);
