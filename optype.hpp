@@ -6,11 +6,11 @@ enum optype {
 	/* DECLS */
 	class_decl, object_decl,
 	/* CLASSES & OBJECTS */
-	instanciation, cast, member_access, method_call,
+	instanciation, cast, member_access, static_member_access, method_call, static_method_call,
 	/* ASSIGNMENT */
 	assignment,
 	/* ARITHMETIC */
-	unary_plus, unary_substract,
+	unary_plus, unary_minus,
 	multiplication, division,
 	addition, substraction,
 	/* RELATIONAL_OPERATOR */

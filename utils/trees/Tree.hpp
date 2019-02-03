@@ -48,6 +48,8 @@ struct Tree {
 	int isCorrect(Environment& env);
 };
 
+std::ostream &operator<<(std::ostream &os, const Tree &t);
+
 /* Pour récuperer une valeur d'un variant en particulier children. On part du principe que tu as un Tree t;
  * alors t.children est le variant.
  * alors pour récuperer le contenu tu ferras si tu que tu as un std::vector<Tree>* std::get<std::vector<*Tree>>(t.children);

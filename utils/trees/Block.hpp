@@ -19,6 +19,8 @@ struct Block {
 	~Block() = default;
 
 	bool correctDecl(Environment env) const;
-}; 
+};
+
+std::ostream &operator<<(std::ostream &os, const Block &b);
 
 #endif

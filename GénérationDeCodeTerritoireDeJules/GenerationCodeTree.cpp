@@ -65,7 +65,7 @@ void genereCodeTree(Tree *tree) {
 		case optype::unary_plus:
 			genereCodeTree(std::get<Tree*>(tree->children[0]));
 			break;
-		case unary_substract:
+		case unary_minus:
 			negat(tree);
 			break;
 		case optype::integer:

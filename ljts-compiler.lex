@@ -40,9 +40,9 @@ then			return THEN;
 this			return THIS;
 :=				return ASSIGNMENT;
 (<)				{ yylval.Integer = less_strict; return RELATIONAL_OPERATOR; }
-=<|<=			{ yylval.Integer = less_equal; return RELATIONAL_OPERATOR; }
+(<=)			{ yylval.Integer = less_equal; return RELATIONAL_OPERATOR; }
 >				{ yylval.Integer = greater_strict; return RELATIONAL_OPERATOR; }
-=>|>=			{ yylval.Integer = greater_equal; return RELATIONAL_OPERATOR; }
+(>=)			{ yylval.Integer = greater_equal; return RELATIONAL_OPERATOR; }
 =				{ yylval.Integer = equal; return RELATIONAL_OPERATOR; }
 (<>)			{ yylval.Integer = not_equal; return RELATIONAL_OPERATOR; }
 {integer}		{ yylval.Integer = std::atoi(yytext); return INTEGER; }

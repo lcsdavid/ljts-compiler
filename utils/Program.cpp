@@ -25,9 +25,9 @@ void Program::contextualCheck() const {
 	/* Vérife de main */
 }
 
-std::ostream &operator<<(std::ostream &os, const Program &program) {
+std::ostream &operator<<(std::ostream &os, const Program &p) {
 	os << "Déclarations:" << std::endl;
-	for (auto it = program.typesDecls.begin(); it != program.typesDecls.end(); it++)
+	for (auto it = p.typesDecls.begin(); it != p.typesDecls.end(); it++)
 		os << **it << std::endl;
-	return os << std::endl << "main():" << std::endl << program.main;
+	return os << "main():" << std::endl << *p.main;
 }

@@ -17,6 +17,6 @@ struct Program {
 	void contextualCheck() const;
 };
 
-std::ostream &operator<<(std::ostream &os, const Program &program);
+std::ostream &operator<<(std::ostream &os, const Program &p);
 
 #endif 

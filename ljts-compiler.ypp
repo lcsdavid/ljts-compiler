@@ -191,7 +191,7 @@ Expr : Expr RELATIONAL_OPERATOR Expr	{ $$ = new Tree(yylineno, $2, { $1, $3 }); 
  | Expr '*' Expr						{ $$ = new Tree(yylineno, multiplication, { $1, $3 }); }
  | Expr '/' Expr						{ $$ = new Tree(yylineno, division, { $1, $3 }); }
  | '+' Expr %prec unary					{ $$ = new Tree(yylineno, unary_plus, { $2 }); }
- | '-' Expr %prec unary					{ $$ = new Tree(yylineno, unary_substract, { $2 }); }
+ | '-' Expr %prec unary					{ $$ = new Tree(yylineno, unary_minus, { $2 }); }
  | '(' TYPENAME Expr ')'				{ $$ = new Tree(yylineno, cast, *$2, $3); }
  | NEW TYPENAME '(' LOptExpr ')'		{ $$ = new Tree(yylineno, instanciation, *$2, *$4); }
  | MemberAccess							{ $$ = $1; }
@@ -204,11 +204,11 @@ Expr : Expr RELATIONAL_OPERATOR Expr	{ $$ = new Tree(yylineno, $2, { $1, $3 }); 
 ;
 
 MemberAccess : Expr '.' IDENTIFIER	{ $$ = new Tree(yylineno, member_access, $1, *$3); }
- | TYPENAME '.' IDENTIFIER			{ $$ = new Tree(yylineno, member_access, *$1, *$3); }
+ | TYPENAME '.' IDENTIFIER			{ $$ = new Tree(yylineno, static_member_access, *$1, *$3); }
 ;
 
 MethodCall : Expr '.' IDENTIFIER '(' LOptExpr ')'	{ $$ = new Tree(yylineno, method_call, $1, *$3, *$5); }
- | TYPENAME '.' IDENTIFIER '(' LOptExpr ')' 		{ $$ = new Tree(yylineno, method_call, *$1, *$3, *$5); }
+ | TYPENAME '.' IDENTIFIER '(' LOptExpr ')' 		{ $$ = new Tree(yylineno, static_member_access, *$1, *$3, *$5); }
 ;
 
 %%

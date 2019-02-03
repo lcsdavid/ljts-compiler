@@ -144,7 +144,79 @@ int Tree::isCorrect(Environment& env){
 	return -1;
 }
 
-
+std::ostream &operator<<(std::ostream &os, const Tree &t) {
+	switch (t.operation) {
+		case instanciation:
+			os << "new " << std::get<std::string>(t.children.at(0));
+			break;
+		case cast:
+			os << '(' << std::get<std::string>(t.children.at(0)) << " " << std::get<Tree*>(t.children.at(1));
+			break;
+		case member_access:
+			os << "TODO";
+			break;
+		case method_call:
+			os << "TODO";
+			break;
+		case assignment:
+			os << std::get<Tree*>(t.children.at(0)) << " := " << std::get<Tree*>(t.children.at(1));
+			break;
+		case unary_plus:
+			os << "+ " << std::get<Tree*>(t.children.at(0));
+			break;
+		case unary_minus:
+			os << "- " << std::get<Tree*>(t.children.at(0));
+			break;
+		case multiplication:
+			os << std::get<Tree*>(t.children.at(0)) << " * " << std::get<Tree*>(t.children.at(1));
+			break;
+		case division:
+			os << std::get<Tree*>(t.children.at(0)) << " / " << std::get<Tree*>(t.children.at(1));
+			break;
+		case addition:
+			os << std::get<Tree*>(t.children.at(0)) << " + " << std::get<Tree*>(t.children.at(1));
+			break;
+		case substraction:
+			os << std::get<Tree*>(t.children.at(0)) << " - " << std::get<Tree*>(t.children.at(1));
+			break;
+		case less_strict:
+			os << std::get<Tree*>(t.children.at(0)) << " < " << std::get<Tree*>(t.children.at(1));
+			break;
+		case less_equal:
+			os << std::get<Tree*>(t.children.at(0)) << " <= " << std::get<Tree*>(t.children.at(1));
+			break;
+		case greater_strict:
+			os << std::get<Tree*>(t.children.at(0)) << " > " << std::get<Tree*>(t.children.at(1));
+			break;
+		case greater_equal:
+			os << std::get<Tree*>(t.children.at(0)) << " >= " << std::get<Tree*>(t.children.at(1));
+			break;
+		case equal:
+			os << std::get<Tree*>(t.children.at(0)) << " = " << std::get<Tree*>(t.children.at(1));
+			break;
+		case not_equal:
+			os << std::get<Tree*>(t.children.at(0)) << " <> " << std::get<Tree*>(t.children.at(1));
+			break;
+		case if_then_else:
+			os << "TODO";
+			break;
+		case return_call:
+			os << "return;";
+			break;
+		case integer:
+			os << std::get<int>(t.children.at(0));
+			break;
+		case string:
+			os << std::get<std::string>(t.children.at(0));
+			break;
+		case identifier:
+			os << std::get<std::string>(t.children.at(0));
+			break;
+		default:
+			os << "\033[91mundefined\033[0m";
+	}
+	
+}
 	
 
 
