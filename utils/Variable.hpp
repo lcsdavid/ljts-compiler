@@ -5,6 +5,9 @@
 #include <string>
 
 struct Variable {
+	enum vartype {
+		class_param, 
+	};
     std::string identifier;     /* Identifiant du paramètre. */
     std::string typeIdentifier; /* Identifiant du type du paramètre. */
     bool var;                   /* Est-ce que c'est un paramètre 'var'. */

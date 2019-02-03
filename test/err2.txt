@@ -1,5 +1,7 @@
-x := 0;
-y := x+5;
-x := 4;
-begin 0 end
-/* Double declaration de: x */
+{
+x : Integer := 0;
+y : Integer := x + 5;
+x : Integer := 4;
+is
+x + y;
+}

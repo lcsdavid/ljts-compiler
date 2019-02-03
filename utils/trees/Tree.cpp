@@ -140,7 +140,6 @@ int Tree::isCorrect(Environment& env){
 		break;
 
 	}
-
 	return -1;
 }
 
@@ -150,10 +149,10 @@ std::ostream &operator<<(std::ostream &os, const Tree &t) {
 			os << "new " << std::get<std::string>(t.children.at(0));
 			break;
 		case cast:
-			os << '(' << std::get<std::string>(t.children.at(0)) << " " << std::get<Tree*>(t.children.at(1));
+			os << '(' << std::get<std::string>(t.children.at(0)) << " " << *std::get<Tree*>(t.children.at(1));
 			break;
 		case member_access:
-			os << std::get<Tree*>(t.children.at(0)) << '.' << std::get<std::string>(t.children.at(1));
+			os << *std::get<Tree*>(t.children.at(0)) << '.' << std::get<std::string>(t.children.at(1));
 			break;
 		case static_member_access:
 			os << std::get<std::string>(t.children.at(0)) << '.' << std::get<std::string>(t.children.at(1));
@@ -161,56 +160,64 @@ std::ostream &operator<<(std::ostream &os, const Tree &t) {
 		case method_call:
 			os << *std::get<Tree*>(t.children.at(0)) << '.' << std::get<std::string>(t.children.at(1)) << '(';
 			for (auto it = t.children.begin() + 2; it != t.children.end(); it++) {
-				os << std::get<Tree*>(*it);
+				os << *std::get<Tree*>(*it);
 				if (it != t.children.end() - 1)
 					os << ", ";
 			}
 			os << ')';
 			break;
 		case static_method_call:
-			os << std::get<std::string>(t.children.at(0)) << '.' << std::get<std::string>(t.children.at(1));
+			os << std::get<std::string>(t.children.at(0)) << '.' << std::get<std::string>(t.children.at(1)) << '(';
+			for (auto it = t.children.begin() + 2; it != t.children.end(); it++) {
+				os << *std::get<Tree*>(*it);
+				if (it != t.children.end() - 1)
+					os << ", ";
+			}
+			os << ')';
 			break;
 		case assignment:
-			os << std::get<Tree*>(t.children.at(0)) << " := " << std::get<Tree*>(t.children.at(1));
+			os << *std::get<Tree*>(t.children.at(0)) << " := " << *std::get<Tree*>(t.children.at(1));
 			break;
 		case unary_plus:
-			os << "+ " << std::get<Tree*>(t.children.at(0));
+			os << "+ " << *std::get<Tree*>(t.children.at(0));
 			break;
 		case unary_minus:
-			os << "- " << std::get<Tree*>(t.children.at(0));
+			os << "- " << *std::get<Tree*>(t.children.at(0));
 			break;
 		case multiplication:
-			os << std::get<Tree*>(t.children.at(0)) << " * " << std::get<Tree*>(t.children.at(1));
+			os << *std::get<Tree*>(t.children.at(0)) << " * " << *std::get<Tree*>(t.children.at(1));
 			break;
 		case division:
-			os << std::get<Tree*>(t.children.at(0)) << " / " << std::get<Tree*>(t.children.at(1));
+			os << *std::get<Tree*>(t.children.at(0)) << " / " << *std::get<Tree*>(t.children.at(1));
 			break;
 		case addition:
-			os << std::get<Tree*>(t.children.at(0)) << " + " << std::get<Tree*>(t.children.at(1));
+			os << *std::get<Tree*>(t.children.at(0)) << " + " << *std::get<Tree*>(t.children.at(1));
 			break;
 		case substraction:
-			os << std::get<Tree*>(t.children.at(0)) << " - " << std::get<Tree*>(t.children.at(1));
+			os << *std::get<Tree*>(t.children.at(0)) << " - " << *std::get<Tree*>(t.children.at(1));
 			break;
 		case less_strict:
-			os << std::get<Tree*>(t.children.at(0)) << " < " << std::get<Tree*>(t.children.at(1));
+			os << *std::get<Tree*>(t.children.at(0)) << " < " << *std::get<Tree*>(t.children.at(1));
 			break;
 		case less_equal:
-			os << std::get<Tree*>(t.children.at(0)) << " <= " << std::get<Tree*>(t.children.at(1));
+			os << *std::get<Tree*>(t.children.at(0)) << " <= " << *std::get<Tree*>(t.children.at(1));
 			break;
 		case greater_strict:
-			os << std::get<Tree*>(t.children.at(0)) << " > " << std::get<Tree*>(t.children.at(1));
+			os << *std::get<Tree*>(t.children.at(0)) << " > " << *std::get<Tree*>(t.children.at(1));
 			break;
 		case greater_equal:
-			os << std::get<Tree*>(t.children.at(0)) << " >= " << std::get<Tree*>(t.children.at(1));
+			os << *std::get<Tree*>(t.children.at(0)) << " >= " << *std::get<Tree*>(t.children.at(1));
 			break;
 		case equal:
-			os << std::get<Tree*>(t.children.at(0)) << " = " << std::get<Tree*>(t.children.at(1));
+			os << *std::get<Tree*>(t.children.at(0)) << " = " << *std::get<Tree*>(t.children.at(1));
 			break;
 		case not_equal:
-			os << std::get<Tree*>(t.children.at(0)) << " <> " << std::get<Tree*>(t.children.at(1));
+			os << *std::get<Tree*>(t.children.at(0)) << " <> " << *std::get<Tree*>(t.children.at(1));
 			break;
 		case if_then_else:
-			os << "TODO";
+			os << "if (" << *std::get<Tree*>(t.children.at(0)) << ')' << std::endl 
+				<< "---then" << std::endl << *std::get<Tree*>(t.children.at(1)) << ";--- " << std::endl
+				<< "---else" << std::endl << *std::get<Tree*>(t.children.at(2)) << ";--- " << std::endl;
 			break;
 		case return_call:
 			os << "return;";
