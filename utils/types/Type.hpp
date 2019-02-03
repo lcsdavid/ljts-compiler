@@ -31,6 +31,9 @@ struct Type {
 	virtual bool correctDecl(const Environment &env) const;
 	
 	virtual std::ostream &print(std::ostream &os) const = 0;
+	
+	//est-ce que l'on connait cette methode ou pas dans notre classe
+	virtual Method* know(std::string str);
 };
 
 std::ostream &operator<<(std::ostream &os, const Type &type);

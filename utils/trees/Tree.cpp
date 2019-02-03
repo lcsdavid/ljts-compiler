@@ -73,73 +73,123 @@ Tree::Tree(int lineno, int operation, const std::string &var, const std::string 
 }
 
 int Tree::isCorrect(Environment& env){
-	switch(operation){
-		case 258:
-		
-		break;
-		case 259 :
-		
-		break;
-		case 260:
-		
-		break;
-		case 261 :
-		
-		break;
-		case 262:
-		
-		break;
-		case 263:
-			for(size_t i; i < env.fields.size(); i++){
-				if (env.fields.at(i).identifier == std::get<std::string>(children.at(0)))
-					return -1; //l'identifier appartient effectivement à la liste des variables connues
+	switch (operation) {
+		case instanciation:
+			return std::get<std::string>(this->children.at(0));
+			break;
+		case cast:
+		if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
 			}
-			return this->lineno;
-		
-		break;
-		case 264:
-		
-		break;
-		case 265 :
-		
-		break;
-		case 266:
-		
-		break;
-		case 267 :
-		
-		break;
-		case 268:
-		
-		break;
-		case 269 :
-		
-		break;
-		case 270:
-		
-		break;
-		case 271 :
-		
-		break;
-		case 272:
+			return std::get<std::string>(this->children.at(0));
+			break;
+		case member_access:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
+				
+			for(size_t i = 0; i < env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->fields.size(); i++){
+					if(env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->fields.at(i).identifier == std::get<std::string>(this->children.at(1)))
+						return env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->fields.at(i).typeIdentifier;
+				
+			}
+			break;
+		case static_member_access:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
+				
+			for(size_t i = 0; i < env.env[std::get<std::string>(this->children.at(0))]->fields.size(); i++){
+					if(env.env[std::get<std::string>(this->children.at(0))]->fields.at(i).identifier == std::get<std::string>(this->children.at(1)))
+						return env.env[std::get<std::string>(this->children.at(0))]->fields.at(i).typeIdentifier;
+				
+			}
+			break;
+		case method_call:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
+				
+			for(size_t i = 0; i < env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->methods.size(); i++){
+					if(env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->methods.at(i).identifier == std::get<std::string>(this->children.at(1)))
+						return env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->methods.at(i).returnTypeIdentifier;
+				
+			}
+			break;
+		case static_method_call:
+			if(env.env.find(std::get<std::string>(this->children.at(0))) == env.env.end())
+				return this->lineno;
+			
+				
+			
+			break;
+		case assignment: {
+			this->getType(env);
 			return -1;
-		break;
-		case 273 :
-		
-		break;
-		case 274:
-		
-		break;
-		case 275 :
-		
-		break;
-		case 276:
-		
-		break;
-		case 277 :
-		
-		break;
-
+		}
+		case unary_plus:
+			if(std::get<Tree*>(children.at(0))->getType(env) != "Integer" || std::get<Tree*>(children.at(1))->getType(env) != "Integer" )
+				return -1;
+			return this->lineno;
+		case unary_minus:
+			if(std::get<Tree*>(children.at(0))->getType(env) != "Integer" || std::get<Tree*>(children.at(1))->getType(env) != "Integer" )
+				return -1;
+			return this->lineno;
+		case multiplication:
+			if(std::get<Tree*>(children.at(0))->getType(env) != "Integer" || std::get<Tree*>(children.at(1))->getType(env) != "Integer" )
+				return -1;
+			return this->lineno;
+		case division:
+			if(std::get<Tree*>(children.at(0))->getType(env) != "Integer" || std::get<Tree*>(children.at(1))->getType(env) != "Integer" )
+				return -1;
+			return this->lineno;
+		case addition:
+			if(std::get<Tree*>(children.at(0))->getType(env) != "Integer" || std::get<Tree*>(children.at(1))->getType(env) != "Integer" )
+				return -1;
+			return this->lineno;
+		case substraction:
+			if(std::get<Tree*>(children.at(0))->getType(env) != "Integer" || std::get<Tree*>(children.at(1))->getType(env) != "Integer" )
+				return -1;
+			return this->lineno;
+		case less_strict:
+			if(std::get<Tree*>(children.at(0))->getType(env) != "Integer" || std::get<Tree*>(children.at(1))->getType(env) != "Integer" )
+				return -1;
+			return this->lineno;
+		case less_equal:
+			if(std::get<Tree*>(children.at(0))->getType(env) != "Integer" || std::get<Tree*>(children.at(1))->getType(env) != "Integer" )
+				return -1;
+			return this->lineno;
+		case greater_strict:
+			if(std::get<Tree*>(children.at(0))->getType(env) != "Integer" || std::get<Tree*>(children.at(1))->getType(env) != "Integer" )
+				return -1;
+			return this->lineno;
+		case greater_equal:
+			if(std::get<Tree*>(children.at(0))->getType(env) != "Integer" || std::get<Tree*>(children.at(1))->getType(env) != "Integer" )
+				return -1;
+			return this->lineno;
+		case equal:
+			if(std::get<Tree*>(children.at(0))->getType(env) != "Integer" || std::get<Tree*>(children.at(1))->getType(env) != "Integer" )
+				return -1;
+			return this->lineno;
+		case not_equal:
+			if(std::get<Tree*>(children.at(0))->getType(env) != "Integer" || std::get<Tree*>(children.at(1))->getType(env) != "Integer" )
+				return -1;
+			return this->lineno;
+		case integer:
+			return -1;
+		case string:
+			return -1;
+		case identifier:
+			if(env.fields.find(std::get<std::string>(children.at(0))) != anv.fields.end())
+				return -1;
+			else 
+				return this->lineno;
+		default:
+			return -1;
 	}
 	return -1;
 }
@@ -243,7 +293,7 @@ std::string Tree::getType(Environment& env){
 		case identifier:
 			return std::get<std::string>(children.at(0));
 		default:
-			return "\033[91mundefined\033[0m";
+			return "";
 	}
 	return "";
 }
