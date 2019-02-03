@@ -161,7 +161,7 @@ std::string Tree::getType(Environment& env){
 		
 		break;
 		case 263:
-			return 
+			return "oops";
 		
 		break;
 		case 264:
@@ -198,7 +198,7 @@ std::string Tree::getType(Environment& env){
 		
 		break;
 		case 275 :
-			return "string"
+			return "string";
 		break;
 		case 276:
 		

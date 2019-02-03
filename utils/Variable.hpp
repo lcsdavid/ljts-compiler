@@ -4,6 +4,8 @@
 #include <ostream>
 #include <string>
 
+struct Tree;
+
 struct Variable {
 	std::string identifier;     /* Identifiant du paramètre. */
     std::string typeIdentifier; /* Identifiant du type du paramètre. */
