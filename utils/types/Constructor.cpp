@@ -2,7 +2,7 @@
 
 #include "Type.hpp"
 
-Constructor::Constructor(const std::string &identifier, const std::vector<Variable> &parameters, Block *body) : 
+Constructor::Constructor(const std::string &identifier, const std::vector<Parameter> &parameters, Block *body) : 
 	Method(false, identifier, parameters, identifier, body) {}
 	
 std::ostream &operator<<(std::ostream &os, const Constructor &c) {

@@ -1,6 +1,6 @@
 #include "Class.hpp"
 
-Class::Class(const std::string &identifier, const std::vector<Variable> &parameters, const std::string &superIdentifier, 
+Class::Class(const std::string &identifier, const std::vector<Parameter> &parameters, const std::string &superIdentifier, 
 	const std::vector<Variable> &fields, ClassConstructor &constructor, const std::vector<Method> &methods) :
 	Type(identifier, fields, constructor, methods), parameters(parameters), superIdentifier(superIdentifier) {}
 

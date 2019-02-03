@@ -4,7 +4,7 @@
 
 #include "Class.hpp"
 
-ClassConstructor::ClassConstructor(const std::string &identifier, const std::vector<Variable> &parameters,
+ClassConstructor::ClassConstructor(const std::string &identifier, const std::vector<Parameter> &parameters,
 	const std::string &superIdentifier, const std::vector<Tree*> &superVariables, Block *body) : 
 	Constructor(identifier, parameters, body), superIdentifier(superIdentifier), superVariables(superVariables) {}
 

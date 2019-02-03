@@ -4,7 +4,7 @@
 #include "Method.hpp"
 
 struct Constructor : Method {
-    Constructor(const std::string &identifier, const std::vector<Variable> &parameters, Block *body);
+    Constructor(const std::string &identifier, const std::vector<Parameter> &parameters, Block *body);
 	Constructor(const Constructor &other) = default;
 	Constructor(Constructor &&other) = default;
 	~Constructor() override = default;
