@@ -1,5 +1,7 @@
 #include "Method.hpp"
 
+#include <algorithm>
+
 #include "../trees/Block.hpp"
 #include "../trees/Tree.hpp"
 
@@ -16,26 +18,26 @@ Method::Method(bool override, const std::string &identifier, const std::vector<P
 bool Method::correctDecl(const Type &parent, const Environment &env) const {
 	if (override) {
 		if (!parent.hasSuper()) {
-			std::cout << "\033[91merreur:\033[0m method " << parent.identifier << "::" << identifier 
-				<< " cannot have \033[34moverride\033[0m-qualifier" << std::endl;
+			std::cout << "\033[91merror:\033[0m '" << parent.identifier << "::" << *this 
+				<< "' marked 'override', but does not override" << std::endl;
 			return false;
 		}
-		if (
-		auto superIt = env.env[parent.super()].find_if(env.env.begin(), env.env.end())
-		auto it = 
-		
+		/* On est supposé déjà avoir vérifier l'existance de la super classe. */
+		if (std::find(env.env.at(parent.super())->methods.begin(), env.env.at(parent.super())->methods.end(), *this) == 
+			env.env.at(parent.super())->methods.end()) {
+			std::cout << "\033[91merror:\033[0m '" << parent.identifier << "::" << *this 
+				<< "' marked 'override', but does not override" << std::endl;
+			return false;
+		}
 	}
-	
 	return true;
 }
 
 bool Method::correctDef(const Type &parent, const Environment &env) const {
-	
+	return isCorrect
 }
 
 std::ostream &Method::print(std::ostream &os) const {
-	if (override)
-		os << "override ";
 	os << identifier << '(';
 	for (auto it = parameters.cbegin(); it != parameters.cend(); it++) {
 		os << *it;
@@ -43,6 +45,8 @@ std::ostream &Method::print(std::ostream &os) const {
 			os << ", ";
 	}
 	os << ')';
+	if (override)
+		os << " override";
 	if (!returnTypeIdentifier.empty())
 		os << " : " << returnTypeIdentifier;
 	return os;
@@ -63,6 +67,7 @@ Method operator+(const Method &lhs, const Variable &rhs) {
 	result.parameters.push_back(rhs);
     return result;
 }
+*/
 
 bool operator==(const Method &lhs, const Method &rhs) {
     if (lhs.parameters.size() != rhs.parameters.size())
@@ -70,8 +75,7 @@ bool operator==(const Method &lhs, const Method &rhs) {
     if (lhs.identifier != rhs.identifier)
         return false;
     for (std::size_t i = 0; i < rhs.parameters.size(); i++)
-        if (lhs.parameters[i] != rhs.parameters[i])
+        if (lhs.parameters[i].typeIdentifier != rhs.parameters[i].typeIdentifier)
             return false;
     return true;
 }
-*/

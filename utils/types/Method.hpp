@@ -39,4 +39,6 @@ struct Method {
  */
 std::ostream &operator<<(std::ostream &os, const Method &m);
 
+bool operator==(const Method &lhs, const Method &rhs) ;
+
 #endif
