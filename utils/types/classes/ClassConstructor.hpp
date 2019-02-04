@@ -16,7 +16,7 @@ struct ClassConstructor : Constructor {
 	ClassConstructor &operator=(const ClassConstructor &other) = default;
 	ClassConstructor &operator=(ClassConstructor &&other) = default;
 	
-	bool isCorrectDecl(const Class &parent, Environment &env) const override;
+	bool isCorrect(const Class &parent, Environment &env) const override;
 	bool correctDecl(const Type &parent, const Environment &env) const override;
 };
 
