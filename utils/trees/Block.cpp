@@ -8,7 +8,7 @@ Block::Block(std::vector<Variable> const &varDecls, std::vector<Tree*> const &in
 bool Block::isCorrect(Environment &env) const {/* Dans le cas d'un bloc */
     if(!varDecls.empty()) {
 		for (Variable const &varDecl : varDecls) {
-			if(env..env.find(varDecl.identifier) == env.end())
+			if(env.env.find(varDecl.identifier) == env.env.end())
 				return false;
 			else
 				env.fields.push_back(varDecl);
