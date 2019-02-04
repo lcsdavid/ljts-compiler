@@ -27,9 +27,6 @@ struct Type {
 	virtual bool hasSuper() const = 0;
 	virtual std::string super() const = 0;
 	
-	// Est-ce que l'on connait cette méthode ou pas dans notre classe. */
-	Method &know(const std::string &methodIdentifier);
-	
 	Variable &field(const std::string &identifier);
 	Method &method(const std::string &identifier);
 	

@@ -92,8 +92,8 @@ OptExtends : EXTENDS TYPENAME	{ $$ = $2; }
  |								{ $$ = new std::string(); }
 ;
 
-ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block	{ $$ = new ClassConstructor(*$2, *$4, *$7, *$9, $12); }
- | DEF TYPENAME '(' LOptParamDecl ')' IS Block													{ $$ = new ClassConstructor(*$2, *$4, "", std::vector<Tree*>(), $7); }
+ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block	{ $$ = new ClassConstructor(*$2, *$4, new Tree(yylineno, instanciation, *$7, *$9), $12); }
+ | DEF TYPENAME '(' LOptParamDecl ')' IS Block													{ $$ = new ClassConstructor(*$2, *$4, nullptr, $7); }
 ;
 
 /* ===== Object ===== */

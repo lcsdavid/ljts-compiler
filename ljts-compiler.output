@@ -10,8 +10,8 @@ Grammar
     4 LDecls: Decl LDecls
     5       | Decl
 
-    6 Decl: ClassDecl
-    7     | ObjectDecl
+    6 Decl: Class
+    7     | Object
 
     8 LOptParamDecl: LParamDecl
     9              | %empty
@@ -24,7 +24,7 @@ Grammar
    13 OptVar: VAR
    14       | %empty
 
-   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'
+   15 Class: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'
 
    16 OptExtends: EXTENDS TYPENAME
    17           | %empty
@@ -32,7 +32,7 @@ Grammar
    18 ClassConstructor: DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr ')' IS Block
    19                 | DEF TYPENAME '(' LOptParamDecl ')' IS Block
 
-   20 ObjectDecl: OBJECT TYPENAME IS '{' LOptField ObjectConstructor LOptMethod '}'
+   20 Object: OBJECT TYPENAME IS '{' LOptField ObjectConstructor LOptMethod '}'
 
    21 ObjectConstructor: DEF TYPENAME IS Block
 
@@ -171,13 +171,13 @@ ParamDecl (42)
     on left: 12, on right: 10 11
 OptVar (43)
     on left: 13 14, on right: 12
-ClassDecl (44)
+Class (44)
     on left: 15, on right: 6
 OptExtends (45)
     on left: 16 17, on right: 15
 ClassConstructor (46)
     on left: 18 19, on right: 15
-ObjectDecl (47)
+Object (47)
     on left: 20, on right: 7
 ObjectConstructor (48)
     on left: 21, on right: 20
@@ -233,24 +233,24 @@ State 0
 
     $default  reduce using rule 3 (LOptDecls)
 
-    Program     go to state 3
-    LOptDecls   go to state 4
-    LDecls      go to state 5
-    Decl        go to state 6
-    ClassDecl   go to state 7
-    ObjectDecl  go to state 8
+    Program    go to state 3
+    LOptDecls  go to state 4
+    LDecls     go to state 5
+    Decl       go to state 6
+    Class      go to state 7
+    Object     go to state 8
 
 
 State 1
 
-   15 ClassDecl: CLASS . TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'
+   15 Class: CLASS . TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'
 
     TYPENAME  shift, and go to state 9
 
 
 State 2
 
-   20 ObjectDecl: OBJECT . TYPENAME IS '{' LOptField ObjectConstructor LOptMethod '}'
+   20 Object: OBJECT . TYPENAME IS '{' LOptField ObjectConstructor LOptMethod '}'
 
     TYPENAME  shift, and go to state 10
 
@@ -288,36 +288,36 @@ State 6
 
     $default  reduce using rule 5 (LDecls)
 
-    LDecls      go to state 14
-    Decl        go to state 6
-    ClassDecl   go to state 7
-    ObjectDecl  go to state 8
+    LDecls  go to state 14
+    Decl    go to state 6
+    Class   go to state 7
+    Object  go to state 8
 
 
 State 7
 
-    6 Decl: ClassDecl .
+    6 Decl: Class .
 
     $default  reduce using rule 6 (Decl)
 
 
 State 8
 
-    7 Decl: ObjectDecl .
+    7 Decl: Object .
 
     $default  reduce using rule 7 (Decl)
 
 
 State 9
 
-   15 ClassDecl: CLASS TYPENAME . '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'
+   15 Class: CLASS TYPENAME . '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'
 
     '('  shift, and go to state 15
 
 
 State 10
 
-   20 ObjectDecl: OBJECT TYPENAME . IS '{' LOptField ObjectConstructor LOptMethod '}'
+   20 Object: OBJECT TYPENAME . IS '{' LOptField ObjectConstructor LOptMethod '}'
 
     IS  shift, and go to state 16
 
@@ -378,7 +378,7 @@ State 14
 
 State 15
 
-   15 ClassDecl: CLASS TYPENAME '(' . LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'
+   15 Class: CLASS TYPENAME '(' . LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'
 
     VAR  shift, and go to state 38
 
@@ -393,7 +393,7 @@ State 15
 
 State 16
 
-   20 ObjectDecl: OBJECT TYPENAME IS . '{' LOptField ObjectConstructor LOptMethod '}'
+   20 Object: OBJECT TYPENAME IS . '{' LOptField ObjectConstructor LOptMethod '}'
 
     '{'  shift, and go to state 43
 
@@ -650,7 +650,7 @@ State 38
 
 State 39
 
-   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl . ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'
+   15 Class: CLASS TYPENAME '(' LOptParamDecl . ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'
 
     ')'  shift, and go to state 67
 
@@ -681,7 +681,7 @@ State 42
 
 State 43
 
-   20 ObjectDecl: OBJECT TYPENAME IS '{' . LOptField ObjectConstructor LOptMethod '}'
+   20 Object: OBJECT TYPENAME IS '{' . LOptField ObjectConstructor LOptMethod '}'
 
     VAR  shift, and go to state 70
 
@@ -1008,7 +1008,7 @@ State 66
 
 State 67
 
-   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl ')' . OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'
+   15 Class: CLASS TYPENAME '(' LOptParamDecl ')' . OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'
 
     EXTENDS  shift, and go to state 88
 
@@ -1046,7 +1046,7 @@ State 70
 
 State 71
 
-   20 ObjectDecl: OBJECT TYPENAME IS '{' LOptField . ObjectConstructor LOptMethod '}'
+   20 Object: OBJECT TYPENAME IS '{' LOptField . ObjectConstructor LOptMethod '}'
 
     DEF  shift, and go to state 93
 
@@ -1300,7 +1300,7 @@ State 88
 
 State 89
 
-   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends . IS '{' LOptField ClassConstructor LOptMethod '}'
+   15 Class: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends . IS '{' LOptField ClassConstructor LOptMethod '}'
 
     IS  shift, and go to state 108
 
@@ -1335,7 +1335,7 @@ State 93
 
 State 94
 
-   20 ObjectDecl: OBJECT TYPENAME IS '{' LOptField ObjectConstructor . LOptMethod '}'
+   20 Object: OBJECT TYPENAME IS '{' LOptField ObjectConstructor . LOptMethod '}'
 
     OVERRIDE  shift, and go to state 112
 
@@ -1501,7 +1501,7 @@ State 107
 
 State 108
 
-   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS . '{' LOptField ClassConstructor LOptMethod '}'
+   15 Class: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS . '{' LOptField ClassConstructor LOptMethod '}'
 
     '{'  shift, and go to state 123
 
@@ -1536,7 +1536,7 @@ State 112
 
 State 113
 
-   20 ObjectDecl: OBJECT TYPENAME IS '{' LOptField ObjectConstructor LOptMethod . '}'
+   20 Object: OBJECT TYPENAME IS '{' LOptField ObjectConstructor LOptMethod . '}'
 
     '}'  shift, and go to state 126
 
@@ -1658,7 +1658,7 @@ State 122
 
 State 123
 
-   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' . LOptField ClassConstructor LOptMethod '}'
+   15 Class: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' . LOptField ClassConstructor LOptMethod '}'
 
     VAR  shift, and go to state 70
 
@@ -1687,9 +1687,9 @@ State 125
 
 State 126
 
-   20 ObjectDecl: OBJECT TYPENAME IS '{' LOptField ObjectConstructor LOptMethod '}' .
+   20 Object: OBJECT TYPENAME IS '{' LOptField ObjectConstructor LOptMethod '}' .
 
-    $default  reduce using rule 20 (ObjectDecl)
+    $default  reduce using rule 20 (Object)
 
 
 State 127
@@ -1744,7 +1744,7 @@ State 133
 
 State 134
 
-   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField . ClassConstructor LOptMethod '}'
+   15 Class: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField . ClassConstructor LOptMethod '}'
 
     DEF  shift, and go to state 138
 
@@ -1783,7 +1783,7 @@ State 138
 
 State 139
 
-   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor . LOptMethod '}'
+   15 Class: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor . LOptMethod '}'
 
     OVERRIDE  shift, and go to state 112
 
@@ -1822,7 +1822,7 @@ State 141
 
 State 142
 
-   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod . '}'
+   15 Class: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod . '}'
 
     '}'  shift, and go to state 145
 
@@ -1853,9 +1853,9 @@ State 144
 
 State 145
 
-   15 ClassDecl: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}' .
+   15 Class: CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}' .
 
-    $default  reduce using rule 15 (ClassDecl)
+    $default  reduce using rule 15 (Class)
 
 
 State 146

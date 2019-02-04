@@ -38,13 +38,6 @@ bool Type::correctDecl(const Environment &env) const {
 	return true;
 }
 
-Method &Type::know(const std::string &methodIdentifier) {
-	for(auto it = methods.begin(); it != methods.end(); it++)
-		if((*it).identifier == methodIdentifier)
-			return *it;
-	throw std::logic_error(identifier + "::" + methodIdentifier + " was not declared in this scope");
-}
-
 Variable &Type::field(const std::string &identifier) {
 	for(auto it = fields.begin(); it != fields.end(); it++)
 		if((*it).identifier == identifier)

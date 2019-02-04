@@ -51,12 +51,3 @@ std::ostream &Class::print(std::ostream &os) const {
 std::ostream &operator<<(std::ostream &os, const Class &c) {
 	return c.print(os);
 }
-
-Method &Class::know(const std::string &methodIdentifier, const Environment &env){
-	if(Type::know(methodIdentifier) != nullptr)
-		return Type::know(methodIdentifier);
-	if(this->hasSuper())
-		return env.env[this->superIdentifier].know(methodIdentifier, env);	
-	
-	throw std::logic_error(identifier + "::" + methodIdentifier + " was not declared in this scope");
-}
