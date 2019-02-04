@@ -5,6 +5,7 @@
 #include "../../optype.hpp"
 #include "../types/Type.hpp"
 #include "Block.hpp"
+#include "../types/Method.hpp"
 
 /* return_call */
 Tree::Tree(int lineno, int operation) : lineno(lineno), operation(operation) {}
@@ -97,14 +98,19 @@ int Tree::isCorrect(Environment& env){
 			std::string type = (*(env.fields.find(std::get<std::string>(this->children.at(0)))).typeIdentifier);
 			if(env.env.find(type) == env.env.end())
 				return this->lineo;
-			for(size_t i = 0; i < env.env[type]->methods.size(); i++){
-					if(env.env[type]->methods.at(i).identifier == std::get<std::string>(this->children.at(1)))
-						return env.env[type]->methods.at(i).returnTypeIdentifier;
-				
+			Method meth = env.env[type].know(std::get<std::string>(this->children.at(1)));
+			size_t i = 0;
+			for (auto it = this->children.begin() + 2; it != this->children.end(); it++) {
+				if( i >= meth.parameters.size())
+					break;//on vérifie qu'on est toujours dans la taille de meth
+				if((*std::get<Tree*>(*it)).getType(env) != meth.parameters.at(i).typeIdentifier)
+					break;//on vérifie que les types des arguments sont les bons
+				i++;
 			}
+			if(i == meth.parameters.size())//si on a le bon nombre de parametres
+				return -1
 			//dans ce cas on essaie d'appeler une methode qui n'existe pas
-			std::cout<<"la fonction " << std::get<std::string>(this->children.at(1)) << " n'existe pas pour le type "<<type<<". Ligne : "<<lineno;
-			//TODO
+			std::cout<<"la fonction " << std::get<std::string>(this->children.at(1)) << " n'existe pas (ou n'a pas les bons arguments) pour le type "<<type<<". Ligne : "<<lineno;
 			
 			break;
 		case assignment: {
