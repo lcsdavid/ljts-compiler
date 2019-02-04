@@ -91,9 +91,19 @@ int Tree::isCorrect(Environment& env){
 			//TODO
 			break;
 		case static_method_call:
-			if(env.env.find(std::get<std::string>(this->children.at(0))) == env.env.end())
+			if(env.fields.find(std::get<std::string>(this->children.at(0))) == env.env.end())
 				return this->lineno;
 			
+			std::string type = (*(env.fields.find(std::get<std::string>(this->children.at(0)))).typeIdentifier);
+			if(env.env.find(type) == env.env.end())
+				return this->lineo;
+			for(size_t i = 0; i < env.env[type]->methods.size(); i++){
+					if(env.env[type]->methods.at(i).identifier == std::get<std::string>(this->children.at(1)))
+						return env.env[type]->methods.at(i).returnTypeIdentifier;
+				
+			}
+			//dans ce cas on essaie d'appeler une methode qui n'existe pas
+			std::cout<<"la fonction " << std::get<std::string>(this->children.at(1)) << " n'existe pas pour le type "<<type<<". Ligne : "<<lineno;
 			//TODO
 			
 			break;
