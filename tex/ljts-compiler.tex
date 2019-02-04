@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{article}
+ \documentclass[12pt,a4paper]{article}
 
 \usepackage{lmodern}
 \usepackage[utf8]{inputenc}
@@ -12,11 +12,43 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{listings}
 \usepackage{multicol}
 \usepackage{parskip}
 
 \definecolor{blue}{HTML}{000080}
 \definecolor{turquoise}{HTML}{008080}
+
+\lstset{
+	language=c++,
+	frame=shadowbox,
+	framexleftmargin=2em,
+	backgroundcolor=\color[HTML]{2B2B2B},
+	columns=fullflexible,
+	basicstyle=\color{white}\ttfamily\small,
+	commentstyle=\color{gray},
+	stringstyle=\color{green},
+	keywordstyle=\color[HTML]{CC7832},
+	showstringspaces=true,
+	numbers=left,
+	numberfirstline=true,
+	numberstyle=\color{white}\ttfamily\small,
+	tabsize=4,
+	literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+	{Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+	{à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+	{À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+	{ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+	{Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+	{â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+	{Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+	{Ã}{{\~A}}1 {ã}{{\~a}}1 {Õ}{{\~O}}1 {õ}{{\~o}}1
+	{œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+	{ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+	{ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+	{€}{{\euro}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
+	{»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1
+}
 
 \begin{document}
 \title{\bfseries Projet de Compilation}
@@ -43,11 +75,7 @@ Dans un second temps, nous ne traitons pas le commentaire comme un token mais no
 
 Et finalement, pour définir comment s'organise le projet de compilation, il faut réfléchir aux tokens que nous allons reconnaître. Aussi, pour chacun des tokens reconnu le nombre de caractère devra être compté pour garder un contexte d'erreur lors de la compilation. En voici, un exemple d'approche:
 
-Soit $numLine$, $numCharOfLine$, $numChar$ des entiers initialisés à 0. \newline
-Chaque fois que \verb!{newline}! est reconnu $numLine$ est incrémenté de 1. \newline
-Chaque fois que \verb!{commentary}! est reconnu $numLine$ est incrémenté de 1 ou plus selon si le commentaire est multilignes ou non. \newline
-Pour chaque token reconnut $numCharOfLine$ \& $numChar$ sont incrémenté du nombre de caractères du token (\verb|strlen(yytext)|). \newline
-Et finalement pour tout autre caractère simple reconnu $numCharOfLine$ \& $numChar$ sont incrémentés de 1.
+Pour cela, nous indiquons l'option \texttt{--yylineno} lors de l'appel de \texttt{flex}, qui indiqué à flex d'incrémenter la valeur de \texttt{yylineno} à chaque saut de ligne.
 
 \newpage
 
@@ -85,19 +113,19 @@ Finalement, voici le tableau des différents tokens reconnus ainsi que leurs exp
 		\hline \hline
 		\multicolumn{3}{|c|}{Opérateurs arithmétiques} \tabularnewline
 		\hline
-		\textbf{PLUS}     & \verb|\+| & $\varnothing$ \tabularnewline
-		\textbf{MINUS}    & \verb|-|  & $\varnothing$ \tabularnewline
-		\textbf{MULTIPLY} & \verb|\*| & $\varnothing$ \tabularnewline
-		\textbf{DIVIDE}   & \verb|\/| & $\varnothing$ \tabularnewline
+		\verb|'+'| & \verb|\+| & $\varnothing$ \tabularnewline
+		\verb|'-'| & \verb|-|  & $\varnothing$ \tabularnewline
+		\verb|'*'| & \verb|\*| & $\varnothing$ \tabularnewline
+		\verb|'/'| & \verb|\/| & $\varnothing$ \tabularnewline
 		\hline \hline
 		\multicolumn{3}{|c|}{Opérateurs relationnels} \tabularnewline
 		\hline
-		\textbf{RELATIONAL\_OPERATOR} & \verb!=|<>! & {\color{blue}enum} {\color{turquoise}operation}::{\color{turquoise}relational} \tabularnewline
+		\textbf{RELATIONAL\_OPERATOR} & \verb!<|<=|>=|=|<>! & {\color{blue}int} \tabularnewline
 		\hline \hline
 		\multicolumn{3}{|c|}{Autres opérateurs} \tabularnewline
 		\hline
 		\textbf{ASSIGNMENT}     & \verb|:=| & $\varnothing$ \tabularnewline
-		\textbf{MEMBER\_ACCESS} & \verb|\.|  & $\varnothing$ \tabularnewline
+		\verb|'.'| & \verb|\.|  & $\varnothing$ \tabularnewline
 		\hline \hline
 		\multicolumn{3}{|c|}{Idenifiants \& constantes} \tabularnewline
 		\hline
@@ -110,86 +138,86 @@ Finalement, voici le tableau des différents tokens reconnus ainsi que leurs exp
 	\end{tabular}
 \end{center}
 
+On peut en déduire l'{\color{blue}enum} suivante (extrait du fichier \href{../yytokentype.hpp}{\ttfamily yytokentype.hpp}), qui servira dans le fonctionnement de \texttt{bison}:
+\begin{lstlisting}
+enum yytokentype {
+	ASSIGNMENT = 258, CLASS = 259,
+	DEF = 260, ELSE = 261,
+	EXTENDS = 262, IDENTIFIER = 263,
+	IF = 264, INTEGER = 265,
+	IS = 266, NEW = 267,
+	OBJECT = 268, OVERRIDE = 269,
+	RELATIONAL_OPERATOR = 270, RETURN = 271,
+	STRING = 272, THEN = 273,
+	THIS = 274, TYPENAME = 275,
+	VAR = 276, unary = 277
+};
+\end{lstlisting}
+
+
 \newpage
 
 \part{Analyse syntaxique}
 
-\section{Déclarations}
+\section{Grammaire}
 
-\subsection{Préambule}
+\subsection{Programme}
 
-\begin{multicols}{2}
-	\sffamily
-	\begin{tabular}{rcl}
-		LOptParam & := & LParam                \tabularnewline
-		    & \textbar & $\varepsilon$         \tabularnewline
-		LParam    & := & Param \verb|,| LParam \tabularnewline
-		    & \textbar & Param                 \tabularnewline
-		Param     & := & \textbf{IDENTIFIER}   \tabularnewline
-	\end{tabular}
-	\begin{tabular}{rcl}
-		LOptParamDecl & := & LParamDecl                    \tabularnewline
-		        & \textbar & $\varepsilon$                 \tabularnewline
-		LParamDecl    & := & ParamDecl \verb|,| LParamDecl \tabularnewline
-		        & \textbar & ParamDecl                     \tabularnewline
-		ParamDecl     & := & OptVar \textbf{IDENTIFIER} \verb|:| \textbf{IDENTIFIER} \tabularnewline
-		OptVar        & := & \textbf{VAR}                  \tabularnewline
-		        & \textbar & $\varepsilon$                 \tabularnewline
-	\end{tabular}
-\end{multicols}
+{\sffamily
+Program :=  LOptDecls Block \$
 
-\subsection{Déclaration d'une classe}
+LOptDecls := LDecls \textbar \ $\varepsilon$ \newline
+LDecls := Decl LDecls \textbar \ Decl \newline
+Decl := Class \textbar \ Object \newline
+}
 
-\begin{center}
-	\sffamily
-	\begin{tabular}{rcl}
-		Class          & := & \textbf{CLASS} \textbf{IDENTIFIER} \verb|(| LOptParamDecl \verb|)| OptExtends \textbf{IS} \verb|{| ClassDef \verb|}| \tabularnewline
-		OptExtends     & := & \textbf{EXTENDS} \textbf{IDENTIFIER}  \tabularnewline
-		         & \textbar & $\varepsilon$                         \tabularnewline    
-		ClassDef       & := & LOptField ClassConstructor LOptMethod \tabularnewline		
-		ClassConstruct & := & \textbf{DEF} \textbf{IDENTIFIER} \verb|(| LOptParamDecl \verb|)| OptSuper \textbf{IS} \verb|{| Bloc \verb|}| \tabularnewline
-        OptSuper       & := & \textbf{IDENTIFIER} \verb|(| LOptParam \verb|)|
-	\end{tabular}
-\end{center}
+
+\subsection{Déclarations}
+
+
+
+\subsubsection{Déclaration d'une classe}
+
+{\sffamily
+Class := \textbf{CLASS TYPENAME} \verb|'('| LOptParamDecl \verb|')'| OptExtends \textbf{IS} \verb|'{'| LOptField ClassConstructor LOptMethod \verb|'}'| \newline
+OptExtends := \textbf{EXTENDS TYPENAME} \textbar \ $\varepsilon$
+
+{\sffamily
+LOptParamDecl := LParamDecl \textbar \ $\varepsilon$ \newline
+LParamDecl := ParamDecl \verb|,| LParamDecl \textbar \ ParamDecl \newline
+ParamDecl := OptVar \textbf{IDENTIFIER} \verb|:| \textbf{TYPENAME} \newline
+OptVar := \textbf{VAR} \textbar \ $\varepsilon$
+}
+
+ClassConstructor := \textbf{DEF TYPENAME} \verb|'('| LOptParamDecl \verb|')'| \verb|':'| \textbf{TYPENAME} \verb|'('| LOptExpr \verb|')'| \textbf{IS Block} \textbar \ \textbf{DEF TYPENAME} \verb|'('| LOptParamDecl \verb|')'| \textbf{IS} Block
+}
 
 \subsection{Déclaration d'un objet}
 
 {\sffamily
-\begin{tabular}{rcl}
-	Object          & := & \textbf{CLASS} \textbf{IDENTIFIER} \textbf{IS} \verb|{| ObjectDef \verb|}| \tabularnewline
-	OptExtends      & := & \textbf{EXTENDS} \textbf{IDENTIFIER}   \tabularnewline
-	          & \textbar & $\varepsilon$                          \tabularnewline
-	ObjectDef       & := & LOptField ObjectConstructor LOptMethod \tabularnewline
-    ObjectConstruct & := & \textbf{DEF} \textbf{IDENTIFIER} \textbf{IS} \verb|{| Bloc \verb|}|
-\end{tabular}}
+Object := \textbf{OBJECT TYPENAME} \textbf{IS} \verb|'{'| LOptField ObjectConstructor LOptMethod \verb|}|
+
+ObjectConstruct := \textbf{DEF IDENTIFIER IS} \verb|'{'| Bloc \verb|'}'|
+}
 
 \subsection{Déclaration d'un champ}
 
 {\sffamily
-\begin{tabular}{rcl}
-    LOptField & := & LField        \tabularnewline
-        & \textbar & $\varepsilon$ \tabularnewline
-    LField    & := & Field LField  \tabularnewline
-        & \textbar & Field         \tabularnewline
-    Field     & := & \textbf{VAR} \textbf{IDENTIFIER} \verb|:| \textbf{IDENTIFIER} \verb|;|
-\end{tabular}}
+LOptField := LField \textbar \ $\varepsilon$ \newline
+LField := Field LField \textbar \ Field \newline
+Field := \textbf{VAR IDENTIFIER} \verb|':'| \textbf{TYPENAME} \verb|';'|
+}
 
 \subsection{Déclaration d'une méthode}
 
-{\sffamily
-\begin{tabular}{rcl}
-    LOptMethod  & := & LMethod        \tabularnewline
-          & \textbar & $\varepsilon$  \tabularnewline
-    LMethod     & := & Method LMethod \tabularnewline
-          & \textbar & Method         \tabularnewline
-    Method      & := & OptOverride \textbf{IDENTIFIER} \verb|(| LOptParamDecl \verb|)| MethodEnd \tabularnewline
-    MethodEnd   & := & \verb|:| \textbf{IDENTIFIER} \textbf{ASSIGNMENT} Expr                     \tabularnewline
-          & \textbar & OptReturn \textbf{IS} Bloc   \tabularnewline
-    OptOverride & := & \textbf{OVERRIDE}            \tabularnewline
-          & \textbar & $\varepsilon$                \tabularnewline
-    OptReturn   & := & \verb|:| \textbf{IDENTIFIER} \tabularnewline
-          & \textbar & $\varepsilon$
-\end{tabular}}
+{\sffamily\small
+LOptMethod := LMethod \textbar \ $\varepsilon$ \newline
+LMethod := Method LMethod \textbar \ Method \newline
+Method := OptOverride \textbf{IDENTIFIER} \verb|'('| LOptParamDecl \verb|')'| \verb|':'| \textbf{IDENTIFIER ASSIGNMENT} Expr \newline
+\textbar \ OptOverride \textbf{IDENTIFIER} \verb|'('| LOptParamDecl \verb|')'| OptReturn \textbf{IS} Bloc \newline
+OptOverride := \textbf{OVERRIDE} \textbar \ $\varepsilon$ \newline
+OptReturn := \verb|':'| \textbf{IDENTIFIER} \textbar \ $\varepsilon$
+}
 
 \subsection{Expressions et instructions}
 
@@ -200,16 +228,16 @@ On connait le principe pour faire apparaitre la priorité et l'associativité de
 {\sffamily
 \begin{tabular}{rcl}
     Expr  & := & Expr \textbf{RELATIONAL\_OPERATOR} Expr                         \tabularnewline
-    & \textbar & Expr \textbf{PLUS} Expr                                         \tabularnewline
-    & \textbar & Expr \textbf{MINUS} Expr                                        \tabularnewline
-    & \textbar & Expr \textbf{MULTIPLY} Expr                                     \tabularnewline
-    & \textbar & Expr \textbf{DIVIDE} Expr                                       \tabularnewline
+    & \textbar & Expr \textbf{'+'} Expr                                         \tabularnewline
+    & \textbar & Expr \textbf{'$-$'} Expr                                        \tabularnewline
+    & \textbar & Expr \textbf{'*'} Expr                                     \tabularnewline
+    & \textbar & Expr \textbf{'/'} Expr                                       \tabularnewline
     & \textbar & \textbf{NEW} \textbf{IDENTIFIER} \verb|(| LOptParam \verb|)|    \tabularnewline
-    & \textbar & \textbf{PLUS} Expr                                              \tabularnewline
-    & \textbar & \textbf{MINUS} Expr                                             \tabularnewline
+    & \textbar & \textbf{'+'} Expr                                              \tabularnewline
+    & \textbar & \textbf{'$-$'} Expr                                             \tabularnewline
     & \textbar & \verb|(| \textbf{IDENTIFIER} Expr \verb|)|                      \tabularnewline
-    & \textbar & \textbf{IDENTIFIER} \textbf{MEMBER\_ACCESS} \textbf{IDENTIFIER} \tabularnewline
-    & \textbar & \textbf{IDENTIFIER} \textbf{MEMBER\_ACCESS} \textbf{IDENTIFIER} \verb|(| LOptParam \verb|)| \tabularnewline
+    & \textbar & \textbf{IDENTIFIER} \textbf{'\texttt{.}'} \textbf{IDENTIFIER} \tabularnewline
+    & \textbar & \textbf{IDENTIFIER} \textbf{'\texttt{.}'} \textbf{IDENTIFIER} \verb|(| LOptParam \verb|)| \tabularnewline
     & \textbar & \verb|(| Expr \verb|)| \tabularnewline
     & \textbar & \textbf{IDENTIFIER}    \tabularnewline
     & \textbar & \textbf{INTEGER}       \tabularnewline

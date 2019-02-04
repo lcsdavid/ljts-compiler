@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6880 64-bit) (preloaded format=pdflatex 2018.11.26)  8 JAN 2019 10:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6880 64-bit) (preloaded format=pdflatex 2018.11.26)  4 FEB 2019 15:33
 entering extended mode
 **./ljts-compiler.tex
 (ljts-compiler.tex
@@ -317,31 +317,54 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip48
 )
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\listings.sty"
+\lst@mode=\count113
+\lst@gtempboxa=\box30
+\lst@token=\toks24
+\lst@length=\count114
+\lst@currlwidth=\dimen128
+\lst@column=\count115
+\lst@pos=\count116
+\lst@lostspace=\dimen129
+\lst@width=\dimen130
+\lst@newlines=\count117
+\lst@lineno=\count118
+\lst@maxwidth=\dimen131
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstmisc.sty"
+File: lstmisc.sty 2018/09/02 1.7 (Carsten Heinz)
+\c@lstnumber=\count119
+\lst@skipnumbers=\count120
+\lst@framebox=\box31
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\listings.cfg"
+File: listings.cfg 2018/09/02 1.7 listings configuration
+))
+Package: listings 2018/09/02 1.7 (Carsten Heinz)
+
 ("C:\Program Files\MiKTeX 2.9\tex\latex\tools\multicol.sty"
 Package: multicol 2018/04/20 v1.8s multicolumn formatting (FMi)
-\c@tracingmulticols=\count113
-\mult@box=\box30
-\multicol@leftmargin=\dimen128
-\c@unbalance=\count114
-\c@collectmore=\count115
-\doublecol@number=\count116
-\multicoltolerance=\count117
-\multicolpretolerance=\count118
-\full@width=\dimen129
-\page@free=\dimen130
-\premulticols=\dimen131
-\postmulticols=\dimen132
+\c@tracingmulticols=\count121
+\mult@box=\box32
+\multicol@leftmargin=\dimen132
+\c@unbalance=\count122
+\c@collectmore=\count123
+\doublecol@number=\count124
+\multicoltolerance=\count125
+\multicolpretolerance=\count126
+\full@width=\dimen133
+\page@free=\dimen134
+\premulticols=\dimen135
+\postmulticols=\dimen136
 \multicolsep=\skip49
 \multicolbaselineskip=\skip50
-\partial@page=\box31
-\last@line=\box32
-\maxbalancingoverflow=\dimen133
-\mult@rightbox=\box33
-\mult@grightbox=\box34
-\mult@gfirstbox=\box35
-\mult@firstbox=\box36
-\@tempa=\box37
-\@tempa=\box38
+\partial@page=\box33
+\last@line=\box34
+\maxbalancingoverflow=\dimen137
+\mult@rightbox=\box35
+\mult@grightbox=\box36
+\mult@gfirstbox=\box37
+\mult@firstbox=\box38
 \@tempa=\box39
 \@tempa=\box40
 \@tempa=\box41
@@ -357,40 +380,51 @@ Package: multicol 2018/04/20 v1.8s multicolumn formatting (FMi)
 \@tempa=\box51
 \@tempa=\box52
 \@tempa=\box53
-\c@columnbadness=\count119
-\c@finalcolumnbadness=\count120
-\last@try=\dimen134
-\multicolovershoot=\dimen135
-\multicolundershoot=\dimen136
-\mult@nat@firstbox=\box54
-\colbreak@box=\box55
-\mc@col@check@num=\count121
+\@tempa=\box54
+\@tempa=\box55
+\c@columnbadness=\count127
+\c@finalcolumnbadness=\count128
+\last@try=\dimen138
+\multicolovershoot=\dimen139
+\multicolundershoot=\dimen140
+\mult@nat@firstbox=\box56
+\colbreak@box=\box57
+\mc@col@check@num=\count129
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\parskip\parskip.sty"
 Package: parskip 2018-08-24 v2.0a non-zero parskip adjustments
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\etoolbox\etoolbox.sty"
 Package: etoolbox 2018/08/19 v2.5f e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count122
+\etb@tempcnta=\count130
 ))
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstlang1.sty"
+File: lstlang1.sty 2018/09/02 1.7 listings language file
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstlang1.sty"
+File: lstlang1.sty 2018/09/02 1.7 listings language file
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstmisc.sty"
+File: lstmisc.sty 2018/09/02 1.7 (Carsten Heinz)
+)
 (ljts-compiler.aux)
 \openout1 = `ljts-compiler.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 21.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 53.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\ot1lmr.fd"
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
@@ -430,17 +464,17 @@ File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 
 ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count123
-\scratchdimen=\dimen137
-\scratchbox=\box56
-\nofMPsegments=\count124
-\nofMParguments=\count125
-\everyMPshowfont=\toks24
-\MPscratchCnt=\count126
-\MPscratchDim=\dimen138
-\MPnumerator=\count127
-\makeMPintoPDFobject=\count128
-\everyMPtoPDFconversion=\toks25
+\scratchcounter=\count131
+\scratchdimen=\dimen141
+\scratchbox=\box58
+\nofMPsegments=\count132
+\nofMParguments=\count133
+\everyMPshowfont=\toks25
+\MPscratchCnt=\count134
+\MPscratchDim=\dimen142
+\MPnumerator=\count135
+\makeMPintoPDFobject=\count136
+\everyMPtoPDFconversion=\toks26
 ) ("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-base.sty"
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 
@@ -454,8 +488,8 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
-\AtBeginShipoutBox=\box57
-Package hyperref Info: Link coloring OFF on input line 21.
+\AtBeginShipoutBox=\box59
+Package hyperref Info: Link coloring OFF on input line 53.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
@@ -463,118 +497,135 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty"
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count129
+\c@section@level=\count137
 )
-LaTeX Info: Redefining \ref on input line 21.
-LaTeX Info: Redefining \pageref on input line 21.
-LaTeX Info: Redefining \nameref on input line 21.
+LaTeX Info: Redefining \ref on input line 53.
+LaTeX Info: Redefining \pageref on input line 53.
+LaTeX Info: Redefining \nameref on input line 53.
 
 (ljts-compiler.out) (ljts-compiler.out)
 \@outlinefile=\write3
 \openout3 = `ljts-compiler.out'.
 
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 26.
+\c@lstlisting=\count138
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 58.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\omllmm.fd"
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 26.
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 58.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\omslmsy.fd"
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 26.
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 58.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\omxlmex.fd"
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 26.
+(Font)              <14.4> on input line 58.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 26.
+(Font)              <10> on input line 58.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 26.
-LaTeX Font Info:    Try loading font information for U+msa on input line 26.
+(Font)              <7> on input line 58.
+LaTeX Font Info:    Try loading font information for U+msa on input line 58.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 26.
+LaTeX Font Info:    Try loading font information for U+msb on input line 58.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 31.
+(Font)              <12> on input line 63.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 31.
+(Font)              <8> on input line 63.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 31.
-LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 32.
+(Font)              <6> on input line 63.
+LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 64.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\ot1lmtt.fd"
 File: ot1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [1
+)
+Overfull \hbox (17.59604pt too wide) in paragraph at lines 78--79
+[]\OT1/lmr/m/n/12 Pour cela, nous in-diquons l'option \OT1/lmtt/m/n/12 --yyline
+no \OT1/lmr/m/n/12 lors de l'appel de \OT1/lmtt/m/n/12 flex\OT1/lmr/m/n/12 , qu
+i in-dique a flex d'incrementer
+ []
+
+[1
 
 {C:/Users/ldavid/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-LaTeX Font Info:    Try loading font information for OT1+lmss on input line 57.
+LaTeX Font Info:    Try loading font information for OT1+lmss on input line 85.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\ot1lmss.fd"
 File: ot1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [2]
-LaTeX Font Info:    Try loading font information for OMS+lmss on input line 125
+LaTeX Font Info:    Try loading font information for OMS+lmss on input line 169
 .
-LaTeX Font Info:    No file OMSlmss.fd. on input line 125.
+LaTeX Font Info:    No file OMSlmss.fd. on input line 169.
 
 
 LaTeX Font Warning: Font shape `OMS/lmss/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbar' on input line 125.
+(Font)              for symbol `textbar' on input line 169.
 
 
-Overfull \hbox (270.48949pt too wide) in paragraph at lines 123--139
-[][] [] 
+Underfull \hbox (badness 10000) in paragraph at lines 169--173
+
  []
 
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10.95> on input line 214.
 [3]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 242.
- [4] [5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 242.
+LaTeX Font Info:    Font shape `OT1/lmtt/bx/n' in size <12> not available
+(Font)              Font shape `OT1/lmtt/b/n' tried instead on input line 239.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 270.
+ [4]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 270.
  (ljts-compiler.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 242.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 242.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 270.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 270.
 Package rerunfilecheck Info: File `ljts-compiler.out' has not changed.
-(rerunfilecheck)             Checksum: D3325065FEC092A6C19F716697A0177A;754.
+(rerunfilecheck)             Checksum: D12A8C569CED475AF21D74C96ED447DE;821.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 242.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 270.
  ) 
 Here is how much of TeX's memory you used:
- 7541 strings out of 492969
- 107711 string characters out of 3135843
- 220977 words of memory out of 3000000
- 11286 multiletter control sequences out of 15000+200000
- 54917 words of font info for 57 fonts, out of 3000000 for 9000
+ 9401 strings out of 492969
+ 131698 string characters out of 3135843
+ 438482 words of memory out of 3000000
+ 13110 multiletter control sequences out of 15000+200000
+ 65243 words of font info for 67 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 28i,7n,35p,918b,323s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Program Files/M
-iKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Files/MiKTeX 2.9/fonts/e
-nc/dvips/lm/lm-rmtt.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfont
-s/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmbx12.pfb><
-C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmmi12.pfb><C:/Program Files/
-MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
-ype1/public/lm/lmss12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lm
-ssbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmtt12.pfb><C:/Pr
-ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on ljts-compiler.pdf (5 pages, 160814 bytes).
+ 33i,7n,58p,918b,1276s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rmtt.enc}{C:/Program Files
+/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Program Files/MiKTeX 2.9/fonts
+/enc/dvips/lm/lm-mathit.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-
+rm.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
+C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmbx12.pfb><C:/Program Files/
+MiKTeX 2.9/fonts/type1/public/lm/lmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/
+type1/public/lm/lmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/l
+mr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmss10.pfb><C:/Prog
+ram Files/MiKTeX 2.9/fonts/type1/public/lm/lmss12.pfb><C:/Program Files/MiKTeX 
+2.9/fonts/type1/public/lm/lmssbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
+/public/lm/lmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmtk10
+.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmtt10.pfb><C:/Program 
+Files/MiKTeX 2.9/fonts/type1/public/lm/lmtt12.pfb><C:/Program Files/MiKTeX 2.9/
+fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on ljts-compiler.pdf (4 pages, 236844 bytes).
 PDF statistics:
- 111 PDF objects out of 1000 (max. 8388607)
- 17 named destinations out of 1000 (max. 500000)
- 89 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 148 PDF objects out of 1000 (max. 8388607)
+ 30 named destinations out of 1000 (max. 500000)
+ 97 words of extra memory for PDF output out of 10000 (max. 10000000)
 

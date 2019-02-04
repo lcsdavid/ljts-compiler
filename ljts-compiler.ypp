@@ -23,8 +23,8 @@
 /* Types */
 %type <PTypeList> LOptDecls LDecls
 %type <PType> Decl
-%type <PClass> ClassDecl
-%type <PObject> ObjectDecl
+%type <PClass> Class
+%type <PObject> Object
 
 /* Methods */
 %type <MethodList> LOptMethod LMethod
@@ -63,8 +63,8 @@ LDecls : Decl LDecls	{ $$ = $2; $$->insert($$->begin(), $1); }
  | Decl					{ $$ = new std::vector<Type*>({$1}); }
 ;
 
-Decl : ClassDecl		{ $$ = $1; }
- | ObjectDecl			{ $$ = $1; }
+Decl : Class	{ $$ = $1; }
+ | Object		{ $$ = $1; }
 ;
 
 /* Variable declaration */
@@ -86,8 +86,7 @@ OptVar : VAR	{ $$ = true; }
 
 /* ===== Class ===== */
 
-ClassDecl : CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'	{ $$ = new Class(*$2, *$4, *$6, *$9, *(ClassConstructor*)$10, *$11); }
-;
+Class : CLASS TYPENAME '(' LOptParamDecl ')' OptExtends IS '{' LOptField ClassConstructor LOptMethod '}'	{ $$ = new Class(*$2, *$4, *$6, *$9, *(ClassConstructor*)$10, *$11); };
 
 OptExtends : EXTENDS TYPENAME	{ $$ = $2; }
  |								{ $$ = new std::string(); }
@@ -99,11 +98,9 @@ ClassConstructor : DEF TYPENAME '(' LOptParamDecl ')' ':' TYPENAME '(' LOptExpr 
 
 /* ===== Object ===== */
 
-ObjectDecl : OBJECT TYPENAME IS '{' LOptField ObjectConstructor LOptMethod '}'	{ $$ = new Object(*$2, *$5, *(ObjectConstructor*)$6, *$7); }
-;
+Object : OBJECT TYPENAME IS '{' LOptField ObjectConstructor LOptMethod '}'	{ $$ = new Object(*$2, *$5, *(ObjectConstructor*)$6, *$7); };
 
-ObjectConstructor : DEF TYPENAME IS Block										{ $$ = new ObjectConstructor(*$2, $4); }
-;
+ObjectConstructor : DEF TYPENAME IS Block	{ $$ = new ObjectConstructor(*$2, $4); };
 
 /* ===== Champ ===== */
 
