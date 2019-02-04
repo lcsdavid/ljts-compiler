@@ -101,16 +101,22 @@ int Tree::isCorrect(Environment& env){
 			std::cout<<"l'argument " << std::get<std::string>(this->children.at(1)) << " n'existe pas pour le type "<<type<<". Ligne : "<<lineno;
 			break;
 		}
-		case static_member_access:{
-			if(std::find_if(env.fields.begin(), env.fields.end(), [&] (const Variable &var) { return var.identifier == std::get<std::string>(children.at(0)); })  == env.fields.end()) {
-				return this->lineno;
-			} 
-			std::string type = (*(std::find_if(env.fields.begin(), env.fields.end(), [&] (const Variable &var) { return var.identifier == std::get<std::string>(children.at(0)); })).typeIdentifier);
-			if(std::find_if(env.env[type]->fields.begin(), env.env[type]->fields.end(), [&] (const Variable &var) { return var.identifier == std::get<std::string>(children.at(1)); })  != env.env[type]->fields.end()) {
-				return -1;
-			} 
-			std::cout<<"l'argument " << std::get<std::string>(this->children.at(1)) << " n'existe pas pour le type "<<type<<". Ligne : "<<lineno;
-			
+		case static_member_access: {
+			auto itType = std::find_if(env.env.begin(), env.env.end(), [&] (const Type &type) { return type.identifier == std::get<std::string>(children.at(0)); });
+			if (itType  == env.fields.end()) {
+				std::cout << "type inconnue " << lineno;
+				return lineno;
+			}
+			if (!(*itType)->isStatic()) {
+				std::cout << "appel static pas static " << lineno;
+				return lineno;
+			}
+			auto itMethod = std::find_if((*itType).methods().begin(), (*itType).methods().end(), [&] (const Method &method) { return method.identifier == std::get<std::string>(children.at(1)) && true/* tester les parametres*/; });
+			if(itMethod == (*itType).methods().end()) {
+				std::cout << "pas de méthode avec cette signature " << lineno;
+				return lineno;
+			}
+			return -1; /* ok */
 			break;
 		}
 		case method_call:{
