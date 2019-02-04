@@ -88,14 +88,15 @@ int Tree::isCorrect(Environment& env){
 		case cast:
 			this->getType(env);// vu que getType fait déjà la vérification
 			break;
-		case member_access:
+		case member_access:{
 			
 			std::string type = (std::get<Tree*>(this->children.at(0)))->getType(env);
 			if(env.env[type]->fields.find(std::get<std::string>(this->children.at(1))) != env.env[type]->fields.end())
 				return -1;
 			std::cout<<"l'argument " << std::get<std::string>(this->children.at(1)) << " n'existe pas pour le type "<<type<<". Ligne : "<<lineno;
 			break;
-		case static_member_access:
+		}
+		case static_member_access:{
 			if(env.fields.find(std::get<std::string>(this->children.at(0))) == env.env.end())
 				return this->lineno;
 			
@@ -105,7 +106,8 @@ int Tree::isCorrect(Environment& env){
 			std::cout<<"l'argument " << std::get<std::string>(this->children.at(1)) << " n'existe pas pour le type "<<type<<". Ligne : "<<lineno;
 			
 			break;
-		case method_call:
+		}
+		case method_call:{
 			
 			std::string type = (std::get<Tree*>(this->children.at(0)))->getType(env);
 			if(env.env.find(type) == env.env.end())
@@ -125,7 +127,8 @@ int Tree::isCorrect(Environment& env){
 			std::cout<<"la fonction " << std::get<std::string>(this->children.at(1)) << " n'existe pas (ou n'a pas les bons arguments) pour le type "<<type<<". Ligne : "<<lineno;
 			
 			break;
-		case static_method_call:
+		}
+		case static_method_call:{
 			if(env.fields.find(std::get<std::string>(this->children.at(0))) == env.env.end())
 				return this->lineno;
 			
@@ -147,6 +150,7 @@ int Tree::isCorrect(Environment& env){
 			std::cout<<"la fonction " << std::get<std::string>(this->children.at(1)) << " n'existe pas (ou n'a pas les bons arguments) pour le type "<<type<<". Ligne : "<<lineno;
 			
 			break;
+		}
 		case assignment: {
 			this->getType(env);
 			return -1;
@@ -232,7 +236,7 @@ std::string Tree::getType(Environment& env){
 			}
 			return std::get<std::string>(this->children.at(0));
 			break;
-		case member_access:
+		case member_access:{
 			if(this->isCorrect(env) != -1){
 				//TODO
 				return "";
@@ -245,7 +249,8 @@ std::string Tree::getType(Environment& env){
 				
 			}
 			break;
-		case static_member_access:
+		}
+		case static_member_access:{
 			if(this->isCorrect(env) != -1){
 				//TODO
 				return "";
@@ -257,7 +262,8 @@ std::string Tree::getType(Environment& env){
 				
 			}
 			break;
-		case method_call:
+		}
+		case method_call:{
 			if(this->isCorrect(env) != -1){
 				//TODO
 				return "";
@@ -270,7 +276,8 @@ std::string Tree::getType(Environment& env){
 				
 			}
 			break;
-		case static_method_call:
+			}
+		case static_method_call:{
 			if(this->isCorrect(env) != -1){
 				//TODO
 				return "";
@@ -283,6 +290,7 @@ std::string Tree::getType(Environment& env){
 				
 			}
 			break;
+		}
 		case assignment: {
 			if(this->isCorrect(env) != -1){
 				//TODO
