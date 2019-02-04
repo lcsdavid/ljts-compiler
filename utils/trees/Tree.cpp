@@ -187,7 +187,7 @@ std::string Tree::getType(Environment& env){
 				//TODO
 				return "";
 			}
-			std::string type = (*(env.fields.find(std::get<std::string>(this->children.at(0)))).typeIdentifier);
+			std::string type = (std::get<Tree*>(this->children.at(0)))->getType(env);
 				
 			for(size_t i = 0; i < env.env[type]->fields.size(); i++){
 					if(env.env[type]->fields.at(i).identifier == std::get<std::string>(this->children.at(1)))
@@ -212,11 +212,11 @@ std::string Tree::getType(Environment& env){
 				//TODO
 				return "";
 			}
-			std::string type = (*(env.fields.find(std::get<std::string>(this->children.at(0)))).typeIdentifier);
+			std::string type = (std::get<Tree*>(this->children.at(0)))->getType(env);
 				
-			for(size_t i = 0; i < env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->methods.size(); i++){
-					if(env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->methods.at(i).identifier == std::get<std::string>(this->children.at(1)))
-						return env.env[(std::get<Tree*>(this->children.at(0)))->getType(env)]->methods.at(i).returnTypeIdentifier;
+			for(size_t i = 0; i < env.env[type]->methods.size(); i++){
+					if(env.env[type]->methods.at(i).identifier == std::get<std::string>(this->children.at(1)))
+						return env.env[type]->methods.at(i).returnTypeIdentifier;
 				
 			}
 			break;
@@ -227,9 +227,9 @@ std::string Tree::getType(Environment& env){
 			}
 			std::string type = (*(env.fields.find(std::get<std::string>(this->children.at(0)))).typeIdentifier);
 				
-			for(size_t i = 0; i < env.env[std::get<std::string>(this->children.at(0))]->methods.size(); i++){
-					if(env.env[std::get<std::string>(this->children.at(0))]->methods.at(i).identifier == std::get<std::string>(this->children.at(1)))
-						return env.env[std::get<std::string>(this->children.at(0))]->methods.at(i).returnTypeIdentifier;
+			for(size_t i = 0; i < env.env[type]->methods.size(); i++){
+					if(env.env[type]->methods.at(i).identifier == std::get<std::string>(this->children.at(1)))
+						return env.env[type]->methods.at(i).returnTypeIdentifier;
 				
 			}
 			break;
