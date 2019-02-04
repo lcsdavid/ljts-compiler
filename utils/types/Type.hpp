@@ -30,6 +30,9 @@ struct Type {
 	// Est-ce que l'on connait cette méthode ou pas dans notre classe. */
 	Method &know(const std::string &methodIdentifier);
 	
+	Variable &field(const std::string &identifier);
+	Method &method(const std::string &identifier);
+	
 	virtual bool isCorrect(Environment &env) const;
 	virtual bool correctDecl(const Environment &env) const;
 	

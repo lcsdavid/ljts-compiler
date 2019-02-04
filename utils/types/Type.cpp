@@ -45,6 +45,20 @@ Method &Type::know(const std::string &methodIdentifier) {
 	throw std::logic_error(identifier + "::" + methodIdentifier + " was not declared in this scope");
 }
 
+Variable &Type::field(const std::string &identifier) {
+	for(auto it = fields.begin(); it != fields.end(); it++)
+		if((*it).identifier == identifier)
+			return *it;
+	throw std::logic_error(this->identifier + "::" + identifier + " was not declared in this scope");
+}
+
+Method &Type::method(const std::string &identifier) {
+	for(auto it = methods.begin(); it != methods.end(); it++)
+		if((*it).identifier == identifier)
+			return *it;
+	throw std::logic_error(this->identifier + "::" + identifier + " was not declared in this scope");
+}
+
 std::ostream &operator<<(std::ostream &os, const Type &t) {
 	return t.print(os);
 }

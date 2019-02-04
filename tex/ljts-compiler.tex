@@ -174,8 +174,6 @@ Decl := Class \textbar \ Object \newline
 
 \subsection{Déclarations}
 
-
-
 \subsubsection{Déclaration d'une classe}
 
 {\sffamily
@@ -192,7 +190,7 @@ OptVar := \textbf{VAR} \textbar \ $\varepsilon$
 ClassConstructor := \textbf{DEF TYPENAME} \verb|'('| LOptParamDecl \verb|')'| \verb|':'| \textbf{TYPENAME} \verb|'('| LOptExpr \verb|')'| \textbf{IS Block} \textbar \ \textbf{DEF TYPENAME} \verb|'('| LOptParamDecl \verb|')'| \textbf{IS} Block
 }
 
-\subsection{Déclaration d'un objet}
+\subsubsection{Déclaration d'un objet}
 
 {\sffamily
 Object := \textbf{OBJECT TYPENAME} \textbf{IS} \verb|'{'| LOptField ObjectConstructor LOptMethod \verb|}|
@@ -200,7 +198,7 @@ Object := \textbf{OBJECT TYPENAME} \textbf{IS} \verb|'{'| LOptField ObjectConstr
 ObjectConstruct := \textbf{DEF IDENTIFIER IS} \verb|'{'| Bloc \verb|'}'|
 }
 
-\subsection{Déclaration d'un champ}
+\subsubsection{Déclaration d'un champ}
 
 {\sffamily
 LOptField := LField \textbar \ $\varepsilon$ \newline
@@ -208,13 +206,13 @@ LField := Field LField \textbar \ Field \newline
 Field := \textbf{VAR IDENTIFIER} \verb|':'| \textbf{TYPENAME} \verb|';'|
 }
 
-\subsection{Déclaration d'une méthode}
+\subsubsection{Déclaration d'une méthode}
 
 {\sffamily\small
 LOptMethod := LMethod \textbar \ $\varepsilon$ \newline
 LMethod := Method LMethod \textbar \ Method \newline
 Method := OptOverride \textbf{IDENTIFIER} \verb|'('| LOptParamDecl \verb|')'| \verb|':'| \textbf{IDENTIFIER ASSIGNMENT} Expr \newline
-\textbar \ OptOverride \textbf{IDENTIFIER} \verb|'('| LOptParamDecl \verb|')'| OptReturn \textbf{IS} Bloc \newline
+\hspace*{1em} \textbar \ OptOverride \textbf{IDENTIFIER} \verb|'('| LOptParamDecl \verb|')'| OptReturn \textbf{IS} Bloc \newline
 OptOverride := \textbf{OVERRIDE} \textbar \ $\varepsilon$ \newline
 OptReturn := \verb|':'| \textbf{IDENTIFIER} \textbar \ $\varepsilon$
 }
@@ -226,45 +224,39 @@ OptReturn := \verb|':'| \textbf{IDENTIFIER} \textbar \ $\varepsilon$
 On connait le principe pour faire apparaitre la priorité et l'associativité des opérateurs mais vu que Bison l'intègre "en dehors" de la définition des règles on va faire de même (pour consulter notre liste la priorité et l'associativité des opérateurs, autant directement consulter celle du C++: \url{https://en.cppreference.com/w/cpp/language/operator_precedence}).
 
 {\sffamily
-\begin{tabular}{rcl}
-    Expr  & := & Expr \textbf{RELATIONAL\_OPERATOR} Expr                         \tabularnewline
-    & \textbar & Expr \textbf{'+'} Expr                                         \tabularnewline
-    & \textbar & Expr \textbf{'$-$'} Expr                                        \tabularnewline
-    & \textbar & Expr \textbf{'*'} Expr                                     \tabularnewline
-    & \textbar & Expr \textbf{'/'} Expr                                       \tabularnewline
-    & \textbar & \textbf{NEW} \textbf{IDENTIFIER} \verb|(| LOptParam \verb|)|    \tabularnewline
-    & \textbar & \textbf{'+'} Expr                                              \tabularnewline
-    & \textbar & \textbf{'$-$'} Expr                                             \tabularnewline
-    & \textbar & \verb|(| \textbf{IDENTIFIER} Expr \verb|)|                      \tabularnewline
-    & \textbar & \textbf{IDENTIFIER} \textbf{'\texttt{.}'} \textbf{IDENTIFIER} \tabularnewline
-    & \textbar & \textbf{IDENTIFIER} \textbf{'\texttt{.}'} \textbf{IDENTIFIER} \verb|(| LOptParam \verb|)| \tabularnewline
-    & \textbar & \verb|(| Expr \verb|)| \tabularnewline
-    & \textbar & \textbf{IDENTIFIER}    \tabularnewline
-    & \textbar & \textbf{INTEGER}       \tabularnewline
-    & \textbar & \textbf{STRING}        \tabularnewline
-\end{tabular}}
+Expr := Expr \textbf{RELATIONAL\_OPERATOR} Expr \newline
+\hspace*{1em} \textbar \ Expr \verb|'+'| Expr \newline
+\hspace*{1em} \textbar \ Expr \verb|'-'| Expr \newline
+\hspace*{1em} \textbar \ Expr \verb|'*'| Expr \newline
+\hspace*{1em} \textbar \ Expr \verb|'/'| Expr \newline
+\hspace*{1em} \textbar \ \textbf{NEW} \textbf{IDENTIFIER} \verb|'('| LOptParam \verb|')'| \newline
+\hspace*{1em} \textbar \ \verb|'+'| Expr \newline
+\hspace*{1em} \textbar \ \verb|'-'| Expr \newline
+\hspace*{1em} \textbar \ \verb|'('| \textbf{IDENTIFIER} Expr \verb|')'| \newline
+\hspace*{1em} \textbar \ \textbf{IDENTIFIER} \verb|':'| \textbf{IDENTIFIER} \newline
+\hspace*{1em} \textbar \ \textbf{IDENTIFIER} \verb|':'| \textbf{IDENTIFIER} \verb|'('| LOptParam \verb|')'| \newline
+\hspace*{1em} \textbar \ \verb|'('| Expr \verb|')'| \newline
+\hspace*{1em} \textbar \ \textbf{IDENTIFIER} \newline
+\hspace*{1em} \textbar \ \textbf{INTEGER} \newline
+\hspace*{1em} \textbar \ \textbf{STRING}
+}
 
 \subsubsection{Instructions}
 
-    {\sffamily
-    \begin{tabular}{rcl}
-        Instr & := & Expr \verb|;| \tabularnewline
-        & \textbar & Bloc          \tabularnewline
-        & \textbar & \textbf{RETURN} \verb|;|      \tabularnewline
-        & \textbar & Expr \textbf{ASSIGNMENT} Expr \verb|;|                   \tabularnewline
-        & \textbar & \textbf{IF} Expr \textbf{THEN} Instr \textbf{ELSE} Instr \tabularnewline
-    \end{tabular}}
+{\sffamily
+Instr := Expr \verb|';'| \newline
+\hspace*{1em} \textbar \ Bloc \newline
+\hspace*{1em} \textbar \ \textbf{RETURN} \verb|';'| \newline
+\hspace*{1em} \textbar \ Expr \textbf{ASSIGNMENT} Expr \verb|';'| \newline
+\hspace*{1em} \textbar \ \textbf{IF} Expr \textbf{THEN} Instr \textbf{ELSE} Instr
+}
 
 {\sffamily
-    \begin{tabular}{rcl}
-        Bloc        & := & \verb|{| LOptInst \verb|}|                      \tabularnewline
-              & \textbar & \verb|{| LOptVarDecl \textbf{IS} LInst \verb|}| \tabularnewline
-        LOptVarDecl & := & LVarDecl         \tabularnewline
-              & \textbar & $\varepsilon$    \tabularnewline
-        LVarDecl    & := & VarDecl LVarDecl \tabularnewline
-              & \textbar & VarDecl          \tabularnewline
-        VarDecl     & := & \textbf{IDENTIFIER} \verb|:| \textbf{IDENTIFIER} Expr \verb|;| \tabularnewline
-              & \textbar & \textbf{IDENTIFIER} \verb|:| \textbf{IDENTIFIER} \verb|;| \tabularnewline    
-    \end{tabular}}
+Bloc  := \verb|'{'| LOptInst \verb|'}'| \textbar \ \verb|'{'| LOptVarDecl \textbf{IS} LInst \verb|'}'|
 
+LOptVarDecl := LVarDecl \textbar \ $\varepsilon$ \newline
+LVarDecl := VarDecl LVarDecl \textbar \ VarDecl \newline
+VarDecl := \textbf{IDENTIFIER} \verb|':'| \textbf{IDENTIFIER} Expr \verb|';'| \newline
+\hspace*{1em} \textbar \ \textbf{IDENTIFIER} \verb|':'| \textbf{IDENTIFIER} \verb|';'| \newline
+}
 \end{document}

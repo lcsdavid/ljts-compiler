@@ -252,19 +252,13 @@ std::string Tree::getType(Environment& env){
 			}
 			return std::get<std::string>(this->children.at(0));
 			break;
-		case member_access:{
+		case member_access: {
 			if(this->isCorrect(env) != -1){
 				//TODO
 				return "";
 			}
-			std::string type = (std::get<Tree*>(this->children.at(0)))->getType(env);
-				
-			for(size_t i = 0; i < env.env[type]->fields.size(); i++){
-					if(env.env[type]->fields.at(i).identifier == std::get<std::string>(this->children.at(1)))
-						return env.env[type]->fields.at(i).typeIdentifier;
-				
-			}
-			break;
+			Type *type = env.env.at(std::get<Tree*>(this->children.at(0))->getType(env));
+			return type->field(std::get<std::string>(children.at(1))).typeIdentifier;
 		}
 		case static_member_access: {
 			if (!env.env.count(std::get<std::string>(children.at(0)))) {
@@ -272,17 +266,7 @@ std::string Tree::getType(Environment& env){
 				return "error";
 			}
 			Type *type = env.env.at(std::get<std::string>(children.at(0)));
-			auto itVar = std::find_if(type->fields.begin(), type->fields.end(), [&] (const Variable &var) {
-					return var.identifier != std::get<std::string>(children.at(1)); 
-				});
-			if(itVar == type->fields.end()) {
-				//dans ce cas on essaie d'appeler une methode qui n'existe pas
-				std::cout << std::get<std::string>(this->children.at(1)) << " n'existe pas  pour le type " 
-					<< type << ". Ligne : " << lineno;
-				return "error";
-			}
-			return (*itVar).typeIdentifier;
-			break;
+			return type->field(std::get<std::string>(children.at(1))).typeIdentifier;
 		}
 		case method_call:{
 			if(this->isCorrect(env) != -1){
