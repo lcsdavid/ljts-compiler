@@ -32,6 +32,8 @@ struct Class : Type {
 	bool correctDecl(const Environment &env) const override;
 	
 	std::ostream &print(std::ostream &os) const override;
+	
+	Method &know(const std::string &methodIdentifier, const Environment &env);
 };
 
 std::ostream &operator<<(std::ostream &os, const Class &c);
