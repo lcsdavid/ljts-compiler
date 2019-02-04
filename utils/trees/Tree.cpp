@@ -272,15 +272,16 @@ std::string Tree::getType(Environment& env){
 				return "error";
 			}
 			Type *type = env.env.at(std::get<std::string>(children.at(0)));
-			auto itMethod = std::find_if(type->methods.begin(), type->methods.end(), [&] (const Method &method) {
-					return method.identifier != std::get<std::string>(children.at(1)); 
+			auto itVar = std::find_if(type->fields.begin(), type->fields.end(), [&] (const Variable &var) {
+					return var.identifier != std::get<std::string>(children.at(1)); 
 				});
-			if(itMethod == type->methods.end()) {
+			if(itVar == type->fields.end()) {
 				//dans ce cas on essaie d'appeler une methode qui n'existe pas
-				std::cout<<"la fonction " << std::get<std::string>(this->children.at(1)) << " n'existe pas (ou n'a pas les bons arguments) pour le type "<<type<<". Ligne : "<<lineno;
+				std::cout << std::get<std::string>(this->children.at(1)) << " n'existe pas  pour le type " 
+					<< type << ". Ligne : " << lineno;
 				return "error";
 			}
-			return (*itMethod).returnTypeIdentifier;
+			return (*itVar).typeIdentifier;
 			break;
 		}
 		case method_call:{
@@ -297,18 +298,21 @@ std::string Tree::getType(Environment& env){
 			}
 			break;
 			}
-		case static_method_call:{
-			if(this->isCorrect(env) != -1){
-				//TODO
-				return "";
+		case static_method_call: {
+			if (!env.env.count(std::get<std::string>(children.at(0)))) {
+				std::cout << "type inconnue " << lineno;
+				return "error";
 			}
-			std::string type = (*(env.fields.find(std::get<std::string>(this->children.at(0)))).typeIdentifier);
-				
-			for(size_t i = 0; i < env.env[type]->methods.size(); i++){
-					if(env.env[type]->methods.at(i).identifier == std::get<std::string>(this->children.at(1)))
-						return env.env[type]->methods.at(i).returnTypeIdentifier;
-				
+			Type *type = env.env.at(std::get<std::string>(children.at(0)));
+			auto itMethod = std::find_if(type->methods.begin(), type->methods.end(), [&] (const Method &method) {
+					return method.identifier != std::get<std::string>(children.at(1)); 
+				});
+			if(itMethod == type->methods.end()) {
+				//dans ce cas on essaie d'appeler une methode qui n'existe pas
+				std::cout<<"la fonction " << std::get<std::string>(this->children.at(1)) << " n'existe pas (ou n'a pas les bons arguments) pour le type "<<type<<". Ligne : "<<lineno;
+				return "error";
 			}
+			return (*itMethod).returnTypeIdentifier;
 			break;
 		}
 		case assignment: {
