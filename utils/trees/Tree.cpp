@@ -83,7 +83,10 @@ int Tree::isCorrect(Environment& env){
 			}
 				
 			//on doit maintenant vérifier qu'on instancie pas un objet
-			if((*(env.env.find(std::get<std::string>(this->children.at(0))))).isStatic())
+			if((env.env[std::get<std::string>(this->children.at(0))]).isStatic()){
+				std::cout<<"Vous ne pouvez pas instancier un objet : ligne " << this->lineno << std::endl;
+				return lineno;
+			}
 			break;
 		case cast:
 			this->getType(env);// vu que getType fait déjà la vérification
@@ -134,7 +137,7 @@ int Tree::isCorrect(Environment& env){
 			
 			std::string type = (*(env.fields.find(std::get<std::string>(this->children.at(0)))).typeIdentifier);
 			if(env.env.find(type) == env.env.end())
-				return this->lineo;
+				return this->lineno;
 			Method meth = env.env[type].know(std::get<std::string>(this->children.at(1)));
 			size_t i = 0;
 			for (auto it = this->children.begin() + 2; it != this->children.end(); it++) {
