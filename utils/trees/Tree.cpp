@@ -169,6 +169,10 @@ int Tree::isCorrect(Environment& env){
 std::string Tree::getType(Environment& env){
 	switch (operation) {
 		case instanciation:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
 			return std::get<std::string>(this->children.at(0));
 			break;
 		case cast:
@@ -227,6 +231,10 @@ std::string Tree::getType(Environment& env){
 			}
 			break;
 		case assignment: {
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
 			std::string lhs = std::get<Tree*>(children.at(0))->getType(env),
 				rhs = std::get<Tree*>(children.at(1))->getType(env);
 			if (lhs != rhs)
@@ -234,34 +242,94 @@ std::string Tree::getType(Environment& env){
 			return lhs;
 		}
 		case unary_plus:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
 			return "Integer";
 		case unary_minus:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
 			return "Integer";
 		case multiplication:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
 			return "Integer";
 		case division:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
 			return "Integer";
 		case addition:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
 			return "Integer";
 		case substraction:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
 			return "Integer";
 		case less_strict:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
 			return "Integer";
 		case less_equal:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
 			return "Integer";
 		case greater_strict:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
 			return "Integer";
 		case greater_equal:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
 			return "Integer";
 		case equal:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
 			return "Integer";
 		case not_equal:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
 			return "Integer";
 		case integer:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
 			return "Integer";
 		case string:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
 			return "String";
 		case identifier:
+			if(this->isCorrect(env) != -1){
+				//TODO
+				return "";
+			}
 			return std::get<std::string>(children.at(0));
 		default:
 			return "";
