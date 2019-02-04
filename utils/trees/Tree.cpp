@@ -105,9 +105,10 @@ int Tree::isCorrect(Environment& env){
 			if(std::find_if(env.fields.begin(), env.fields.end(), [&] (const Variable &var) { return var.identifier == std::get<std::string>(children.at(0)); })  == env.fields.end()) {
 				return this->lineno;
 			} 
-			std::string type = (*(env.fields.find(std::get<std::string>(this->children.at(0)))).typeIdentifier);
-			if(env.env[type]->fields.find(std::get<std::string>(this->children.at(1))) != env.env[type]->fields.end())
+			std::string type = (*(std::find_if(env.fields.begin(), env.fields.end(), [&] (const Variable &var) { return var.identifier == std::get<std::string>(children.at(0)); })).typeIdentifier);
+			if(std::find_if(env.env[type]->fields.begin(), env.env[type]->fields.end(), [&] (const Variable &var) { return var.identifier == std::get<std::string>(children.at(1)); })  != env.env[type]->fields.end()) {
 				return -1;
+			} 
 			std::cout<<"l'argument " << std::get<std::string>(this->children.at(1)) << " n'existe pas pour le type "<<type<<". Ligne : "<<lineno;
 			
 			break;
@@ -134,13 +135,14 @@ int Tree::isCorrect(Environment& env){
 			break;
 		}
 		case static_method_call:{
-			if(env.fields.find(std::get<std::string>(this->children.at(0))) == env.env.end())
+			if(std::find_if(env.fields.begin(), env.fields.end(), [&] (const Variable &var) { return var.identifier == std::get<std::string>(children.at(0)); })  == env.fields.end()) {
 				return this->lineno;
+			} 
 			
-			std::string type = (*(env.fields.find(std::get<std::string>(this->children.at(0)))).typeIdentifier);
+			std::string type = (*(std::find_if(env.fields.begin(), env.fields.end(), [&] (const Variable &var) { return var.identifier == std::get<std::string>(children.at(0)); })).typeIdentifier);
 			if(env.env.find(type) == env.env.end())
 				return this->lineno;
-			Method meth = env.env[type].know(std::get<std::string>(this->children.at(1)));
+			Method meth = env.env[type]->know(std::get<std::string>(this->children.at(1)));
 			size_t i = 0;
 			for (auto it = this->children.begin() + 2; it != this->children.end(); it++) {
 				if( i >= meth.parameters.size())
