@@ -266,17 +266,21 @@ std::string Tree::getType(Environment& env){
 			}
 			break;
 		}
-		case static_member_access:{
-			if(this->isCorrect(env) != -1){
-				//TODO
-				return "";
+		case static_member_access: {
+			if (!env.env.count(std::get<std::string>(children.at(0)))) {
+				std::cout << "type inconnue " << lineno;
+				return "error";
 			}
-			std::string type = (*(env.fields.find(std::get<std::string>(this->children.at(0)))).typeIdentifier);
-			for(size_t i = 0; i < env.env[type]->fields.size(); i++){
-					if(env.env[type]->fields.at(i).identifier == std::get<std::string>(this->children.at(1)))
-						return env.env[type]->fields.at(i).typeIdentifier;
-				
+			Type *type = env.env.at(std::get<std::string>(children.at(0)));
+			auto itMethod = std::find_if(type->methods.begin(), type->methods.end(), [&] (const Method &method) {
+					return method.identifier != std::get<std::string>(children.at(1)); 
+				});
+			if(itMethod == type->methods.end()) {
+				//dans ce cas on essaie d'appeler une methode qui n'existe pas
+				std::cout<<"la fonction " << std::get<std::string>(this->children.at(1)) << " n'existe pas (ou n'a pas les bons arguments) pour le type "<<type<<". Ligne : "<<lineno;
+				return "error";
 			}
+			return (*itMethod).returnTypeIdentifier;
 			break;
 		}
 		case method_call:{
