@@ -204,8 +204,7 @@ void creerVar(Tree *tree)
 	std::cout << "PUSHI " << std::get<int>(tree->children[0]);
 }
 
-void negat(Tree *tree)
-{
+void negat(Tree *tree) {
 	genereCodeTree(std::get<Tree*>(tree->children[0]));
 	std::cout << "PUSHI -1\nMUL";
 }

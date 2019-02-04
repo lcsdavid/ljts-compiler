@@ -4,19 +4,16 @@
 #include "../Constructor.hpp"
 
 struct ClassConstructor : Constructor {
-	std::string superIdentifier;		/* Identifiant du super constructeur appelé [optionnel]. */
-	std::vector<Tree*> superVariables;	/* Paramètres du super constructeur appelé [optionnel]. */
+	Tree *super;
 	
 	ClassConstructor(const std::string &identifier, const std::vector<Parameter> &parameters,
-		const std::string &superIdentifier, const std::vector<Tree*> &superVariables, Block *body);
-	ClassConstructor(const ClassConstructor &other) = default;
-	ClassConstructor(ClassConstructor &&other) = default;
+		Tree *super, Block *body);
 	~ClassConstructor() override = default;
 	
 	ClassConstructor &operator=(const ClassConstructor &other) = default;
 	ClassConstructor &operator=(ClassConstructor &&other) = default;
 	
-	bool isCorrectDecl(const Class &parent, Environment &env) const override;
+	bool isCorrect(const Type &parent, Environment &env) const override;
 	bool correctDecl(const Type &parent, const Environment &env) const override;
 };
 
