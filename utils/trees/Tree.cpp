@@ -94,15 +94,17 @@ int Tree::isCorrect(Environment& env){
 		case member_access:{
 			
 			std::string type = (std::get<Tree*>(this->children.at(0)))->getType(env);
-			if(env.env[type]->fields.find(std::get<std::string>(this->children.at(1))) != env.env[type]->fields.end())
+			
+			if(std::find_if(env.env[type]->fields.begin(), env.env[type]->fields.end(), [&] (const Variable &var) { return var.identifier == std::get<std::string>(children.at(1)); })  != env.env[type]->fields.end()) {
 				return -1;
+			} 
 			std::cout<<"l'argument " << std::get<std::string>(this->children.at(1)) << " n'existe pas pour le type "<<type<<". Ligne : "<<lineno;
 			break;
 		}
 		case static_member_access:{
-			if(env.fields.find(std::get<std::string>(this->children.at(0))) == env.env.end())
+			if(std::find_if(env.fields.begin(), env.fields.end(), [&] (const Variable &var) { return var.identifier == std::get<std::string>(children.at(0)); })  == env.fields.end()) {
 				return this->lineno;
-			
+			} 
 			std::string type = (*(env.fields.find(std::get<std::string>(this->children.at(0)))).typeIdentifier);
 			if(env.env[type]->fields.find(std::get<std::string>(this->children.at(1))) != env.env[type]->fields.end())
 				return -1;
