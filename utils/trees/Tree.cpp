@@ -102,17 +102,18 @@ int Tree::isCorrect(Environment& env){
 			break;
 		}
 		case static_member_access: {
-			auto itType = std::find_if(env.env.begin(), env.env.end(), [&] (const Type &type) { return type.identifier == std::get<std::string>(children.at(0)); });
-			if (itType  == env.fields.end()) {
+			if (!env.env.count(std::get<std::string>(children.at(0)))) {
 				std::cout << "type inconnue " << lineno;
 				return lineno;
 			}
-			if (!(*itType)->isStatic()) {
+			Type *type = env.env.at(std::get<std::string>(children.at(0)));
+
+			if (!type->isStatic()) {
 				std::cout << "appel static pas static " << lineno;
 				return lineno;
 			}
-			auto itMethod = std::find_if((*itType).methods().begin(), (*itType).methods().end(), [&] (const Method &method) { return method.identifier == std::get<std::string>(children.at(1)) && true/* tester les parametres*/; });
-			if(itMethod == (*itType).methods().end()) {
+			auto itMethod = std::find_if(type->methods.begin(), type->methods.end(), [&] (const Method &method) { return method.identifier == std::get<std::string>(children.at(1)) && true/* tester les parametres*/; });
+			if(itMethod == type->methods.end()) {
 				std::cout << "pas de méthode avec cette signature " << lineno;
 				return lineno;
 			}
