@@ -92,80 +92,64 @@ int Tree::isCorrect(Environment& env){
 			this->getType(env);// vu que getType fait déjà la vérification
 			break;
 		case member_access:{
-			
-			std::string type = (std::get<Tree*>(this->children.at(0)))->getType(env);
-			
-			if(std::find_if(env.env[type]->fields.begin(), env.env[type]->fields.end(), [&] (const Variable &var) { return var.identifier == std::get<std::string>(children.at(1)); })  != env.env[type]->fields.end()) {
-				return -1;
-			} 
-			std::cout<<"l'argument " << std::get<std::string>(this->children.at(1)) << " n'existe pas pour le type "<<type<<". Ligne : "<<lineno;
-			break;
+			Type *type = env.env.at(std::get<std::string>(children.at(0)));
+			type->field(std::get<std::string>(children.at(1)));
+			return true;
 		}
 		case static_member_access: {
-			if (!env.env.count(std::get<std::string>(children.at(0)))) {
-				std::cout << "type inconnue " << lineno;
-				return lineno;
-			}
 			Type *type = env.env.at(std::get<std::string>(children.at(0)));
 			if (!type->isStatic()) {
-				std::cout << "appel static pas static " << lineno;
-				return lineno;
+				std::cout << "\033[91merror:\033[0m static member access '" << std::get<std::string>(children.at(1))
+					<< "' from non static type '" << type->identifier << "'" << std::endl;
+				return false;
 			}
-			auto itVar = std::find_if(type->fields.begin(), type->fields.end(), [&] (const Variable &var) { return var.identifier == std::get<std::string>(children.at(1)); });
-			if(itVar == type->fields.end()) {
-				std::cout << "pas de champ de ce nom" << lineno;
-				return lineno;
-			}
-			return -1; /* ok */
+			type->field(std::get<std::string>(children.at(1)));
+			return true;
 		}
 		case method_call:{
-
-			std::string type = (std::get<Tree*>(this->children.at(0)))->getType(env);
-			if(env.env.find(type) == env.env.end())
-				return this->lineno;
-			Method method = env.env[type]->method(std::get<std::string>(this->children.at(1)));
-			size_t i = 0;
-			for (auto it = this->children.begin() + 2; it != this->children.end(); it++) {
-				if( i >= method.parameters.size())
-					break;//on vérifie qu'on est toujours dans la taille de method
-				if((*std::get<Tree*>(*it)).getType(env) != method.parameters.at(i).typeIdentifier)
-					break;//on vérifie que les types des arguments sont les bons
-				i++;
+			Type *type = env.env.at(std::get<Tree*>(children.at(0))->getType(env));
+			Method method = type->method(std::get<std::string>(children.at(1)));
+			if (children.size() - 2 != method.parameters.size()) {
+				std::cout << "\033[91merror:\033[0m '" << type->identifier << "' has no method named '" 
+					<< std::get<std::string>(children.at(1)) << "'" << std::endl;
+				return false;
 			}
-			if(i == method.parameters.size())//si on a le bon nombre de parametres
-				return -1;
-			//dans ce cas on essaie d'appeler une methode qui n'existe pas
-			std::cout<<"la fonction " << std::get<std::string>(this->children.at(1)) << " n'existe pas (ou n'a pas les bons arguments) pour le type "<<type<<". Ligne : "<<lineno;
-			
+			for (std::size_t i = 0; i < children.size(); i++) {
+				if (std::get<Tree*>(children.at(i + 2))->getType(env) != method.parameters.at(i).typeIdentifier) {
+					std::cout << "\033[91merror:\033[0m '" << type->identifier << "' has no method '" 
+						<< std::get<std::string>(children.at(1)) << "'" << std::endl;
+					for (std::size_t i = 2; i < children.size(); i++) {
+						std::cout << std::get<Tree*>(children.at(i + 2))->getType(env);
+						if (i == children.size() - 1)
+							std::cout << ", ";
+					}
+					std::cout << ") ";
+					return false;
+				}
+			}
 			break;
 		}
 		case static_method_call: {
-			if (!env.env.count(std::get<std::string>(children.at(0)))) {
-				std::cout << "type inconnue " << lineno;
-				return lineno;
-			}
-			Type *type = env.env.at(std::get<std::string>(children.at(0)));
+			Type *type = env.env.at(std::get<Tree*>(children.at(0))->getType(env));
 			if (!type->isStatic()) {
-				std::cout << "appel static pas static " << lineno;
-				return lineno;
+				std::cout << "\033[91merror:\033[0m static method call from non static type '" << type->identifier << "'" << std::endl;
+				return false;
 			}
-			auto itMethod = std::find_if(type->methods.begin(), type->methods.end(), [&] (const Method &method) {
-					if (method.identifier != std::get<std::string>(children.at(1)))
-						return false;
-					if (children.size() - 2 != method.parameters.size())
-						return false;
-					for (std::size_t i = 0; i < children.size(); i++) {
-						if (std::get<Tree*>(children.at(i + 2))->getType(env) != method.parameters.at(i).typeIdentifier)
-							return false;
+			Method method = type->method(std::get<std::string>(children.at(1)));
+			for (std::size_t i = 0; i < children.size(); i++) {
+				if (std::get<Tree*>(children.at(i + 2))->getType(env) != method.parameters.at(i).typeIdentifier) {
+					std::cout << "\033[91merror:\033[0m '" << type->identifier << "' has no method '" 
+						<< std::get<std::string>(children.at(1)) << "'" << std::endl;
+					for (std::size_t i = 2; i < children.size(); i++) {
+						std::cout << std::get<Tree*>(children.at(i + 2))->getType(env);
+						if (i == children.size() - 1)
+							std::cout << ", ";
 					}
-					return true;
-				});
-			if(itMethod == type->methods.end()) {
-				//dans ce cas on essaie d'appeler une methode qui n'existe pas
-				std::cout<<"la fonction " << std::get<std::string>(this->children.at(1)) << " n'existe pas (ou n'a pas les bons arguments) pour le type "<<type<<". Ligne : "<<lineno;
-				return lineno;
+					std::cout << ") ";
+					return false;
+				}
 			}
-			return -1; /* ok */
+			return true;
 		}
 		case assignment: {
 			this->getType(env);
@@ -234,7 +218,6 @@ int Tree::isCorrect(Environment& env){
 	}
 	return -1;
 }
-
 
 std::string Tree::getType(Environment& env){
 	switch (operation) {
@@ -420,7 +403,7 @@ std::ostream &Tree::generateAsm(std::ostream &os, Environment& env) {
 
 			break;
 		case static_method_call:
-
+			
 			break;
 		case assignment:
 			break;
