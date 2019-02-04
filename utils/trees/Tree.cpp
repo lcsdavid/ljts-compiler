@@ -271,7 +271,7 @@ std::string Tree::getType(Environment& env){
 				//TODO
 				return "";
 			}
-			Type *type = env.env.at(std::get<std::string>(children.at(0)));
+			std::string type = (*(env.fields.find(std::get<std::string>(this->children.at(0)))).typeIdentifier);
 			for(size_t i = 0; i < env.env[type]->fields.size(); i++){
 					if(env.env[type]->fields.at(i).identifier == std::get<std::string>(this->children.at(1)))
 						return env.env[type]->fields.at(i).typeIdentifier;
@@ -298,7 +298,7 @@ std::string Tree::getType(Environment& env){
 				//TODO
 				return "";
 			}
-			Type *type = env.env.at(std::get<std::string>(children.at(0)));
+			std::string type = (*(env.fields.find(std::get<std::string>(this->children.at(0)))).typeIdentifier);
 				
 			for(size_t i = 0; i < env.env[type]->methods.size(); i++){
 					if(env.env[type]->methods.at(i).identifier == std::get<std::string>(this->children.at(1)))
