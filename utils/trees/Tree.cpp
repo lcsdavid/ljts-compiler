@@ -77,19 +77,53 @@ Tree::Tree(int lineno, int operation, const std::string &var, const std::string 
 int Tree::isCorrect(Environment& env){
 	switch (operation) {
 		case instanciation:
-			//TODO
+			if(env.env.find(std::get<std::string>(t.children.at(0)))==env.env.end()){
+				std::cout << " Vous essayez d'instancier un type qui n'existe pas à la ligne : "<<lineno << " ! " <<std::endl;
+				return lineno;
+			}
+				
+			//on doit maintenant vérifier qu'on instancie pas un objet
+			if((*(env.env.find(std::get<std::string>(t.children.at(0)))))->isStatic())
 			break;
 		case cast:
-			//TODO
+			this->getType(env);// vu que getType fait déjà la vérification
 			break;
 		case member_access:
-			//TODO
+			
+			std::string type = (std::get<Tree*>(this->children.at(0)))->getType(env);
+			if(env.env[type]->fields.find(std::get<std::string>(this->children.at(1))) != env.env[type]->fields.end())
+				return -1;
+			std::cout<<"l'argument " << std::get<std::string>(this->children.at(1)) << " n'existe pas pour le type "<<type<<". Ligne : "<<lineno;
 			break;
 		case static_member_access:
-			//TODO
+			if(env.fields.find(std::get<std::string>(this->children.at(0))) == env.env.end())
+				return this->lineno;
+			
+			std::string type = (*(env.fields.find(std::get<std::string>(this->children.at(0)))).typeIdentifier);
+			if(env.env[type]->fields.find(std::get<std::string>(this->children.at(1))) != env.env[type]->fields.end())
+				return -1;
+			std::cout<<"l'argument " << std::get<std::string>(this->children.at(1)) << " n'existe pas pour le type "<<type<<". Ligne : "<<lineno;
+			
 			break;
 		case method_call:
-			//TODO
+			
+			std::string type = (std::get<Tree*>(this->children.at(0)))->getType(env);
+			if(env.env.find(type) == env.env.end())
+				return this->lineo;
+			Method meth = env.env[type].know(std::get<std::string>(this->children.at(1)));
+			size_t i = 0;
+			for (auto it = this->children.begin() + 2; it != this->children.end(); it++) {
+				if( i >= meth.parameters.size())
+					break;//on vérifie qu'on est toujours dans la taille de meth
+				if((*std::get<Tree*>(*it)).getType(env) != meth.parameters.at(i).typeIdentifier)
+					break;//on vérifie que les types des arguments sont les bons
+				i++;
+			}
+			if(i == meth.parameters.size())//si on a le bon nombre de parametres
+				return -1
+			//dans ce cas on essaie d'appeler une methode qui n'existe pas
+			std::cout<<"la fonction " << std::get<std::string>(this->children.at(1)) << " n'existe pas (ou n'a pas les bons arguments) pour le type "<<type<<". Ligne : "<<lineno;
+			
 			break;
 		case static_method_call:
 			if(env.fields.find(std::get<std::string>(this->children.at(0))) == env.env.end())
