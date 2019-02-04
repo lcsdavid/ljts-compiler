@@ -7,11 +7,25 @@ Block::Block(std::vector<Variable> const &varDecls, std::vector<Tree*> const &in
 
 bool Block::isCorrect(Environment &env) const {/* Dans le cas d'un bloc */
     if(!varDecls.empty()) {
-    /*for (Variable const &varDecl : varDecls) {
-        if(env.find(varDecl.identifier) == env.end())
-            return false;
-    }*/
+		for (Variable const &varDecl : varDecls) {
+			if(env..env.find(varDecl.identifier) == env.end())
+				return false;
+			else
+				env.fields.push_back(varDecl);
+		}
 	}
+	
+	for(size_t i = 0; i < this->insts.size(); i++){
+		if(this->insts.at(i)->isCorrect(env) != -1){
+			std::cout << "Problème à la ligne " << this->insts.at(i)->isCorrect(env);
+			return false;
+		}
+	}
+	
+	for(size_t i =0; i < varDecls.size(); i++){
+		env.fields.pop_back();
+	}
+	
     return true;
 }
 
