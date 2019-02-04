@@ -60,18 +60,15 @@
 
 Premièrement, nous pouvons définir des expressions régulières intermédiaires qui nous seront utiles pour éviter les expressions trop complexes:
 
-\begin{tabular}{l}
-    \verb!{digit}!   = \verb![0-9]!        \tabularnewline
-    \verb!{letter}!  = \verb![A-Za-z0-9_]! \tabularnewline
-    \verb!{newline}! = \verb![(\r\n?)|\n]! \tabularnewline
-\end{tabular}
+\verb|{digit}| = \verb|[0-9]| \newline
+\verb|{upperletter}| = \verb|[A-Z]| \newline
+\verb|{lowerletter}| = \verb|[a-z]| \newline
+\verb|{letter}| = \verb!{lowerletter}|{upperletter}! \newline
+\verb|{newline}| = \verb!(\r\n?)|\n!
 
 Dans un second temps, nous ne traitons pas le commentaire comme un token mais nous le reconnaissons pour pouvoir l'éliminer de l'analyse:
 
-\begin{tabular}{l}
-\verb!{commentary}! = \verb!\/{2}[^{newline}]*{newline}|\/\*([^\*]*|\*[^\/])*\*\/!
-\end{tabular}
-
+\verb|{commentary}| = \verb!\/{2}[^{newline}]*{newline}|\/\*([^\*]*|\*[^\/])*\*\/!
 
 Et finalement, pour définir comment s'organise le projet de compilation, il faut réfléchir aux tokens que nous allons reconnaître. Aussi, pour chacun des tokens reconnu le nombre de caractère devra être compté pour garder un contexte d'erreur lors de la compilation. En voici, un exemple d'approche:
 
@@ -129,7 +126,8 @@ Finalement, voici le tableau des différents tokens reconnus ainsi que leurs exp
 		\hline \hline
 		\multicolumn{3}{|c|}{Idenifiants \& constantes} \tabularnewline
 		\hline
-		\textbf{IDENTIFIER} & \verb/{letter}({letter}|{digit})*/ & {\color{blue}class} {\color{turquoise}std}::{\color{turquoise}string} \tabularnewline
+		\textbf{TYPENAME} & \verb/{upperletter}({letter}|{digit})*/ & {\color{blue}class} {\color{turquoise}std}::{\color{turquoise}string} \tabularnewline
+		\textbf{IDENTIFIER} & \verb/{lowerletter}({letter}|{digit})*/ & {\color{blue}class} {\color{turquoise}std}::{\color{turquoise}string} \tabularnewline
 		\textbf{STRING}     & \verb|"[^"]*"|                     & {\color{blue}class} {\color{turquoise}std}::{\color{turquoise}string} \tabularnewline
 		\textbf{CHAR}       & \verb|'[^']+'|             & {\color{blue}char}   \tabularnewline		
 		\textbf{INTEGER}    & \verb|{digit}+|            & {\color{blue}int}    \tabularnewline
@@ -154,7 +152,6 @@ enum yytokentype {
 };
 \end{lstlisting}
 
-
 \newpage
 
 \part{Analyse syntaxique}
@@ -168,9 +165,8 @@ Program :=  LOptDecls Block \$
 
 LOptDecls := LDecls \textbar \ $\varepsilon$ \newline
 LDecls := Decl LDecls \textbar \ Decl \newline
-Decl := Class \textbar \ Object \newline
+Decl := Class \textbar \ Object
 }
-
 
 \subsection{Déclarations}
 
@@ -187,7 +183,8 @@ ParamDecl := OptVar \textbf{IDENTIFIER} \verb|:| \textbf{TYPENAME} \newline
 OptVar := \textbf{VAR} \textbar \ $\varepsilon$
 }
 
-ClassConstructor := \textbf{DEF TYPENAME} \verb|'('| LOptParamDecl \verb|')'| \verb|':'| \textbf{TYPENAME} \verb|'('| LOptExpr \verb|')'| \textbf{IS Block} \textbar \ \textbf{DEF TYPENAME} \verb|'('| LOptParamDecl \verb|')'| \textbf{IS} Block
+ClassConstructor := \textbf{DEF TYPENAME} \verb|'('| LOptParamDecl \verb|')'| \verb|':'| \textbf{TYPENAME} \verb|'('| LOptExpr \verb|')'| \textbf{IS Block}  \newline
+\hspace*{1em} \textbar \ \textbf{DEF TYPENAME} \verb|'('| LOptParamDecl \verb|')'| \textbf{IS} Block
 }
 
 \subsubsection{Déclaration d'un objet}
@@ -195,7 +192,7 @@ ClassConstructor := \textbf{DEF TYPENAME} \verb|'('| LOptParamDecl \verb|')'| \v
 {\sffamily
 Object := \textbf{OBJECT TYPENAME} \textbf{IS} \verb|'{'| LOptField ObjectConstructor LOptMethod \verb|}|
 
-ObjectConstruct := \textbf{DEF IDENTIFIER IS} \verb|'{'| Bloc \verb|'}'|
+ObjectConstruct := \textbf{DEF TYPENAME IS} \verb|'{'| Bloc \verb|'}'|
 }
 
 \subsubsection{Déclaration d'un champ}
@@ -221,24 +218,29 @@ OptReturn := \verb|':'| \textbf{IDENTIFIER} \textbar \ $\varepsilon$
 
 \subsubsection{Expressions}
 
-On connait le principe pour faire apparaitre la priorité et l'associativité des opérateurs mais vu que Bison l'intègre "en dehors" de la définition des règles on va faire de même (pour consulter notre liste la priorité et l'associativité des opérateurs, autant directement consulter celle du C++: \url{https://en.cppreference.com/w/cpp/language/operator_precedence}).
+On connait le principe pour faire apparaitre la priorité et l'associativité des opérateurs mais vu que Bison l'intègre "en dehors" de la définition des règles on va faire de même (pour consulter notre liste la priorité et l'associativité des opérateurs, autant directement consulter celle du C++ qui est un modèle fiable): \url{https://en.cppreference.com/w/cpp/language/operator_precedence}).
 
 {\sffamily
+LOptExpr := LExpr \textbar \ $\varepsilon$ \newline
+LExpr := Expr \verb|','| LExpr \textbar \ Expr \newline
 Expr := Expr \textbf{RELATIONAL\_OPERATOR} Expr \newline
 \hspace*{1em} \textbar \ Expr \verb|'+'| Expr \newline
 \hspace*{1em} \textbar \ Expr \verb|'-'| Expr \newline
 \hspace*{1em} \textbar \ Expr \verb|'*'| Expr \newline
 \hspace*{1em} \textbar \ Expr \verb|'/'| Expr \newline
-\hspace*{1em} \textbar \ \textbf{NEW} \textbf{IDENTIFIER} \verb|'('| LOptParam \verb|')'| \newline
+\hspace*{1em} \textbar \ \textbf{NEW TYPENAME} \verb|'('| LOptParam \verb|')'| \newline
 \hspace*{1em} \textbar \ \verb|'+'| Expr \newline
 \hspace*{1em} \textbar \ \verb|'-'| Expr \newline
-\hspace*{1em} \textbar \ \verb|'('| \textbf{IDENTIFIER} Expr \verb|')'| \newline
-\hspace*{1em} \textbar \ \textbf{IDENTIFIER} \verb|':'| \textbf{IDENTIFIER} \newline
-\hspace*{1em} \textbar \ \textbf{IDENTIFIER} \verb|':'| \textbf{IDENTIFIER} \verb|'('| LOptParam \verb|')'| \newline
+\hspace*{1em} \textbar \ \verb|'('| \textbf{TYPENAME} Expr \verb|')'| \newline
+\hspace*{1em} \textbar \ Expr \verb|'.'| \textbf{IDENTIFIER} \newline
+\hspace*{1em} \textbar \ \textbf{TYPENAME} \verb|'.'| \textbf{IDENTIFIER} \newline
+\hspace*{1em} \textbar \ Expr \verb|'.'| \textbf{IDENTIFIER} \verb|'('| LOptParam \verb|')'| \newline
+\hspace*{1em} \textbar \ \textbf{TYPENAME} \verb|'.'| IDENTIFIER \verb|'('| LOptExpr \verb|')'| \newline
 \hspace*{1em} \textbar \ \verb|'('| Expr \verb|')'| \newline
-\hspace*{1em} \textbar \ \textbf{IDENTIFIER} \newline
+\hspace*{1em} \textbar \ \textbf{STRING} \newline
 \hspace*{1em} \textbar \ \textbf{INTEGER} \newline
-\hspace*{1em} \textbar \ \textbf{STRING}
+\hspace*{1em} \textbar \ \textbf{IDENTIFIER} \newline
+\hspace*{1em} \textbar \ \textbf{THIS}
 }
 
 \subsubsection{Instructions}
@@ -259,4 +261,76 @@ LVarDecl := VarDecl LVarDecl \textbar \ VarDecl \newline
 VarDecl := \textbf{IDENTIFIER} \verb|':'| \textbf{IDENTIFIER} Expr \verb|';'| \newline
 \hspace*{1em} \textbar \ \textbf{IDENTIFIER} \verb|':'| \textbf{IDENTIFIER} \verb|';'| \newline
 }
+
+\newpage
+
+On peut tenir le tableau suivant qui indique pour chaque non-terminal à quel type de structure, il correspond:
+
+\begin{center}
+	\sffamily
+	\begin{tabular}{|c|c|}
+		\hline
+		Structure & Non-terminaux \tabularnewline
+		\hline \hline
+		{\color{blue}bool} & OptVar OptOverride \tabularnewline
+		\hline
+		{\color{turquoise}std}::{\color{turquoise}string}* & OptExtends OptReturn \tabularnewline
+		\hline
+		{\color{turquoise}std}::{\color{turquoise}vector}$<$Parameter$>$* & LOptParamDecl LParamDecl \tabularnewline
+		\hline
+		Parameter* & ParamDecl \tabularnewline
+		\hline
+		{\color{turquoise}std}::{\color{turquoise}vector}$<$Variable$>$* & LOptVar LVar LOptField LField \tabularnewline
+		\hline
+		Variable* & Var Field \tabularnewline
+		\hline
+		{\color{turquoise}std}::{\color{turquoise}vector}$<$Type*$>$* & LOptDecls LDecls \tabularnewline
+		\hline
+		Type* & Decl \tabularnewline
+		\hline
+		Class* & Class \tabularnewline
+		\hline
+		Object* & Object \tabularnewline
+		\hline
+		{\color{turquoise}std}::{\color{turquoise}vector}$<$Method$>$* & LOptMethod LMethod \tabularnewline
+		\hline
+		Method* & Method ClassConstructor ObjectConstructor \tabularnewline
+		\hline
+		{\color{turquoise}std}::{\color{turquoise}vector}$<$Tree*$>$* & LOptInst LInst LOptExpr LExpr\tabularnewline
+		\hline
+		Tree* & Inst Expr \tabularnewline
+		\hline
+		Block* & Block \tabularnewline
+		\hline
+	\end{tabular}
+\end{center}
+
+On peut en déduire l'{\color{blue}union} suivante (extrait du fichier \href{../YYSTYPE.hpp}{\ttfamily YYSTYPE.hpp}), qui servira dans le fonctionnement de \texttt{bison}:
+
+\begin{lstlisting}
+typedef union {
+	bool Boolean;			/* Valeur booléenne. */
+	char Char;				/* Caractère isolé. */
+	int Integer;			/* Valeur entière. */
+	std::string *String;	/* Chaîne de caractère. */
+	
+	std::vector<Parameter> *PParamList;
+	Parameter *PParam;
+	std::vector<Variable> *PVarList;
+	Variable *PVar;
+	
+	std::vector<Type*> *PTypeList;
+	Type *PType;
+	Class *PClass;
+	Object *PObject;
+	
+	std::vector<Method> *MethodList;
+	Method *PMethod;
+	
+	std::vector<Tree*> *PTreeList;
+	Tree *PTree;
+	Block *PBlock;
+} YYSTYPE;
+\end{lstlisting}
+
 \end{document}
