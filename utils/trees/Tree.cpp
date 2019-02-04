@@ -77,13 +77,13 @@ Tree::Tree(int lineno, int operation, const std::string &var, const std::string 
 int Tree::isCorrect(Environment& env){
 	switch (operation) {
 		case instanciation:
-			if(env.env.find(std::get<std::string>(t.children.at(0)))==env.env.end()){
+			if(env.env.find(std::get<std::string>(this->children.at(0)))==env.env.end()){
 				std::cout << " Vous essayez d'instancier un type qui n'existe pas à la ligne : "<<lineno << " ! " <<std::endl;
 				return lineno;
 			}
 				
 			//on doit maintenant vérifier qu'on instancie pas un objet
-			if((*(env.env.find(std::get<std::string>(t.children.at(0)))))->isStatic())
+			if((*(env.env.find(std::get<std::string>(this->children.at(0))))).isStatic())
 			break;
 		case cast:
 			this->getType(env);// vu que getType fait déjà la vérification
@@ -109,8 +109,8 @@ int Tree::isCorrect(Environment& env){
 			
 			std::string type = (std::get<Tree*>(this->children.at(0)))->getType(env);
 			if(env.env.find(type) == env.env.end())
-				return this->lineo;
-			Method meth = env.env[type].know(std::get<std::string>(this->children.at(1)));
+				return this->lineno;
+			Method meth = env.env[type]->know(std::get<std::string>(this->children.at(1)));
 			size_t i = 0;
 			for (auto it = this->children.begin() + 2; it != this->children.end(); it++) {
 				if( i >= meth.parameters.size())
@@ -120,7 +120,7 @@ int Tree::isCorrect(Environment& env){
 				i++;
 			}
 			if(i == meth.parameters.size())//si on a le bon nombre de parametres
-				return -1
+				return -1;
 			//dans ce cas on essaie d'appeler une methode qui n'existe pas
 			std::cout<<"la fonction " << std::get<std::string>(this->children.at(1)) << " n'existe pas (ou n'a pas les bons arguments) pour le type "<<type<<". Ligne : "<<lineno;
 			
@@ -142,7 +142,7 @@ int Tree::isCorrect(Environment& env){
 				i++;
 			}
 			if(i == meth.parameters.size())//si on a le bon nombre de parametres
-				return -1
+				return -1;
 			//dans ce cas on essaie d'appeler une methode qui n'existe pas
 			std::cout<<"la fonction " << std::get<std::string>(this->children.at(1)) << " n'existe pas (ou n'a pas les bons arguments) pour le type "<<type<<". Ligne : "<<lineno;
 			
