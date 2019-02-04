@@ -48,6 +48,8 @@ struct Tree {
 	int isCorrect(Environment& env);
 	
 	std::string getType(Environment& env);
+	
+	std::ostream &Tree::generateAsm(std::ostream &os, Environment& env);
 };
 
 std::ostream &operator<<(std::ostream &os, const Tree &t);

@@ -419,14 +419,10 @@ std::string Tree::getType(Environment& env){
 }
 
 std::ostream &Tree::generateAsm(std::ostream &os, Environment& env) {
-	std::vector<Assignee> tempo;
 	switch (operation) {
 		case instanciation:
-		
 			break;
 		case cast:
-		
-		
 			break;
 		case member_access:
 			break;
@@ -441,61 +437,61 @@ std::ostream &Tree::generateAsm(std::ostream &os, Environment& env) {
 		case assignment:
 			break;
 		case unary_plus:
-			std::get<Tree*>(tree->children[0])->generateAsm(os);
+			std::get<Tree*>(children[0])->generateAsm(os, env);
 			break;
 		case unary_minus:
 			os << "PUSHI 0" << std::endl;
-			std::get<Tree*>(tree->children[0])->generateAsm(os);
+			std::get<Tree*>(children[0])->generateAsm(os, env);
 			os << "SUB";
 			break;
 		case multiplication:
-			std::get<Tree*>(tree->children[0])->generateAsm(os);
-			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			std::get<Tree*>(children[0])->generateAsm(os, env);
+			std::get<Tree*>(children[1])->generateAsm(os, env);
 			os << "MUL";
 			break;
 		case division:
-			std::get<Tree*>(tree->children[0])->generateAsm(os);
-			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			std::get<Tree*>(children[0])->generateAsm(os, env);
+			std::get<Tree*>(children[1])->generateAsm(os, env);
 			os << "DIV";
 			break;
 		case addition:
-			std::get<Tree*>(tree->children[0])->generateAsm(os);
-			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			std::get<Tree*>(children[0])->generateAsm(os, env);
+			std::get<Tree*>(children[1])->generateAsm(os, env);
 			os << "ADD";
 			break;
 		case substraction:
-			std::get<Tree*>(tree->children[0])->generateAsm(os);
-			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			std::get<Tree*>(children[0])->generateAsm(os, env);
+			std::get<Tree*>(children[1])->generateAsm(os, env);
 			os << "SUB";
 			break;
 		case less_strict:
-			std::get<Tree*>(tree->children[0])->generateAsm(os);
-			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			std::get<Tree*>(children[0])->generateAsm(os, env);
+			std::get<Tree*>(children[1])->generateAsm(os, env);
 			os << "INF";
 			break;
 		case less_equal:
-			std::get<Tree*>(tree->children[0])->generateAsm(os);
-			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			std::get<Tree*>(children[0])->generateAsm(os, env);
+			std::get<Tree*>(children[1])->generateAsm(os, env);
 			os << "INFEQ";
 			break;
 		case greater_strict:
-			std::get<Tree*>(tree->children[0])->generateAsm(os);
-			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			std::get<Tree*>(children[0])->generateAsm(os, env);
+			std::get<Tree*>(children[1])->generateAsm(os, env);
 			os << "SUP";
 			break;
 		case greater_equal:
-			std::get<Tree*>(tree->children[0])->generateAsm(os);
-			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			std::get<Tree*>(children[0])->generateAsm(os, env);
+			std::get<Tree*>(children[1])->generateAsm(os, env);
 			os << "SUPEQ";
 			break;
 		case equal:
-			std::get<Tree*>(tree->children[0])->generateAsm(os);
-			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			std::get<Tree*>(children[0])->generateAsm(os, env);
+			std::get<Tree*>(children[1])->generateAsm(os, env);
 			os << "EQUAL";
 			break;
 		case not_equal:
-			std::get<Tree*>(tree->children[0])->generateAsm(os);
-			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			std::get<Tree*>(children[0])->generateAsm(os, env);
+			std::get<Tree*>(children[1])->generateAsm(os, env);
 			os << "EQUAL" << std::endl << "NOT";
 			break;
 		case if_then_else:
@@ -503,16 +499,17 @@ std::ostream &Tree::generateAsm(std::ostream &os, Environment& env) {
 		case return_call:
 			break;
 		case integer:
-			os << "PUSHI " << std::get<int>(tree->children[0]);
+			os << "PUSHI " << std::get<int>(children[0]);
 			break;
 		case string:
-			os << "PUSHS " << std::get<std::string>(tree->children[0]);
+			os << "PUSHS " << std::get<std::string>(children[0]);
 			break;
 		case identifier:
 			break;
 		default:
 			os << "\033[91mundefined\033[0m";
 	}
+	return os << std::endl;
 }
 
 std::ostream &operator<<(std::ostream &os, const Tree &t) {
