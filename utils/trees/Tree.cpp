@@ -390,6 +390,103 @@ std::string Tree::getType(Environment& env){
 	return "";
 }
 
+std::ostream &Tree::generateAsm(std::ostream &os, Environment& env) {
+	std::vector<Assignee> tempo;
+	switch (operation) {
+		case instanciation:
+		
+			break;
+		case cast:
+		
+		
+			break;
+		case member_access:
+			break;
+		case static_member_access:
+			break;
+		case method_call:
+
+			break;
+		case static_method_call:
+
+			break;
+		case assignment:
+			break;
+		case unary_plus:
+			std::get<Tree*>(tree->children[0])->generateAsm(os);
+			break;
+		case unary_minus:
+			os << "PUSHI 0" << std::endl;
+			std::get<Tree*>(tree->children[0])->generateAsm(os);
+			os << "SUB";
+			break;
+		case multiplication:
+			std::get<Tree*>(tree->children[0])->generateAsm(os);
+			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			os << "MUL";
+			break;
+		case division:
+			std::get<Tree*>(tree->children[0])->generateAsm(os);
+			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			os << "DIV";
+			break;
+		case addition:
+			std::get<Tree*>(tree->children[0])->generateAsm(os);
+			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			os << "ADD";
+			break;
+		case substraction:
+			std::get<Tree*>(tree->children[0])->generateAsm(os);
+			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			os << "SUB";
+			break;
+		case less_strict:
+			std::get<Tree*>(tree->children[0])->generateAsm(os);
+			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			os << "INF";
+			break;
+		case less_equal:
+			std::get<Tree*>(tree->children[0])->generateAsm(os);
+			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			os << "INFEQ";
+			break;
+		case greater_strict:
+			std::get<Tree*>(tree->children[0])->generateAsm(os);
+			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			os << "SUP";
+			break;
+		case greater_equal:
+			std::get<Tree*>(tree->children[0])->generateAsm(os);
+			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			os << "SUPEQ";
+			break;
+		case equal:
+			std::get<Tree*>(tree->children[0])->generateAsm(os);
+			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			os << "EQUAL";
+			break;
+		case not_equal:
+			std::get<Tree*>(tree->children[0])->generateAsm(os);
+			std::get<Tree*>(tree->children[1])->generateAsm(os);
+			os << "EQUAL" << std::endl << "NOT";
+			break;
+		case if_then_else:
+			break;
+		case return_call:
+			break;
+		case integer:
+			os << "PUSHI " << std::get<int>(tree->children[0]);
+			break;
+		case string:
+			os << "PUSHS " << std::get<std::string>(tree->children[0]);
+			break;
+		case identifier:
+			break;
+		default:
+			os << "\033[91mundefined\033[0m";
+	}
+}
+
 std::ostream &operator<<(std::ostream &os, const Tree &t) {
 	switch (t.operation) {
 		case instanciation:
