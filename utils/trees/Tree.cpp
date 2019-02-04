@@ -83,7 +83,7 @@ int Tree::isCorrect(Environment& env){
 			}
 				
 			//on doit maintenant vérifier qu'on instancie pas un objet
-			if((env.env[std::get<std::string>(this->children.at(0))]).isStatic()){
+			if((env.env[std::get<std::string>(this->children.at(0))])->isStatic()){
 				std::cout<<"Vous ne pouvez pas instancier un objet : ligne " << this->lineno << std::endl;
 				return lineno;
 			}
