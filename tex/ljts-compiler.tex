@@ -50,6 +50,8 @@
 	{»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1
 }
 
+\counterwithin*{section}{part}
+
 \begin{document}
 \title{\bfseries Projet de Compilation}
 \author{Lucas David, Sullivan Honnet, Théo Legras \& Jules Vittone}
@@ -306,7 +308,6 @@ On peut tenir le tableau suivant qui indique pour chaque non-terminal à quel ty
 \end{center}
 
 On peut en déduire l'{\color{blue}union} suivante (extrait du fichier \href{../YYSTYPE.hpp}{\ttfamily YYSTYPE.hpp}), qui servira dans le fonctionnement de \texttt{bison}:
-
 \begin{lstlisting}
 typedef union {
 	bool Boolean;			/* Valeur booléenne. */
@@ -332,5 +333,60 @@ typedef union {
 	Block *PBlock;
 } YYSTYPE;
 \end{lstlisting}
+
+\newpage
+
+De plus, chacune des expressions à un code d'opération défini par une {\color{blue}enum} pour qualifier sont comportement dans la structure Tree (extrait du fichier \href{../optype.hpp}{\ttfamily optype.hpp})
+\begin{lstlisting}
+enum optype {
+	/* CLASSES & OBJECTS */
+	instanciation, cast, member_access, static_member_access, method_call, static_method_call,
+	/* ASSIGNMENT */
+	assignment,
+	/* ARITHMETIC */
+	unary_plus, unary_minus,
+	multiplication, division,
+	addition, substraction,
+	/* RELATIONAL_OPERATOR */
+	less_strict, less_equal, greater_strict, greater_equal,
+	equal, not_equal,
+	/* MISCELLANEOUS */
+	if_then_else, return_call, inst_block,
+	/* CONSTS & IDENTIFIER */
+	integer, string, identifier
+};
+\end{lstlisting}
+
+\part{Conclusion}
+
+\section{Choix d'implémentation}
+
+Pour le projet, on a fait le choix de faire le compilateur en C++ pour nous permettre d’utiliser l’héritage entre les structures. Dans le projet, nous avons séparé les structures en différents morceaux, nous avons l’Arbre de Syntaxe Abstraite contenant toutes les variables et les opérations réalisées. Les structures 'Class' et les 'Object' ont une base 'Type' pour nous permettre de traiter certains comportements par défaut. On peut citer, la gestion des champs et des méthodes, mais aussi les vérifications contextuelles ou la génération de code.
+
+La classe 'Method' nous permet de définir ce qui se rapporte à ces dernières. Elle va nous permettre de généraliser des comportements. La structure 'Constructeur' hérite de méthode (car c’est une méthode avec un comportement particulier), qui elle même est dérivée en 'ClassConstructor' et  'ObjectConstructor', afin de pouvoir modéliser les spécificités de chacune de ces entités.
+
+La structure 'Environment' va nous servir à passer les informations qui nous serviront lors des vérifications contextuelles : les types connus et les variables qui sont actuellement définies. À noter que les variables sont représentées sous forme de vecteur afin de pouvoir gérer le masquage : les variables sont ajoutées à la fin et supprimées à la fin du bloc (à la manière d'une pile) qui définit leur portée. Pour accéder à une variable, on parcourt ce vecteur en partant de la fin pour tomber en premier sur la dernière variable définie (qui donc masque les autres).
+
+Les structures 'Bloc' et 'Tree' sont des structures de stockage. 'Tree' va nous permettre de stocker les différentes instructions de notre programme. 'Bloc' est un ensemble de déclarations optionnelles suivies d’une liste d’instructions optionnelles. Cette dernière structure nous sert essentiellement pour les problèmes de portée dans l’environnement.
+
+\section{Avancement : ça compile, mais ça ne compile pas}
+
+En ce qui concerne l’avancement, nous avons fini les parties lexicales et syntaxiques. Ces parties ont été testées et sont fonctionnelles.
+
+La partie génération de code a été faite pour les arbres, et il reste à le faire pour les différents types, classes et pour les variables. La génération de code fonctionne pour les instructions conditionnelles et pour les calculs arithmétiques. Les structures nécessaires à la gestion des variables existent, mais ne sont pas utilisées.
+
+À propos des vérifications contextuelles : les vérifications n’ont pas été totalement faites ni testées. 
+
+Néanmoins, nous avons fini de développer un grand nombre de vérifications. Entre autres : nous avons fini la vérification pour la portée des variables (bloc par bloc). La vérification que les arbres sont corrects : quand on appelle une méthode elle appartient bien à la classe qui l’appelle ou à une des super classes de cette dernière. Nous n’avons pas la vérification qui permet de passer en paramètre une classe dérivée de la classe appelée demandée par la signature (il faut la classe exacte). On peut vérifier la cohérence des types lors de l’appel ou de l’initialisation de ces derniers (donc dans la classe Type directement). Pour la déclaration des types : la correcte déclaration est vérifiée correctement, on vérifie qu’il n’y a pas d’héritage circulaire, que le type n'existe pas déjà, que si une classe dérive d'une autre classe cette dernière existe et qu’elle soit héritable (que ce ne soit pas un Object). Puis chaque type va vérifier la validité de ses méthodes en appelant la fonction correspondante. Pour une méthode, on vérifie les types et la portée des variables utilisées ou passées en paramètres. De manière générale, chaque élément vérifie de manière récursive qu’il est correct. On a beaucoup d’affichage pour donner la ligne et le type d’erreur.
+
+\section{Résumé des tâches}
+
+Participation de Lucas : Lucas a fait l’analyse lexicale et a corrigé l’analyse syntaxique et la génération de code. Il a également réécrit le rapport au format \LaTeX .
+
+Participation de Théo : Théo s’est occupé des vérifications contextuelles, du support et du débogage.
+
+Participation de Jules : Jules a écrit la première version de l’analyse syntaxique et a fait les tests des différentes versions de l’analyse syntaxique ainsi que la génération de code.
+
+Participation de Sullivan : Sullivan a participé à l’analyse syntaxique et a écrit la liste des vérifications contextuelles à faire avec Théo.
 
 \end{document}
