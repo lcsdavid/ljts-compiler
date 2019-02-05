@@ -27,7 +27,6 @@ int main(int argc, char **argv) {
 		for (int i = 1; i < argc; i++) {
 			switch (argv[i][0]) {
 				case '-':
-					std::cout << "Test" << std::endl;
 					if (argv[i][1] == 'p')
 						do_print = true;
 					else if (std::strcmp(&argv[i][1], "-version") == 0)
