@@ -52,7 +52,7 @@ using namespace std::string_literals;
 %left '.'
 
 %%
-Program : LOptDecls Block { Program program(*$1, $2); std::cout << program; }
+Program : LOptDecls Block { Program program(*$1, $2); if (do_print) std::cout << program; }
 ;
 
 LOptDecls : LDecls		{ $$ = $1; }

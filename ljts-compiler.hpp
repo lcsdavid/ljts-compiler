@@ -9,5 +9,6 @@ extern "C" int yylex();
 extern "C" YYSTYPE yylval;
 extern int yylineno;
 void yyerror(char const *s);
+extern bool do_print;
 
 #endif
